@@ -44,79 +44,85 @@ const Category = () => {
 
   const navigate=useNavigate()
   return (
-    <div className="flex w-full dark:dark-color">
-      {/* Sidebar */}
-      <Sidebar />
+   <div className="flex w-full dark:dark-color min-h-screen bg-white dark:bg-gray-900">
+  {/* Sidebar */}
+  <Sidebar />
 
-      {/* Main Content */}
-      <div className="w-screen max-w-screen-xl mx-auto max-lg:ml-20 ml-[240px] max-md:ml-0 p-4 dark:dark-color">
-      {/* Top Bar */}
-<div className="flex items-center justify-between px-4  ">
-  {/* Left Section: Back + Search */}
-  <div className="flex items-center flex-grow space-x-2">
-    {/* Back Arrow */}
-    <Link to="/shop">
-      <ArrowLeft className="lg:hidden w-5 h-5 text-gray-600" />
-    </Link>
+  {/* Main Content */}
+  <div className="flex-1 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 ml-[240px] max-lg:ml-20 max-md:ml-0 transition-all duration-300">
+    
+    {/* Top Bar */}
+    <div className="flex items-center justify-between mb-4 relative z-20">
+      {/* Left: Back + Search */}
+      <div className="flex items-center flex-grow space-x-2">
+        {/* Back Arrow */}
+        <Link to="/shop" className="lg:hidden">
+          <ArrowLeft className="w-5 h-5 text-gray-600" />
+        </Link>
 
-    {/* Search Container */}
-    <div className="flex w-full items-center flex-grow border border-gray-300 rounded-xl px-3 py-2">
-      <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
-      <input
-        type="text"
-        placeholder="Search account here...."
-        value={query}
-        onChange={handleChange}
-        className="flex-grow bg-transparent outline-none text-sm"
-      />
-      {suggestions.length > 0 && (
-        <ul className="absolute z-10 bg-white border border-gray-200 h-60 overflow-y-auto scrollbar-hide mt-[300px] w-[70%] rounded shadow">
-          {suggestions.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => handleSelect(item)}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      )}
-     <button 
-  onClick={() => navigate("/filter")}
-  className="p-2 lg:hidden rounded-xl bg-blue-600 text-white">
-  <img src={filter} className="w-6 h-6 obeject-cover" />
-</button>
+        {/* Search */}
+        <div className="relative flex items-center w-full border border-gray-300 rounded-xl px-3 py-2 bg-white dark:bg-gray-800">
+          <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
+          <input
+            type="text"
+            placeholder="Search account here..."
+            value={query}
+            onChange={handleChange}
+            className="flex-grow bg-transparent outline-none text-sm text-black dark:text-white"
+          />
+
+          {/* Filter Button (Mobile Only) */}
+          <button
+            onClick={() => navigate("/filter")}
+            className="p-2 lg:hidden rounded-xl bg-blue-600 text-white ml-2"
+          >
+            <img src={filter} alt="Filter" className="w-6 h-6 object-cover" />
+          </button>
+
+          {/* Suggestions Dropdown */}
+          {suggestions.length > 0 && (
+            <ul className="absolute left-0 top-full mt-2 z-30 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 w-full max-h-60 overflow-y-auto rounded shadow scrollbar-hide">
+              {suggestions.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSelect(item)}
+                  className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-sm text-black dark:text-white"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      {/* Right: Shop Profile */}
+      <Link to="/shopprofile" className="ml-4 flex-shrink-0">
+        <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-300 dark:border-gray-600 flex items-center justify-center cursor-pointer">
+          <img src="/isShop.png" alt="Shop" className="w-6 h-6" />
+        </div>
+      </Link>
+    </div>
+
+    {/* Carousel Banner */}
+    <div className="my-4 max-md:h-[250px]">
+      <ShopCarousel />
+    </div>
+
+    {/* Categories */}
+    <h2 className="text-xl font-semibold mt-6 mb-4">Categories</h2>
+    <CategorySection />
+
+    {/* Most Viewed */}
+    <div className="mt-10">
+      <MostView />
     </div>
   </div>
 
-  {/* Right Section: Shop Profile */}
-  <Link to="/shopprofile" className="ml-4 flex-shrink-0">
-    <div className="w-12 h-12  rounded-full overflow-hidden border border-gray-300 flex items-center justify-center cursor-pointer">
-      <img src="/isShop.png" alt="Shop" className="w-6 h-6" />
-    </div>
-  </Link>
+  {/* Footer */}
+  <Footer />
 </div>
 
-
-        {/* Carousel Banner */}
-        <div className="m-6 w-full max-md:h-[250px] max-md:mb-0">
-          <ShopCarousel />
-        </div>
-
-        {/* Categories */}
-        {/* <div className="mb-8 max-md:mb-0"> */}
-        <h2 className="text-xl font-semibold m-6">Categories</h2>
-        <CategorySection />
-        {/* </div> */}
-
-        {/* Most Viewed */}
-        <div className="m-6 max-md:mt-10">
-          <MostView />
-        </div>
-      </div>
-      <Footer/>
-    </div>
     
   );
 };

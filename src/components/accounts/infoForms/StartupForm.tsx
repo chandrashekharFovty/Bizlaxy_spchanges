@@ -465,7 +465,7 @@ const CompanyForm: React.FC = () => {
                       setSelectedcurrency(e.target.value);
                       setForm((prev) => ({
                         ...prev,
-                        country: e.target.value,
+                        fundingCurrency: e.target.value,
                       }));
                       setTouched((prev) => ({ ...prev, fundingCurrency: true }));
                       validateField("fundingCurrency", e.target.value);

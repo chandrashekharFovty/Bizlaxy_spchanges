@@ -309,80 +309,85 @@ function ShopProducts() {
   const category = location.state?.category || "shop";
 
   return (
-    <>
-      <Sidebar />
-      <main className="dark:dark-color ml-[245px] max-md:ml-0 dark:bg-dark min-h-screen p-4">
-        {/* Back Link */}
-        <div className="flex min-w-screen">
+  <>
+  <Sidebar />
+
+  <main className="dark:dark-color max-lg:ml-20 ml-[245px] max-md:ml-0 dark:bg-dark min-h-screen px-4 py-6 transition-all duration-300">
+    
+    {/* Back Link & Mobile Search */}
+    <div className="flex flex-col gap-4 max-md:gap-2 mb-6 w-full">
+      <div className="flex justify-between items-center">
         <Link
           to="/shop"
-          className="hidden max-md:inline-block text-[30px] text-black mb-4"
+          className="hidden max-md:inline-block text-2xl text-black dark:text-white"
         >
           &lt;
         </Link>
         <Link
           to="/shop"
-          className="max-md:hidden text-sm text-blue-600 mb-4 inline-block"
+          className="max-md:hidden text-sm text-blue-600"
         >
           &lt; Back to {category}
         </Link>
+      </div>
 
-        {/* Search Bar */}
-        <div className="lg:hidden w-screen   flex items-center gap-2 mb-4">
-          <div className="flex items-center flex-grow border border-gray-300 rounded-xl px-3 py-2">
-            <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="flex-grow bg-transparent outline-none text-sm"
-            />
-          </div>
+      {/* Mobile Search */}
+      <div className="lg:hidden w-full flex items-center gap-2">
+        <div className="flex items-center flex-grow border border-gray-300 rounded-xl px-3 py-2 bg-white dark:bg-gray-800">
+          <SearchIcon className="w-4 h-4 text-gray-500 mr-2" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="flex-grow bg-transparent outline-none text-sm text-black dark:text-white"
+          />
         </div>
-        </div>
+      </div>
+    </div>
 
-        {/* Filters */}
-        <div className="lg:hidden flex gap-4 mb-4">
-          <select className="border border-gray-400 rounded-full  py-2">
-            <option>Sort By</option>
-            <option value="price">Price</option>
-            <option value="name">Name</option>
-          </select>
-          <button className="border border-gray-400 rounded-full px-4 py-2">
-            Filter
-          </button>
-          <button className="border border-gray-400 rounded-full px-4 py-2">
-            Company
-          </button>
-          <button className="border border-gray-400 rounded-full px-4 py-2">
-            Brand
-          </button>
-        </div>
+    {/* Filters (Mobile Only) */}
+    <div className="lg:hidden flex flex-wrap gap-2 mb-6">
+      <select className="border border-gray-400 rounded-full px-4 py-2 text-sm bg-white dark:bg-gray-800 dark:text-white">
+        <option>Sort By</option>
+        <option value="price">Price</option>
+        <option value="name">Name</option>
+      </select>
+      <button className="border border-gray-400 rounded-full px-4 py-2 text-sm dark:text-white">
+        Filter
+      </button>
+      <button className="border border-gray-400 rounded-full px-4 py-2 text-sm dark:text-white">
+        Company
+      </button>
+      <button className="border border-gray-400 rounded-full px-4 py-2 text-sm dark:text-white">
+        Brand
+      </button>
+    </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-4 gap-4 max-md:grid-cols-3">
-          {customProducts.map((product) => (
-            <Link
-              key={product.id}
-              to="/productcart"
-              state={{ product }}
-              className="border border-gray-200 rounded-xl shadow hover:shadow-lg transition-shadow p-3 flex flex-col gap-2"
-            >
-              <img
-                src={product.img}
-                alt={product.title}
-                className="w-full h-[300px] max-md:h-32 object-cover rounded-lg"
-              />
-              <h2 className="text-base font-medium">{product.title}</h2>
-              <p className="font-semibold">{product.price}</p>
-              <p className="text-sm">{product.description}</p>
-              <button className="mt-auto bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-xl px-4 py-2 text-sm">
-                Contact Supplier
-              </button>
-            </Link>
-          ))}
-        </div>
-      </main>
-    </>
+    {/* Product Grid */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      {customProducts.map((product) => (
+        <Link
+          key={product.id}
+          to="/productcart"
+          state={{ product }}
+          className="border border-gray-200 dark:border-gray-700 rounded-xl shadow hover:shadow-lg transition-shadow p-3 flex flex-col gap-2 bg-white dark:bg-gray-800"
+        >
+          <img
+            src={product.img}
+            alt={product.title}
+            className="w-full h-64 max-md:h-32 object-cover rounded-lg"
+          />
+          <h2 className="text-base font-medium text-black dark:text-white">{product.title}</h2>
+          <p className="font-semibold text-black dark:text-white">{product.price}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">{product.description}</p>
+          <button className="mt-auto bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-xl px-4 py-2 text-sm">
+            Contact Supplier
+          </button>
+        </Link>
+      ))}
+    </div>
+  </main>
+</>
+
   );
 }
 

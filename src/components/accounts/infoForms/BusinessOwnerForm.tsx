@@ -147,10 +147,7 @@ const CompanyForm: React.FC = () => {
   const [selectedIndustries, setSelectedIndustries] = useState<OptionType[]>(
     []
   );
-  // const [selectedBusinessModels, setSelectedBusinessModels] = useState<
-  //   OptionType[]
-  // >([]);
-
+ 
   const handleOnbusinesschange = (val) => {
     setSelectedBusinessTypes(val);
     setbusinessvalue(val);
@@ -163,11 +160,7 @@ const CompanyForm: React.FC = () => {
     handleChange(val);
     //handleBlur(val);
   };
-  // const handleOnbusinessModelchange = (val) => {
-  //   setvaluebusinessModel(val);
-  //   handleChange(val);
-  //   handleBlur(val);
-  // };
+
 
   form.businessType = businessvalue;
   form.industrySector = industryvalue;
@@ -177,15 +170,8 @@ const CompanyForm: React.FC = () => {
     businessName: (v) => (v.length < 3 ? "At least 5 characters required" : ""),
     businessType: (v) => (!v ? "Pick at least one" : ""),
     industrySector: (v) => (!v ? "Pick at least one" : ""),
-    // businessModel: (v) => (!v ? "Pick at least one" : ""),
-    // companyStage: (v) => (!v ? "Please select a stage" : ""),
-    // minFunding: (v) => (!v ? "Required" : ""),
-    //  maxFunding: (v) => {
-    //  if (!v) return "Required";
-    //  if (form.minFunding && Number(v) < Number(form.minFunding))
-    //     return "Max must be ≥ Min";
-    //   return "";
-    // },
+
+
     country: (v) => (!v ? "Required" : ""),
     state: (v) => (!v ? "Required" : ""),
     city: (v) => (!v ? "Required" : ""),
@@ -218,12 +204,7 @@ const CompanyForm: React.FC = () => {
 
     setForm((prev) => ({ ...prev, [key]: updatedValue }));
 
-    // if (touched[key]) {
-    //   validateField(key, updatedValue);
-    //   if (key === "minFunding") {
-    //     validateField("maxFunding", form.maxFunding);
-    //   }
-    // }
+   
   };
 
   const handleBlur = (e: React.FocusEvent<any>) => {
@@ -232,11 +213,7 @@ const CompanyForm: React.FC = () => {
     validateField(key, form[key]);
   };
 
-  // const handleStageSelect = (stage: string) => {
-  //   setForm((prev) => ({ ...prev, companyStage: stage }));
-  //  setTouched((prev) => ({ ...prev, companyStage: true }));
-  //  //validateField("companyStage", stage);
-  // };
+ 
   //Progress bar simulation
   const progressbarArray = Object.keys(form).map((key) => {
     key = key as keyof Form;
@@ -247,10 +224,7 @@ const CompanyForm: React.FC = () => {
   console.log("Progress Percentage:", progressPercentage);
   // Simulate progress bar width
   const progressBarWidth = `${Math.min(progressPercentage, 100)}%`;
-  //console.log("Progress Bar Width:", progressBarWidth);
-
-  // Update the width of the progress bar dynamically
-  //console.log("Progress Bar Style:", progressBarStyle);
+ 
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -262,10 +236,7 @@ const CompanyForm: React.FC = () => {
     if (!isValid) return;
 
     const fd = new FormData(e.currentTarget);
-    //console.log("FormData:", Object.fromEntries(fd.entries()));
-    // Use the progressBarStyle in your JSX if needed
-    // For example, you can apply it to a div or a progress bar component
-    //console.log("Is Valid:", isValid);
+
     console.log("Form Data:", form);
     navigate("/feed");
   };

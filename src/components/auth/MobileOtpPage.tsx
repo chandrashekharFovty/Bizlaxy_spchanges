@@ -108,9 +108,9 @@ const OtpPage = () => {
                   </span>
                 </p>
                 <p className="text-base font-normal">
-                  6 digit Otp sent to your mobile
-                  <br />
-                  <span className="font-medium">{maskPhonenumber()}</span>
+                  6 digit Otp sent to your mobile  <span className="font-medium">{maskPhonenumber()}</span>
+                  {/* <br /> */} 
+                 
                 </p>
               </div>
               <div className="w-full mt-5">

@@ -227,55 +227,58 @@ export default function PhoneInputWithModal() {
         </div>
       </div>
       {/* Modal */}
-      <Dialog open={open} onClose={setOpen} className="relative z-50 bg-transparent opacity-100">
-        <DialogBackdrop
-          transition
-          className="fixed inset-0  data-closed:opacity-1 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
-        />
-        {/* {isModalOpen && ( */}
-        <div className="fixed inset-0 bg-opacity-60 flex items-center justify-center z-50 glass-bg">
-          <DialogPanel className="w-[604px] shadow-md  shadow-blue-400 h-[530px] scrollbar-hide  rounded-xl p-4 max-h-[80%] overflow-y-auto">
-            <button
-              onClick={() => setOpen(false)}
-              className="text-white text-[16px] mb-4"
-            >
-              <span className="font-[22px]">&lt;</span> Back
-            </button>
-            <div className="w-full text-white mt-4 rounded-xl p-3 flex border focus:border-[#BED6FF] border-[#BED6FF] px-4">
-              <img src={SearchIcon} alt="" className="w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search for Countries"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="outline-none font-normal ml-1 placeholder:text-white px-2 text-sm w-full bg-transparent"
-              />
-            </div>
+ <Dialog open={open} onClose={setOpen} className="relative z-50 bg-transparent opacity-100">
+  <DialogBackdrop
+    transition
+    className="fixed inset-0 data-closed:opacity-1 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+  />
+  <div className="fixed inset-0 bg-opacity-40 bg-black flex items-center justify-center z-50 glass-bg">
+    <DialogPanel className="w-[604px] shadow-md border border-white glass-bg shadow-blue-400 h-[530px] rounded-xl p-4 max-h-[80%]">
+      
+      {/* Back Button */}
+      <button onClick={() => setOpen(false)} className="text-white text-[16px] mb-4">
+        <span className="font-[22px]">&lt;</span> Back
+      </button>
 
-            <ul className="mt-6">
-              {filtered.map((c) => (
-                <li
-                  key={c.isoCode}
-                  onClick={() => {
-                    setSelected(c);
-                    setOpen(false);
-                    setSearch("");
-                  }}
-                  className="flex items-center rounded-[5px] text-white text-sm font-normal px-3 py-2 hover:bg-blue-700 cursor-pointer"
-                >
-                  {React.createElement((Flags as any)[c.isoCode], {
-                    title: c.name,
-                    style: { width: "25px", marginRight: "12px" },
-                  })}{" "}
-                  {c.name}
-                  {c.dialCode.charAt(0) !== "+" ? `+${c.dialCode}` : c.dialCode}
-                </li>
-              ))}
-            </ul>
-          </DialogPanel>
-        </div>
-        {/* )} */}
-      </Dialog>
+      {/* Fixed Search Bar */}
+      <div className="w-full text-white mb-4 rounded-xl p-3 flex border border-[#BED6FF] px-4">
+        <img src={SearchIcon} alt="" className="w-5 h-5" />
+        <input
+          type="text"
+          placeholder="Search for Countries"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="outline-none font-normal ml-1 placeholder:text-white px-2 text-sm w-full bg-transparent"
+        />
+      </div>
+
+      {/* Scrollable List */}
+      <div className="overflow-y-auto max-h-[350px] pr-1 scrollbar-hide">
+        <ul>
+          {filtered.map((c) => (
+            <li
+              key={c.isoCode}
+              onClick={() => {
+                setSelected(c);
+                setOpen(false);
+                setSearch("");
+              }}
+              className="flex items-center rounded-[5px] text-white text-sm font-normal px-3 py-2 hover:bg-blue-700 cursor-pointer"
+            >
+              {React.createElement((Flags as any)[c.isoCode], {
+                title: c.name,
+                style: { width: "25px", marginRight: "12px" },
+              })}{" "}
+              {c.name}
+              {c.dialCode.charAt(0) !== "+" ? `+${c.dialCode}` : c.dialCode}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </DialogPanel>
+  </div>
+</Dialog>
+
     </>
   );
 }

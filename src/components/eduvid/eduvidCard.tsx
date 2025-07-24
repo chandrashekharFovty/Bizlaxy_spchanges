@@ -358,7 +358,8 @@ export default function MainContent() {
   }
 
   return (
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none w-[440px] overflow-y-scroll scrollbar-hide">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-screen max-lg:w-[65vw] h-[95vh] max-h-[782px] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] overflow-y-scroll scrollbar-hide  ">
+ {/* <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen h-[95vh] max-lg:w-full max-md:my-0 my-5 rounded-xl max-md:rounded-none w-[440px] overflow-y-scroll scrollbar-hide"> */}
       {mediaList.map((media, idx) => {
         const liked = likedIds.includes(media.id);
         const isAnimating = animatingLikeIdx === idx;
@@ -366,7 +367,8 @@ export default function MainContent() {
           <div
             key={media.id}
             onDoubleClick={() => handleDoubleClick(media.id, idx)}
-            className="snap-start mb-8 max-md:4 dark:bg-black h-screen max-md:w-screen max-md:h-[98vh] w-[440px] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+            className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[110vh] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+            // className="snap-start mb-8 max-md:4 dark:bg-black h-screen max-md:w-screen max-md:h-[98vh] max-lg:w- w-[440px] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
           >
             {media.type === "image" ? (
               <img
@@ -412,7 +414,7 @@ export default function MainContent() {
                       <img src="/whiteOfficialIcon.png" alt="✔️" />
                     </span>
                   )}
-                  <FollowButtonCard  />
+              <div className="border ">    <FollowButtonCard /></div>
                 </div>
               </div>
               <div className="mb-5 pb-5 pr-8">
@@ -698,7 +700,7 @@ export default function MainContent() {
 
     {isShareOpen && (
       <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-        <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
+        <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
           {/* Close Button */}
           <button
             onClick={() => setIsShareOpen(false)}
@@ -717,7 +719,7 @@ export default function MainContent() {
             placeholder="Search Users"
             // value={searchTerm}
             onChange={handleSearch}
-            className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
+            className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
           />
     
           {/* Scrollable Horizontal Users */}
@@ -736,7 +738,7 @@ export default function MainContent() {
                       )
                     }
                     className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                      isSelected ? "bg-gray-200" : ""
+                      isSelected ? "bg-black" : ""
                     } cursor-pointer relative`}
                   >
                     <div className="relative w-16 h-16 mx-auto">
@@ -763,13 +765,13 @@ export default function MainContent() {
     
           {/* Conditional Message and Send OR Social Buttons */}
           {selectedUsers.length > 0 ? (
-            <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none"
+            <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none"
              >
               {/* Message Field */}
               <input
                 type="text"
                 placeholder="Write a message..." 
-            className="w-full h-full focus:outline-none text-black"
+            className="w-full h-full focus:outline-none text-black dark:dark-color"
     
                 />
     
@@ -812,7 +814,7 @@ export default function MainContent() {
                     <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
                       {item.icon}
                     </button>
-                    <span className="pt-1 text-black text-xs">{item.label}</span>
+                    <span className="pt-1 text-black dark:text-white text-xs">{item.label}</span>
                   </div>
                 ))}
               </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { FiAlertOctagon } from "react-icons/fi";
 
 const AddOptions= ({id, title, selected, onClick }) => {
   return (
@@ -10,7 +11,23 @@ const AddOptions= ({id, title, selected, onClick }) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-[10px]">
-          <h4 className="font-semibold text-gray-800 text-sm mt-2">{title}</h4>
+    <h4 className="flex font-semibold text-gray-800 text-sm mt-2">
+  {title}
+  
+  {/* Wrap the icon in a group */}
+  <div className="relative group ml-2 mt-1">
+    <FiAlertOctagon className="text-black " />
+
+    {/* Tooltip shown only on hover of icon */}
+ <span className="absolute text-xs top-full w-60 mt-1 z-10 opacity-0 group-hover:opacity-100 transition pointer-events-none bg-gray-800 text-white rounded px-3 py-2 whitespace-normal max-w-sm inline-block">
+  Lorem, ipsum dolor sit amet consectetur <br />adipisicing elit. Ea omnis fugit vel 
+  <br />saepe quidem dignissimos magnam quia qui harum sequi, consequatur voluptate 
+  <br />quae eligendi sapiente facere libero! Vitae, tempore incidunt.
+</span>
+
+  </div>
+</h4>
+
           <span className="hidden">{id}</span>
         </div>
 

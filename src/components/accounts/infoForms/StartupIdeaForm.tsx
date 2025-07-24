@@ -312,7 +312,7 @@ const CompanyForm: React.FC = () => {
             <div className="w-full  flex flex-col mx-auto">
               <label className="text-sm font-medium">Startup Name</label>
               <input
-                name="companyName"
+                name="startupIdeaName"
                 value={form.startupIdeaName}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -467,7 +467,7 @@ const CompanyForm: React.FC = () => {
                       setSelectedcurrency(e.target.value);
                       setForm((prev) => ({
                         ...prev,
-                        country: e.target.value,
+                        fundingCurrency: e.target.value,
                       }));
                       setTouched((prev) => ({ ...prev, fundingCurrency: true }));
                       validateField("fundingCurrency", e.target.value);
@@ -514,14 +514,14 @@ const CompanyForm: React.FC = () => {
             </div>
             {/* Company Name */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Company Name</label>
+              <label className="text-sm font-medium">Tell Us About Company</label>
               <input
               type="textArea"
                 name="startupIdeaDescription"
                 value={form.startupIdeaDescription}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Enter your company name here"
+                placeholder="Enter your company Description here"
                 className="w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
               />
               {errors.startupIdeaDescription && (

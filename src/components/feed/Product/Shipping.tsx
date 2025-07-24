@@ -43,7 +43,7 @@ function Shipping() {
       </div>
 
       <div className="flex flex-col w-3/6 max-md:w-screen">
-        <div className="bg-white p-6 rounded-lg shadow-md min-h-screen flex flex-col">
+        <div className="bg-white p-6 rounded-lg min-h-screen flex flex-col">
           <Link to="/priceInvetory" className="flex items-center text-lg mb-4">
             &lt;<span className="text-sm ml-2 mt-1">Shipping Info</span>
           </Link>

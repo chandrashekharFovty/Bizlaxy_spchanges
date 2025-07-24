@@ -258,10 +258,7 @@ const CompanyForm: React.FC = () => {
     if (!isValid) return;
 
     const fd = new FormData(e.currentTarget);
-    //console.log("FormData:", Object.fromEntries(fd.entries()));
-    // Use the progressBarStyle in your JSX if needed
-    // For example, you can apply it to a div or a progress bar component
-    //console.log("Is Valid:", isValid);
+  
     console.log("Form Data:", form);
     navigate("/feed");
   };
@@ -289,23 +286,7 @@ const CompanyForm: React.FC = () => {
           className="w-full overflow-scroll scrollbar-hide mt-[4%] h-[600px] flex flex-col gap-5 z-10"
         >
           <div className="w-[97%] overflow-scroll scrollbar-hide mt-[3%] h-[600px] flex flex-col gap-5 z-10">
-            {/* Company Name */}
-            {/* <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Company Name</label>
-              <input
-                name="companyName"
-                value={form.companyName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Enter your company name here"
-                className="w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
-              />
-              {errors.companyName && (
-                <div className="text-red-500 text-sm mt-1">
-                  {errors.companyName}
-                </div>
-              )}
-            </div> */}
+    
 
             {/* Business Type */}
             <div className="w-full  flex flex-col mx-auto">
@@ -351,113 +332,7 @@ const CompanyForm: React.FC = () => {
               )}
             </div>
 
-            {/* Business Model */}
-            {/* <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Business Model</label>
-              {/* MultiSelect Component */}
-              {/* <div className="w-full mt-2">
-                <MultiSelect
-                  options={businessModels}
-                  value={selectedBusinessModels}
-                  onChange={setSelectedBusinessModels}
-                  labelledBy="Business Model"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
-                />
-              </div>
-
-              {errors.businessModel && (
-                <div className="text-red-500 text-sm mt-1">
-                  {errors.businessModel}
-                </div>
-              )}
-            </div> */}
-            {/* Stage */}
-            {/* <div className="w-full flex flex-col mx-auto">
-              <label className="text-sm font-medium">Stage</label>
-              <div className="mt-2 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleStageSelect("Early")}
-                  className={`px-3 py-2 rounded-[6px] w-auto ${
-                    form.companyStage === "Early"
-                      ? "bg-gradient-to-br from-indigo-600 to-purple-500 text-white"
-                      : "bg-[#EAF6FF]"
-                  } border border-[#BED6FF] text-sm`}
-                >
-                  Early Stage
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleStageSelect("Growth")}
-                  className={`px-3 py-2 rounded-[6px] w-auto ${
-                    form.companyStage === "Growth"
-                      ? "bg-gradient-to-br from-indigo-600 to-purple-500 text-white"
-                      : "bg-[#EAF6FF]"
-                  } border border-[#BED6FF] text-sm`}
-                >
-                  Growth Stage
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleStageSelect("Mature")}
-                  className={`px-3 py-2 rounded-[6px] w-auto ${
-                    form.companyStage === "Mature"
-                      ? "bg-gradient-to-br from-indigo-600 to-purple-500 text-white"
-                      : "bg-[#EAF6FF]"
-                  } border border-[#BED6FF] text-sm`}
-                >
-                  Mature Stage
-                </button>
-              </div>
-              {errors.companyStage && (
-                <div className="text-red-500 text-sm mt-1">
-                  {errors.companyStage}
-                </div>
-              )}
-            </div> */}
-            {/* <div className="w-full flex flex-col mx-auto">
-              <label className="text-sm font-medium">
-                Amount Required for Funding
-              </label>
-              <div className="w-full h-[46px] flex flex-row justify-between items-center mt-1">
-                {/* Funding Range: Min */}
-                {/* <div className="w-5/12 flex flex-col">
-                  <input
-                    type="number"
-                    name="minFunding"
-                    placeholder="Min"
-                    value={form.minFunding}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
-                  />
-                  {errors.minFunding && (
-                    <div className="text-red-500 text-sm">
-                      {errors.minFunding}
-                    </div>
-                  )}
-                </div>
-                <div className="w-1/12 h-[1px] bg-black"></div> */}
-                {/* Funding Range: Max */}
-                {/* <div className="w-5/12 flex flex-col">
-                  <input
-                    type="number"
-                    name="maxFunding"
-                    placeholder="Max"
-                    value={form.maxFunding}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
-                  />
-                  {errors.maxFunding && (
-                    <div className="text-red-500 text-sm">
-                      {errors.maxFunding}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div> */} 
+           
              {/* Country */}
             <div className="w-full flex flex-col mx-auto">
               <label className="text-sm font-medium">Country</label>
@@ -638,8 +513,8 @@ const CompanyForm: React.FC = () => {
           </div>
         </form>
         {/* Submit */}
-        <div className="fixed h-8 w-full">
-          <div className="w-[67%] h-full flex justify-end">
+        <div className="fixed h-8  w-full">
+          <div className="w-[61%] h-full flex justify-end">
             <button
               onClick={() => {
                 onSubmit;

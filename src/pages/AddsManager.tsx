@@ -8,7 +8,7 @@ const AddsManager = () => {
     <>
        <div className="w-screen h-screen flex  bg-gray-100">
       <div className="w-2/10 z-50"><Sidebar/></div>
-      <div className="w-10/12 bg-gray-100 md:ml-[60px] lg:ml-[240px] xl:ml-[240px] max-md:w-full overflow-X-hidden z-0">
+      <div className="w-full h-full bg-gray-100 md:ml-[60px] lg:ml-[240px] xl:ml-[240px] max-md:w-full overflow-X-hidden z-0">
         <Deshboard/>
       </div>
     </div>

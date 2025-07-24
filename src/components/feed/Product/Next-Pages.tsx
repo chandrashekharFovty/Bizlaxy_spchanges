@@ -90,7 +90,7 @@ const NextPages = () => {
       </div>
       <div className="flex flex-col w-3/6 max-md:w-screen">
         <form onSubmit={handleSubmit}>
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md min-h-screen flex flex-col">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg  min-h-screen flex flex-col">
             <Link
               to="/product"
               className="flex items-center text-lg text-black dark:text-white mb-4"

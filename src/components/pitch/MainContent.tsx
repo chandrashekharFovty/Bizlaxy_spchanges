@@ -11,14 +11,24 @@ import {
   FaRegThumbsUp,
   FaWhatsapp,
 } from "react-icons/fa";
-import { ContactIcon, CopyleftIcon, Ellipsis, ExpandIcon, MessageCircleIcon } from "lucide-react";
+import {
+  ContactIcon,
+  CopyleftIcon,
+  Ellipsis,
+  ExpandIcon,
+  MessageCircleIcon,
+} from "lucide-react";
 import { Item } from "@radix-ui/react-accordion";
 import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
 import { truncate } from "fs/promises";
 import { BiCollapse } from "react-icons/bi";
 import { IoIosMore, IoMdMore } from "react-icons/io";
-import { RiFacebookCircleLine, RiFacebookFill, RiWhatsappFill } from "react-icons/ri";
+import {
+  RiFacebookCircleLine,
+  RiFacebookFill,
+  RiWhatsappFill,
+} from "react-icons/ri";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { FaThreads, FaXTwitter } from "react-icons/fa6";
 import { BsChatDots } from "react-icons/bs";
@@ -138,7 +148,7 @@ const pitchMedia: MediaItem[] = [
     shares: 25,
     user: { name: "User4", isVerified: false },
   },
-   {
+  {
     id: 5,
     type: "image",
     src: "/reel1.png",
@@ -157,7 +167,7 @@ const pitchMedia: MediaItem[] = [
     shares: 50,
     user: { name: "User1", isVerified: true },
   },
-   {
+  {
     id: 6,
     type: "image",
     src: "/reel3.png",
@@ -167,7 +177,7 @@ const pitchMedia: MediaItem[] = [
     likes: 3000,
     comments: [
       {
-        id:6,
+        id: 6,
         text: "First comment!",
         likes: 5,
         replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
@@ -176,7 +186,7 @@ const pitchMedia: MediaItem[] = [
     shares: 50,
     user: { name: "User1", isVerified: true },
   },
-   {
+  {
     id: 7,
     type: "image",
     src: "/reel2.png",
@@ -211,72 +221,72 @@ export default function MainContent({ onNavigate }: Props) {
   const [block, setBlock] = useState(false);
   const [moreDetails, setMoreDetails] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-   const [isShareOpen, setIsShareOpen] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredUsers, setFilteredUsers] = useState([]); 
-    const [selectedUsers, setSelectedUsers] = useState([]);
-const scrollRef = useRef(null);
-     const [isHovering, setIsHovering] = useState(false);
-     const [showLeftArrow, setShowLeftArrow] = useState(false);
-     const [showRightArrow, setShowRightArrow] = useState(true);
-   
-     // Update arrow visibility
-     const updateArrows = () => {
-       const el = scrollRef.current;
-       if (el) {
-         setShowLeftArrow(el.scrollLeft > 0);
-         setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
-       }
-     };
-   
-     useEffect(() => {
-       const el = scrollRef.current;
-       if (!el) return;
-       updateArrows();
-       el.addEventListener("scroll", updateArrows);
-       return () => el.removeEventListener("scroll", updateArrows);
-     }, []);
-   
-   
-  
-    const handleSearch = (e) => {
-      setSearchTerm(e.target.value);
-      setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(e.target.value.toLowerCase())));
-    };
-      const users = [
-      { id: 1, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
-      {
-        id: 2,
-        name: "organic__ai",
-        title: "Followed by xhingg_singh07",
-        img: "/Hide1.jpg",
-      },
-      {
-        id: 3,
-        name: "im_gr",
-        title: "Followed by xhingg_singh07",
-        img: "/Hide2.jpg",
-      },
-      { id: 4, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
-      { id: 5, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
-      { id: 6, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
-      {
-        id: 7,
-        name: "organic__ai",
-        title: "Followed by xhingg_singh07",
-        img: "/Hide1.jpg",
-      },
-      {
-        id: 8,
-        name: "im_gr",
-        title: "Followed by xhingg_singh07",
-        img: "/Hide2.jpg",
-      },
-      { id: 9, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
-      { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
-    ];
-  
-  
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const scrollRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  // Update arrow visibility
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (el) {
+      setShowLeftArrow(el.scrollLeft > 0);
+      setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows);
+    return () => el.removeEventListener("scroll", updateArrows);
+  }, []);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setFilteredUsers(
+      users.filter((user) =>
+        user.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+  const users = [
+    { id: 1, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
+    {
+      id: 2,
+      name: "organic__ai",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide1.jpg",
+    },
+    {
+      id: 3,
+      name: "im_gr",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide2.jpg",
+    },
+    { id: 4, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
+    { id: 5, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
+    { id: 6, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
+    {
+      id: 7,
+      name: "organic__ai",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide1.jpg",
+    },
+    {
+      id: 8,
+      name: "im_gr",
+      title: "Followed by xhingg_singh07",
+      img: "/Hide2.jpg",
+    },
+    { id: 9, name: "abhi52", title: "Follows you", img: "/Hide3.jpg" },
+    { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
+  ];
 
   const toggleLike = (id) => {
     setMediaList((prev) =>
@@ -439,7 +449,8 @@ const scrollRef = useRef(null);
   }
   return (
     <>
-      <div className="snap-y snap-mandatory max-md:w-screen max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-screen max-lg:w-[65vw] h-[95vh] max-h-[782px] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] overflow-y-scroll scrollbar-hide   ">
+      {/* <div className="snap-y snap-mandatory max-md:w-screen max-lg:w-[450px] max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide"> */}
         {mediaList.map((media, idx) => {
           const liked = likedIds.includes(media.id);
           const isAnimating = animatingLikeIdx === idx;
@@ -447,7 +458,8 @@ const scrollRef = useRef(null);
             <div
               key={media.id}
               onDoubleClick={() => handleDoubleClick(media.id, idx)}
-              className="snap-start mb-8 max-md:4 dark:bg-black h-full max-md:w-full max-md:h-full w-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+              className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[95vh] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none  "
+              // className="snap-start mb-8 max-md:4 dark:bg-black h-full max-md:w-full max-md:h-full w-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
             >
               {media.type === "image" ? (
                 <img
@@ -497,18 +509,16 @@ const scrollRef = useRef(null);
                   <h3 className="text-lg pl-3 font-bold text-white mb-1">
                     {media.title}
                   </h3>
-                  <p className="text-sm pl-3 w-[350px] text-gray-300 mb-4 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
+                  <p className="text-sm pl-3  max-md:text-xs w-[350px] text-gray-300 mb-4 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
                     {media.description}
                   </p>
-
-            
                 </div>
-                      <button
-                    onClick={() => onNavigate("details")}
-                    className="cursor-pointer h-8 w-full bg-black/40 max-md:w-full w-full rounded text-sm text-white text-center "
-                  >
-                    More Details
-                  </button>
+                <button
+                  onClick={() => onNavigate("details")}
+                  className="cursor-pointer h-8 w-full max-md:mb-4 bg-black/40 max-md:w-full w-full rounded text-sm text-white text-center "
+                >
+                  More Details
+                </button>
               </div>
               {/* CENTER ANIMATED THUMB */}
               {isAnimating && (
@@ -522,73 +532,69 @@ const scrollRef = useRef(null);
                   />
                 </div>
               )}
-         <div className="absolute flex flex-col right-4 top-3/4 mt-14 max-md:pb-20 -translate-y-3/4 space-y-2 z-10">
-  {/* LIKE BUTTON */}
-  <div
-    onClick={() => toggleLike(media.id)}
-    className="cursor-pointer flex flex-col items-center"
-  >
- <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
-  {liked ? (
-      <FaThumbsUp className="w-5 h-5 text-white" />
+              <div className="absolute flex flex-col right-4 max-md:mt-[100px] top-3/4 mt-14 max-md:pb-20 -translate-y-3/4 space-y-2 z-10">
+                {/* LIKE BUTTON */}
+                <div
+                  onClick={() => toggleLike(media.id)}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+                    {liked ? (
+                      <FaThumbsUp className="w-5 h-5 text-white" />
+                    ) : (
+                      <img
+                        src="/LikePitch.png"
+                        alt="Like"
+                        className="w-5 h-5"
+                      />
+                    )}
+                  </div>
 
-  ) : (
-      <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
-  )}
-</div>
+                  <p className="text-center text-sm text-white">
+                    {formatNumber(media.likes)}
+                  </p>
+                </div>
 
-    <p className="text-center text-sm text-white">
-      {formatNumber(media.likes)}
-    </p>
-  </div>
+                {/* COMMENT BUTTON */}
+                <div
+                  onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+                    <img
+                      src="/CommentsPitch.png"
+                      alt="Comment"
+                      className="w-5 h-5"
+                    />
+                  </div>
+                  <p className="text-center text-sm text-white">
+                    {formatNumber(media.comments.length)}
+                  </p>
+                </div>
 
-  {/* COMMENT BUTTON */}
-  <div
-    onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-    className="cursor-pointer flex flex-col items-center"
-  >
-    <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
-      <img
-        src="/CommentsPitch.png"
-        alt="Comment"
-        className="w-5 h-5"
-      />
-    </div>
-    <p className="text-center text-sm text-white">
-      {formatNumber(media.comments.length)}
-    </p>
-  </div>
+                {/* SHARE BUTTON */}
+                <div
+                  onClick={() => setIsShareOpen(true)}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+                    <img src="/SendPitch.png" alt="Share" className="w-5 h-5" />
+                  </div>
+                  <p className="text-center text-sm text-white">
+                    {formatNumber(media.shares)}
+                  </p>
+                </div>
 
-  {/* SHARE BUTTON */}
-   <div
-           onClick={() => setIsShareOpen(true)}
-          className="cursor-pointer flex flex-col items-center"
-        >
-            <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
-            <img
-              src="/SendPitch.png"
-              alt="Share"
-              className="w-5 h-5"
-            />
-
-        </div>
-          <p className="text-center text-sm text-white">
-      {formatNumber(media.shares)}
-    </p>
-       </div>
-
-  {/* MORE OPTIONS BUTTON */}
-  <div
-    onClick={() => setShowMoreOptions(idx)}
-    className="cursor-pointer flex flex-col items-center"
-  >
-    <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
-   <IoIosMore
-        className="text-xl"
-      />
-    </div>
-  </div>
-</div>
+                {/* MORE OPTIONS BUTTON */}
+                <div
+                  onClick={() => setShowMoreOptions(idx)}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+                    <IoIosMore className="text-xl" />
+                  </div>
+                </div>
+              </div>
 
               {/* Moving pitch card when tray opens */}
               {/* <div
@@ -805,171 +811,167 @@ const scrollRef = useRef(null);
                 </Dialog.Panel>
               </Dialog>
 
+              {isShareOpen && (
+                <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+                  <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
+                    {/* Close Button */}
+                    <button
+                      onClick={() => setIsShareOpen(false)}
+                      className="absolute top-4 right-4 text-2xl text-black dark:text-white"
+                    >
+                      ×
+                    </button>
 
+                    <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
+                      Share Pitch To
+                    </h2>
 
-
-{isShareOpen && (
-  <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-    <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
-      {/* Close Button */}
-      <button
-        onClick={() => setIsShareOpen(false)}
-        className="absolute top-4 right-4 text-2xl text-black dark:text-white"
-      >
-        ×
-      </button>
-
-      <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
-        Share Pitch To
-      </h2>
-
-      {/* Search Input */}
-      <input
-        type="text"
-        placeholder="Search Users"
-        value={searchTerm}
-        onChange={handleSearch}
-        className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
-      />
-
-      {/* Scrollable Horizontal Users */}
-      <div className="relative mb-4">
-   <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
-          {filteredUsers.map((user) => {
-            const isSelected = selectedUsers.includes(user.id);
-            return (
-              <div
-                key={user.id}
-                onClick={() =>
-                  setSelectedUsers((prev) =>
-                    prev.includes(user.id)
-                      ? prev.filter((id) => id !== user.id)
-                      : [...prev, user.id]
-                  )
-                }
-                className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                  isSelected ? "bg-gray-200" : ""
-                } cursor-pointer relative`}
-              >
-                <div className="relative w-16 h-16 mx-auto">
-                  <img
-                    src={user.img}
-                    alt={user.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
-                  />
-                  {isSelected && (
-                    <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
-                  )}
-                </div>
-                <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
-                  {user.name}
-                </p>
-                {user.verified && (
-                  <span className="text-blue-500 text-xs">✔</span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Conditional Message and Send OR Social Buttons */}
-      {selectedUsers.length > 0 ? (
-                <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none"
-                 >
-                  {/* Message Field */}
-                  <input
-                    type="text"
-                    placeholder="Write a message..." 
-                className="w-full h-full focus:outline-none text-black"
-        
+                    {/* Search Input */}
+                    <input
+                      type="text"
+                      placeholder="Search Users"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color focus:outline-none"
                     />
-        
-                  {/* Send Button */}
-                  <button
-                    onClick={() => {
-                      // your send logic here
-                      setIsShareOpen(false);
-                    }}
-                    className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
-                  >
-                    Send
-                  </button>
-                </div>
-              ) : (
-                // Social Share Buttons
-             <div
-                  className="relative mt-4"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                >
-                  {/* Scrollable Social Buttons */}
-                  <div
-                    ref={scrollRef}
-                    className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
-                  >
-                    {[
-                      { icon: <MdOutlineInsertLink />, label: "Copy Link" },
-                      { icon: <RiFacebookCircleLine />, label: "Facebook" },
-                      { icon: <BsChatDots />, label: "Messenger" },
-                      { icon: <FaWhatsapp />, label: "WhatsApp" },
-                      { icon: <FaThreads />, label: "Threads" },
-                      { icon: <FaXTwitter/>, label: "X" },
-                      { icon: <HiMiniArrowTurnUpRight/>, label: "More" },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex flex-col items-center text-center flex-shrink-0 w-16"
-                      >
-                        <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
-                          {item.icon}
-                        </button>
-                        <span className="pt-1 text-black text-xs">{item.label}</span>
+
+                    {/* Scrollable Horizontal Users */}
+                    <div className="relative mb-4">
+                      <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
+                        {filteredUsers.map((user) => {
+                          const isSelected = selectedUsers.includes(user.id);
+                          return (
+                            <div
+                              key={user.id}
+                              onClick={() =>
+                                setSelectedUsers((prev) =>
+                                  prev.includes(user.id)
+                                    ? prev.filter((id) => id !== user.id)
+                                    : [...prev, user.id]
+                                )
+                              }
+                              className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
+                                isSelected ? "bg-black" : ""
+                              } cursor-pointer relative`}
+                            >
+                              <div className="relative w-16 h-16 mx-auto">
+                                <img
+                                  src={user.img}
+                                  alt={user.name}
+                                  className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                                />
+                                {isSelected && (
+                                  <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+                                )}
+                              </div>
+                              <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
+                                {user.name}
+                              </p>
+                              {user.verified && (
+                                <span className="text-blue-500 text-xs">✔</span>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Conditional Message and Send OR Social Buttons */}
+                    {selectedUsers.length > 0 ? (
+                      <div className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none">
+                        {/* Message Field */}
+                        <input
+                          type="text"
+                          placeholder="Write a message..."
+                          className="w-full h-full focus:outline-none text-black dark:dark-color"
+                        />
+
+                        {/* Send Button */}
+                        <button
+                          onClick={() => {
+                            // your send logic here
+                            setIsShareOpen(false);
+                          }}
+                          className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
+                        >
+                          Send
+                        </button>
+                      </div>
+                    ) : (
+                      // Social Share Buttons
+                      <div
+                        className="relative mt-4"
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                      >
+                        {/* Scrollable Social Buttons */}
+                        <div
+                          ref={scrollRef}
+                          className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+                        >
+                          {[
+                            {
+                              icon: <MdOutlineInsertLink />,
+                              label: "Copy Link",
+                            },
+                            {
+                              icon: <RiFacebookCircleLine />,
+                              label: "Facebook",
+                            },
+                            { icon: <BsChatDots />, label: "Messenger" },
+                            { icon: <FaWhatsapp />, label: "WhatsApp" },
+                            { icon: <FaThreads />, label: "Threads" },
+                            { icon: <FaXTwitter />, label: "X" },
+                            { icon: <HiMiniArrowTurnUpRight />, label: "More" },
+                          ].map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                            >
+                              <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                                {item.icon}
+                              </button>
+                              <span className="pt-1 text-black dark:text-white text-xs">
+                                {item.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Left Arrow */}
+                        {isHovering && showLeftArrow && (
+                          <button
+                            onClick={() =>
+                              scrollRef.current.scrollBy({
+                                left: -200,
+                                behavior: "smooth",
+                              })
+                            }
+                            className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                          >
+                            <SlArrowLeft />
+                          </button>
+                        )}
+
+                        {/* Right Arrow */}
+                        {isHovering && showRightArrow && (
+                          <button
+                            onClick={() =>
+                              scrollRef.current.scrollBy({
+                                left: 200,
+                                behavior: "smooth",
+                              })
+                            }
+                            className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                          >
+                            <SlArrowRight />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
-            
-                  {/* Left Arrow */}
-                  {isHovering && showLeftArrow && (
-                    <button
-                      onClick={() =>
-                        scrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
-                      }
-                      className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                    >
-                      <SlArrowLeft/>
-                    </button>
-                  )}
-            
-                  {/* Right Arrow */}
-                  {isHovering && showRightArrow && (
-                    <button
-                      onClick={() =>
-                        scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
-                      }
-                      className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                    >
-                      <SlArrowRight />
-                    </button>
-                  )}
                 </div>
               )}
-    </div>
-  </div>
-)}
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
           );
         })}

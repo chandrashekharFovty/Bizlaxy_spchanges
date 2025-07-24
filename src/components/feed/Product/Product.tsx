@@ -162,7 +162,7 @@ const [data, setData] = useLocalStorageState('multiFormData', {
       <div className="flex flex-col w-3/6 max-md:w-screen">
         <div
           onClick={stopPropagation}
-          className="bg-white w-full mx-auto dark:dark-color p-6 rounded-lg shadow-md flex flex-col h-[100vh] overflow-hidden"
+          className="bg-white w-full mx-auto dark:dark-color p-6 rounded-lg flex flex-col h-[100vh] overflow-hidden"
         >
           {/* Back Button */}
           <Link

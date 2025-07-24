@@ -33,7 +33,7 @@ export default function ShopCarousel() {
 
   return (
     <div
-      className="relative w-full h-[320px] mx-auto overflow-hidden rounded-2xl"
+      className="relative w-full h-[320px] mx-auto overflow-hidden mr-10 rounded-2xl"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >

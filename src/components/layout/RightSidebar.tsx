@@ -274,10 +274,10 @@ useEffect(() => {
           <div className="flex items-stretch whitespace-nowrap w-[370px] h-[56px]  mt-3">
             <div className="w-full h-full flex items-center text-sm text-[rgba(5,5,5,1)] font-bold tracking-[-0.14px] grow shrink basis-auto">
               <Link to="/profile">
-                <div className="w-[56px] h-[56px] cursor-pointer border rounded-full">
+                <div className="w-[48px] h-[48px] cursor-pointer border rounded-full">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/8e190579b007ca56ec01ed9bd9da85e43500ed52?placeholderIfAbsent=true"
-                    className="object-cover w-[56px] h-[56px] rounded-full"
+                    className="object-cover w-[48px] h-[48px] rounded-full"
                   />
                 </div>
               </Link>
@@ -305,19 +305,21 @@ useEffect(() => {
        <div className="flex w-full overflow-hidden mt-[9px]">
   <div className="w-[320px] h-[250px] py-2 overflow-y-auto">
     {suggestions.map((suggestion, index) => (
-      <Link
+      <div
         key={index}
-        to={"/profile"}
+        // to={"/profile"}
 
         // to={`/profile/${suggestion.username}`}
         className={`flex w-[320px] h-[44px] items-stretch gap-[8px] 
-          ${index > 0 ? "mt-4" : ""} hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-md transition`}
+          ${index > 0 ? "mt-4" : ""}  dark:hover:bg-neutral-800 rounded-xl  transition`}
       >
+       <div> 
+        <Link to="/profile">
         <img
           src={suggestion.avatar}
           alt={suggestion.username}
           className="object-contain w-[37px] shrink-0 my-auto"
-        />
+        /></Link></div>
         <div className="flex justify-between w-full items-center">
           <div className="flex flex-col items-stretch">
             <div className="dark:dark-color text-neutral-800 dark:text-white text-sm font-semibold leading-none w-[110px]">
@@ -336,7 +338,7 @@ useEffect(() => {
             <FollowButton />
           </div>
         </div>
-      </Link>
+      </div>
     ))}
   </div>
 </div>
@@ -423,8 +425,8 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="cursor-pointer btn-gradient text-white self-stretch min-h-7 w-[114px] h-[27px] pt-1 mt-[4px] text-center rounded-[5px] ">
-            Follow
+          <div className="cursor-pointer btn-gradient text-white self-stretch min-h-7 w-[114px] h-[27px] mt-[4px] text-center rounded-[5px] ">
+          <FollowButtonCard/>
           </div>
         </div>
       ))}

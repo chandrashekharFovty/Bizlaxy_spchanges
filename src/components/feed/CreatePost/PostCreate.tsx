@@ -244,7 +244,7 @@ const onBack = () => {
     <>
     {step === "upload" && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div ref={modalRef} className="bg-white rounded-xl shadow-lg p-6 w-96 text-center">
+    <div ref={modalRef} className="bg-white rounded-xl shadow-lg p-6 w-96 h-[300px] text-center">
       <h2 className="text-lg font-semibold mb-4">Create new post</h2>
       <div className="flex flex-col items-center justify-center gap-4 py-6 border-dashed border-2 border-gray-300 rounded-xl">
         <img src="/postcreation.png" alt="Upload" className="w-16 h-16 opacity-60" />
@@ -326,7 +326,7 @@ const onBack = () => {
                     <div className="w-8 h-8 rounded-full bg-gray-300"></div>
                     <p className="font-semibold text-sm">_back2154</p>
                   </div>
-                  <div className="flex text-black gap-4 items-center text-gray-700 border border-gray-200 rounded px-3 mt-4 py-1">
+                  <div className="flex text-black gap-4 items-center text-gray-700 border border-gray-200 rounded-t-xl px-3 mt-4 py-1">
                     <button onClick={toggleBold} className={isBold ? "text-blue-500" : ""}><FaBold /></button>
                     <button onClick={toggleItalic} className={isItalic ? "text-blue-500" : ""}><FaItalic /></button>
                     <button onClick={toggleList} className={isList ? "text-blue-500" : ""}><FaListUl /></button>
@@ -337,7 +337,7 @@ const onBack = () => {
                     maxLength={2200}
                     value={inputValue}
                     onChange={handleChange}
-                    className={`border border-gray-300 rounded p-4 min-h-[100px] mt-4 focus:outline-none ${isBold ? "font-bold" : ""} ${isItalic ? "italic" : ""} ${isUppercase ? "uppercase" : ""}`}
+                    className={`border border-gray-300 rounded-b-xl p-4 min-h-[100px]  focus:outline-none ${isBold ? "font-bold" : ""} ${isItalic ? "italic" : ""} ${isUppercase ? "uppercase" : ""}`}
                   />
                   {filtered.length > 0 && (
                     <div className="absolute bg-white border border-gray-200 rounded shadow-md w-full mt-1 z-10">

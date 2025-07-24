@@ -21,10 +21,10 @@ const highlightsData = [
   { id: 2, title: "Travel", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
   { id: 3, title: "Events", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
   { id: 4, title: "Public", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
-   { id: 1, title: "Business", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
-  { id: 2, title: "Travel", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
-  { id: 3, title: "Events", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
-  { id: 4, title: "Public", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
+   { id: 5, title: "Business", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
+  { id: 6, title: "Travel", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
+  { id: 7, title: "Events", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
+  { id: 8, title: "Public", HighlightImg: "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/0637cafebd8ce154f8a9a144664dc6f06d3ca299?placeholderIfAbsent=true" },
   
 ];
 
@@ -48,6 +48,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
    const [isImageOpen, setIsImageOpen] = useState(false);
+   const [selectedHighlight, setSelectedHighlight] = useState<null | typeof highlightsData[0]>(null);
+
 
  
 
@@ -148,27 +150,27 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
        <div className="hidden lg:flex gap-4 mt-20">
   {/* Edit Profile with gradient border */}
-  <div className="dark:dark-color p-[2px] rounded-xl hover:bg-gradient-to-r from-blue-600 to-purple-600">
+  <div className="dark:dark-color p-[2px] rounded-xl ">
     <Link
       to="/editprofile"
-      className=" px-4 py-2  block hover:bg-purple-200 text-black bg-gray-200 border border-gray-400 rounded-xl"
+      className=" px-4 py-2  block  text-black bg-gray-200 border border-gray-400 rounded-xl"
     >
       Edit Profile
     </Link>
   </div>
 
   {/* Share Profile with gradient border */}
-  <div className="dark:dark-color p-[2px] rounded-xl hover:bg-gradient-to-r from-blue-600 to-purple-600">
-    <button className=" px-4 py-2  hover:bg-purple-200 text-black bg-gray-200 rounded-xl">
+  <div className="dark:dark-color p-[2px] rounded-xl ">
+    <button className=" px-4 py-2   text-black bg-gray-200 rounded-xl">
       Share Profile
     </button>
   </div>
 
   {/* Info with gradient border */}
-  <div className="dark:dark-color p-[2px] rounded-xl hover:bg-gradient-to-r from-blue-600 to-purple-600">
+  <div className="dark:dark-color p-[2px] rounded-xl bg-gradient-to-r from-blue-600 to-purple-600">
     <Link
       to="/infoprofile"
-      className=" px-4 py-2  hover:bg-purple-200 text-black bg-gray-200 block  text-black  border border-gray-400 rounded-xl"
+      className=" px-4 py-2  bg-purple-200 text-black bg-gray-200 block  text-black  border border-gray-400 rounded-xl"
     >
       Info
     </Link>
@@ -194,20 +196,56 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </div>
 
     {/* Highlights */}
-      <div className="flex overflow-x-auto gap-4 px-6 mt-6 pb-4 max-md:px-4">
-        {highlightsData.map(item => (
-          <div key={item.id} className="flex flex-col items-center min-w-[82px]">
-            <img src={item.HighlightImg} alt={item.title} className="w-[82px] h-[82px] rounded-full object-cover" />
-            <span className="mt-1 text-sm">{item.title}</span>
-          </div>
-        ))}
-          <div className="flex flex-col items-center min-w-[82px] cursor-pointer">
-            <div className="w-[82px] h-[82px] text-4xl border-2 border-gray-300 text-gray-500 rounded-full flex justify-center items-center object-cover">+</div>
-            <span className="mt-1 text-sm">Add</span>
-          </div>
-        
-      </div>
+  <div className="flex overflow-x-auto gap-4 px-6 mt-6 pb-4 max-md:px-4">
+  {/* Add first */}
+  <div
+    className="flex flex-col items-center min-w-[82px] cursor-pointer"
+    onClick={() => {
+      // TODO: handle open add highlight modal here
+      console.log("Add highlight clicked");
+    }}
+  >
+    <div className="w-[82px] h-[82px] text-4xl border-2 border-gray-300 text-gray-500 rounded-full flex justify-center items-center object-cover">
+      +
+    </div>
+    <span className="mt-1 text-sm">Add</span>
+  </div>
 
+  {/* Then render existing highlights */}
+  {highlightsData.map((item) => (
+    <div key={item.id} className="flex flex-col items-center min-w-[82px]"
+    onClick={() => setSelectedHighlight(item)}
+    >
+      <img
+        src={item.HighlightImg}
+        alt={item.title}
+        className="w-[82px] h-[82px] rounded-full object-cover"
+      />
+      <span className="mt-1 text-sm">{item.title}</span>
+    </div>
+  ))}
+</div>
+
+{selectedHighlight && (
+  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-30">
+    <div className="relative bg-white rounded-xl p-4 max-w-sm w-full shadow-lg">
+      <button
+        onClick={() => setSelectedHighlight(null)}
+        className="absolute top-2 right-2 text-black bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"
+      >
+        ✕
+      </button>
+      <img
+        src={selectedHighlight.HighlightImg}
+        alt={selectedHighlight.title}
+        className="w-full h-[300px] object-cover rounded-md"
+      />
+      <h2 className="text-center font-semibold text-lg mt-2">
+        {selectedHighlight.title}
+      </h2>
+    </div>
+  </div>
+)}
 
       
     </div>

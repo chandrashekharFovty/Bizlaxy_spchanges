@@ -349,7 +349,7 @@ export function Post({
 
   return (
     <>
-      <div className="shadow-lg shadow-gray-200 dark:shadow  dark:border dark:border-gray-300 dark:bg-black/30  max-md:w-screen max-md:mr-4 bg-white p-5 rounded-xl w-full relative z-10">
+      <div className="shadow-[0_0_2px_1px_rgba(0,0,0,0.1)] dark:shadow  dark:border dark:border-gray-300 dark:bg-black/30  max-md:w-screen max-md:mr-4 bg-white p-5 rounded-xl w-full relative z-10">
         <div className=" flex justify-between py-[7px]">
           <div className="max-md:w-11/12 flex gap-2">
             <UserAvatar src={user.avatar} />
@@ -486,11 +486,11 @@ export function Post({
             {content.documentUrl && (
               <CgFileDocument
                 onClick={handleDownload}
-                className="text-2xl mt-[0.7px] cursor-pointer hover:text-blue-600 transition"
+                className="text-xl mt-[0.7px] cursor-pointer hover:text-blue-600 transition"
                 title={`Download ${content.documentName || "attachment"}`}
               />
             )}
-            <SavePostBadge />
+            <img src="/savePost.svg" alt="savepost" className="h-5 w-5 text-black dark:invert"/>
           </div>
         </div>
       </div>
@@ -712,7 +712,7 @@ export function Post({
 
         {isShareOpen && (
             <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-              <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
+              <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
                 {/* Close Button */}
                 <button
                   onClick={() => setIsShareOpen(false)}
@@ -731,7 +731,7 @@ export function Post({
                   placeholder="Search Users"
                   // value={searchTerm}
                   onChange={handleSearch}
-                  className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
+                  className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
                 />
           
                 {/* Scrollable Horizontal Users */}
@@ -750,7 +750,7 @@ export function Post({
                             )
                           }
                           className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                            isSelected ? "bg-gray-200" : ""
+                            isSelected ? "dark:bg-black bg-gray-300" : ""
                           } cursor-pointer relative`}
                         >
                           <div className="relative w-16 h-16 mx-auto">
@@ -777,13 +777,13 @@ export function Post({
           
                 {/* Conditional Message and Send OR Social Buttons */}
                 {selectedUsers.length > 0 ? (
-                  <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none"
+                  <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none"
                    >
                     {/* Message Field */}
                     <input
                       type="text"
                       placeholder="Write a message..." 
-                  className="w-full h-full focus:outline-none text-black"
+                  className="w-full h-full focus:outline-none dark:dark-color text-black"
           
                       />
           
@@ -826,7 +826,7 @@ export function Post({
                                     <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
                                       {item.icon}
                                     </button>
-                                    <span className="pt-1 text-black text-xs">{item.label}</span>
+                                    <span className="pt-1 text-black text-xs dark:text-white">{item.label}</span>
                                   </div>
                                 ))}
                               </div>

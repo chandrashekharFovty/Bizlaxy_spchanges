@@ -14,7 +14,7 @@ const ProfilePager: React.FC = () => {
       <div className="dark:dark-color bg-white w-full h-full text-black pb-[58px]">
         <div className="dark:dark-color flex max-md:flex-col  max-md:items-stretch">
           <Sidebar />
-          <main className="max-md:w-full md:ml-16 lg:ml-[244px] w-full z-10">
+          <main className="max-md:w-full md:ml-16 lg:ml-[244px] w-full z-40">
             <div className="flex flex-col items-stretch mt-2 max-md:max-w-full  z-10">
               <ProfileHeader
                 username="aarav.invests"

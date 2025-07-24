@@ -224,7 +224,7 @@ const Dashboard = () => {
   const togglePopup = () => setShowPopup(!showPopup);
 
   return (
-    <div className="dark:dark-color p-6 bg-gray-50 min-h-screen  w-full  relative">
+    <div className="dark:dark-color p-6 bg-gray-50 min-h-screen  lg:w-[91%] 2xl:w-[100%]  relative">
       {/* Header */}
     <div
   className="w-[220px] h-[48px] relative"

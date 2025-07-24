@@ -287,7 +287,7 @@ const CompanyForm: React.FC = () => {
         <div className="fixed w-full flex gap-1">
           {progressbarArray.map((_, index) => (
             <div
-              className="w-[5.8%] bg-gray-200 rounded-full h-2.5 mb-4 "
+              className="w-[5.8%] bg-gray-200 max-md:w-full  rounded-full h-2.5 mb-4 "
               key={index}
             >
               <div
@@ -303,7 +303,7 @@ const CompanyForm: React.FC = () => {
           encType="multipart/form-data"
           className="w-full overflow-scroll scrollbar-hide mt-[4%] h-[600px] flex flex-col gap-5 z-10"
         >
-          <div className="w-[97%] overflow-scroll scrollbar-hide mt-[3%] h-[600px] flex flex-col gap-5 z-10">
+          <div className="w-[97%] overflow-scroll scrollbar-hide mt-[3%] h-[650px] flex flex-col gap-5 z-10">
             {/* Company Name */}
             <div className="w-full  flex flex-col mx-auto">
               <label className="text-sm font-medium">Investor Name</label>
@@ -463,7 +463,7 @@ const CompanyForm: React.FC = () => {
                       setSelectedcurrency(e.target.value);
                       setForm((prev) => ({
                         ...prev,
-                        country: e.target.value,
+                        fundingCurrency: e.target.value,
                       }));
                       setTouched((prev) => ({ ...prev, fundingCurrency: true }));
                       validateField("fundingCurrency", e.target.value);

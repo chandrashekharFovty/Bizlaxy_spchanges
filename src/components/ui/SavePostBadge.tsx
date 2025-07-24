@@ -13,7 +13,7 @@ export default function SavePostBadge({
   const [isFilled, setIsFilled] = useState(filled);
 
   return isFilled ? (
-    <svg
+    <svg 
       onClick={() => setIsFilled(false)}
       width={size}
       height={size}
