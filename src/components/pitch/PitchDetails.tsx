@@ -33,38 +33,45 @@ type Props = {
 
 export default function PitchDetailsPage({ onNavigate }: Props) {
   return (
-    <div className="min-h-screen bg-white px-4 py-6 md:px-12 lg:px-20">
-      <div className="flex flex-col lg:flex-row justify-between gap-8">
+    <div className="h-screen bg-white px-4 py-6 md:px-12 lg:px-20 dark:bg-black
+    dark:text-white">
+      <div className="flex flex-col lg:flex-row justify-between gap-8 dark:bg-black
+    dark:text-white">
         {/* Left Content */}
         <div className="lg:w-2/3 space-y-6">
-          <button onClick={() => onNavigate('main')} className="cursor-pointer text-sm text-blue-600 mb-2">&lt; Back to Pitch</button>
+          <button onClick={() => onNavigate('main')} className="cursor-pointer text-sm text-gray-600 dark:text-white mb-2">&lt; Back to Pitch</button>
 
           <h1 className="text-2xl font-bold">Pitch Details & Investment Opportunity</h1>
 
           <div>
             <h2 className="text-lg font-semibold">Pitch Overview</h2>
             <p className="mt-1 font-medium text-indigo-700">NeoBlend Pro – Smart Kitchen Blending Revolution</p>
-            <p className="text-sm text-gray-600 mb-2">Michael Carter</p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-600 mb-2 dark:bg-black
+    dark:text-white">Michael Carter</p>
+            <p className="text-sm text-gray-700 dark:bg-black
+    dark:text-white">
               🔴 NeoBlend Pro is an innovative smart kitchen appliance designed to bring intelligence and convenience to everyday cooking. With AI-powered blending, app integration, and precise recipe automation, it’s built to disrupt traditional kitchen routines.
             </p>
-            <p className="mt-2 text-sm font-medium text-black">
+            <p className="mt-2 text-sm font-medium text-black dark:bg-black
+    dark:text-white">
               💸 Funding Ask: ₹60 lakh for 1% equity (Valuation: ₹30 crore)
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 dark:bg-black
+    dark:text-white">
             <div className="flex items-center gap-2 text-sm">
               📁 <span className="font-medium">Business Plan:</span>
               <a href="#" className="text-blue-600 underline">View Model PDF</a>
             </div>
             <div className="flex items-center gap-2 text-sm">
               📈 <span className="font-medium">Sales & Growth Data:</span>
-              <p onClick={() => onNavigate('analysis')} className="text-blue-600 underline">See Market Analysis & Sales Projection</p>
+              <p onClick={() => onNavigate('analysis')} className="cursor-pointer text-blue-600 underline">See Market Analysis & Sales Projection</p>
             </div>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 dark:bg-black
+    dark:text-white">
             <h2 className="text-lg font-semibold mb-2">Funding History</h2>
             <ul className="space-y-2">
               {fundingDetails.map((item, index) => (
@@ -78,11 +85,14 @@ export default function PitchDetailsPage({ onNavigate }: Props) {
             </ul>
           </div>
 
-          <div className="flex gap-4 mt-6">
-            <button onClick={() => onNavigate('faq')} className="bg-white border border-black text-black px-4 py-2 rounded shadow-sm">
+          <div className="flex gap-4 mt-6 dark:bg-black
+    dark:text-white">
+            <button onClick={() => onNavigate('faq')} className="dark:bg-black
+    dark:text-white bg-white border border-black text-black px-4 py-2 rounded shadow-sm">
               Ask a Question
             </button>
-            <button className="bg-black text-white px-4 py-2 rounded shadow-sm">
+            <button className="bg-black text-white dark:bg-white
+    dark:text-black px-4 py-2 rounded shadow-sm">
               Make an Offer
             </button>
           </div>
@@ -94,13 +104,17 @@ export default function PitchDetailsPage({ onNavigate }: Props) {
             Make an offer today! 🚀
           </button>
 
-          <div className="border rounded-lg p-5 w-full bg-white shadow-sm">
+          <div className="border rounded-lg p-5 w-full bg-white shadow-sm dark:bg-black
+    dark:text-white">
             <h3 className="font-semibold text-lg mb-4 border-b pb-2">Company Info</h3>
-            <div className="space-y-2 text-sm text-gray-700">
+            <div className="space-y-2 text-sm text-gray-700 dark:bg-black
+    dark:text-white">
               {companyInfo.map((item, index) => (
                 <div key={index} className="flex justify-between">
-                  <span className="font-medium text-gray-600">{item.label}</span>
-                  <span className="text-black text-right max-w-[60%]">{item.value}</span>
+                  <span className="font-medium text-gray-600 dark:bg-black
+    dark:text-white">{item.label}</span>
+                  <span className="text-black text-right max-w-[60%] dark:bg-black
+    dark:text-white">{item.value}</span>
                 </div>
               ))}
             </div>

@@ -136,9 +136,9 @@ export function PostList() {
         documentName: "Ramayana.pdf",
       },
       engagement: {
-        likes: formatNumber("1100"),
+        likes: "11054",
         // comments: formatNumber("0"),
-        shares: formatNumber("6"),
+        shares: "648",
       },
       showFollowButton: true,
       showMoreOptions: true,
@@ -152,14 +152,14 @@ export function PostList() {
               id: 1,
               name:"im_gr",
               text: "Nice post!",
-              likes: 10,
-              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", likes: 2 }],
+              commentlikes: 11054,
+              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", replylikes: 11054 }],
             },
             {
               id: 2,
               name:"organic__ai",
               text: "Great insights!",
-              likes: 3,
+              commentlikes: 110,
               replies: [],
             },
           ],
@@ -182,9 +182,9 @@ export function PostList() {
         descpLimit: 50, // 🔹 Set description character limit here
       },
       engagement: {
-        likes: formatNumber("10050"),
-        // comments: formatNumber("226"),
-        shares: formatNumber("150"),
+        likes: "1105",
+        // comments: formatNumber("0"),
+        shares: "64414",
       },
       showOfficialIcon: true,
       showFollowButton: true,
@@ -196,16 +196,16 @@ export function PostList() {
             id: 1,
              name:"im_gr",
             text: "Nice post!",
-            likes: 10,
+            commentlikes: 110,
             replies: [
-              { replyId: 1,replyname:"Aakash Mehra", replyText: "Thanks 😊", likes: 2 },
+              { replyId: 1,replyname:"Aakash Mehra", replyText: "Thanks 😊", replylikes:110 },
             ],
           },
           {
             id: 2,
             name:"organic__ai",
             text: "Great insights!",
-            likes: 3,
+            commentlikes: 54,
             replies: [],
           },
         ],
@@ -231,9 +231,9 @@ export function PostList() {
         documentName: "Ramayana.pdf",
       },
       engagement: {
-        likes: formatNumber("40686"),
-        // comments: formatNumber("2133"),
-        shares: formatNumber("65"),
+        likes: "1109",
+        // comments: formatNumber("0"),
+        shares: "6441",
       },
       showOfficialIcon: true,
       showFollowButton: true,
@@ -245,16 +245,16 @@ export function PostList() {
             id: 1,
              name:"im_gr",
             text: "Nice post!",
-            likes: 10,
+            commentlikes: 757,
             replies: [
-              { replyId: 1,replyname:"Michael Roberts", replyText: "Thanks 😊", likes: 2 },
+              { replyId: 1,replyname:"Michael Roberts", replyText: "Thanks 😊", replylikes: 546585 },
             ],
           },
           {
-            id: 2,
+            id: "758878",
             name:"organic__ai",
             text: "Great insights!",
-            likes: 3,
+            commentlikes: 87,
             replies: [],
           },
         ],
@@ -277,9 +277,9 @@ export function PostList() {
         descpLimit: 50, // 🔹 Set description character limit here
       },
       engagement: {
-        likes: formatNumber("1100"),
-        // comments: formatNumber("20"),
-        shares: formatNumber("6"),
+        likes: "119",
+        // comments: formatNumber("0"),
+        shares: "64414",
       },
       showFollowButton: true,
       showMoreOptions: true,
@@ -293,16 +293,16 @@ export function PostList() {
             id: 1,
               name:"im_gr",
             text: "Nice post!",
-            likes: 10,
+            commentlikes: 11,
             replies: [
-              { replyId: 1, replyname:"James Walker", replyText: "Thanks 😊", likes: 2 },
+              { replyId: 1, replyname:"James Walker", replyText: "Thanks 😊", replylikes: 8657 },
             ],
           },
           {
             id: 2,
             name:"organic__ai",
             text: "Great insights!",
-            likes: 3,
+            commentlikes: 658,
             replies: [],
           },
         ],
@@ -325,9 +325,9 @@ export function PostList() {
         descpLimit: 50, // 🔹 Set description character limit here
       },
       engagement: {
-        likes: formatNumber("44686"),
-        // comments: formatNumber("2333"),
-        shares: formatNumber("665"),
+       likes: '110541',
+        // comments: formatNumber("0"),
+        shares: "64414",
       },
       showFollowButton: true,
       showOfficialIcon: true,
@@ -341,18 +341,18 @@ export function PostList() {
             id: 1,
              name:"im_gr",
             text: "Nice post!",
-            likes: 10,
+            commentlikes: 10,
             replies: [
-              { replyId: 1,replyname:"David Mitchell", replyText: "Thanks 😊", likes: 2 },
+              { replyId: 1,replyname:"David Mitchell", replyText: "Thanks 😊", replylikes: 2 },
             ],
           },
-          {
-            id: 2,
-            name:"organic__ai",
-            text: "Great insights!",
-            likes: 3,
-            replies: [],
-          },
+          // {
+          //   id: 2,
+          //   name:"organic__ai",
+          //   text: "Great insights!",
+          //   replylikes: 5,
+          //   replies: [],
+          // },
         ],
       },
     ],
@@ -373,9 +373,9 @@ export function PostList() {
         descpLimit: 50, // 🔹 Set description character limit here
       },
       engagement: {
-        likes: formatNumber("44686"),
-        // comments: formatNumber("2333"),
-        shares: formatNumber("665"),
+        likes: "1105415459",
+        // comments: formatNumber("0"),
+        shares: "64414498",
       },
       showFollowButton: true,
       showOfficialIcon: true,
@@ -389,106 +389,8 @@ export function PostList() {
               id: 1,
               name:"im_gr",
               text: "Nice post",
-              likes: 10,
-              replies: [{ replyId: 1, replyname:"C S Ghosh", replyText: "Thank you", likes: 5 }],
-            },
-          ],
-        },
-      ],
-    },
-      {
-      user: {
-        name: "Brian Turner",
-        avatar:
-          "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/207cecdea9d621d7e8dae4481e717853eedb0dda?placeholderIfAbsent=true",
-        timeAgo: "1 hour ago",
-      },
-      content: {
-        title:
-          "Turn your idea into a thriving business—start your journey with us today! 💡🚀",
-        titleLimit: 30, // 🔹 Set title character limit here
-        description:
-          "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
-        descpLimit: 50, // 🔹 Set description character limit here
-        documentUrl:
-          "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
-        documentName: "Ramayana.pdf",
-      },
-      engagement: {
-        likes: formatNumber("1100"),
-        // comments: formatNumber("0"),
-        shares: formatNumber("6"),
-      },
-      showFollowButton: true,
-      showMoreOptions: true,
-      //isFileImage: true,
-      //isMediaContent: true,
-      commentsList: [
-        {
-          id: 1,
-          comments: [
-            {
-              id: 1,
-              name:"im_gr",
-              text: "Nice post!",
-              likes: 10,
-              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", likes: 2 }],
-            },
-            {
-              id: 2,
-              name:"organic__ai",
-              text: "Great insights!",
-              likes: 3,
-              replies: [],
-            },
-          ],
-        },
-      ],
-    },
-      {
-      user: {
-        name: "Brian Turner",
-        avatar:
-          "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/207cecdea9d621d7e8dae4481e717853eedb0dda?placeholderIfAbsent=true",
-        timeAgo: "1 hour ago",
-      },
-      content: {
-        title:
-          "Turn your idea into a thriving business—start your journey with us today! 💡🚀",
-        titleLimit: 30, // 🔹 Set title character limit here
-        description:
-          "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
-        descpLimit: 50, // 🔹 Set description character limit here
-        documentUrl:
-          "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
-        documentName: "Ramayana.pdf",
-      },
-      engagement: {
-        likes: formatNumber("1100"),
-        // comments: formatNumber("0"),
-        shares: formatNumber("6"),
-      },
-      showFollowButton: true,
-      showMoreOptions: true,
-      //isFileImage: true,
-      //isMediaContent: true,
-      commentsList: [
-        {
-          id: 1,
-          comments: [
-            {
-              id: 1,
-              name:"im_gr",
-              text: "Nice post!",
-              likes: 10,
-              replies: [{ replyId: 1,replyname:"Brian Turner", replyText: "Thanks 😊", likes: 2 }],
-            },
-            {
-              id: 2,
-              name:"organic__ai",
-              text: "Great insights!",
-              likes: 3,
-              replies: [],
+              commentlikes: 110,
+              replies: [{ replyId: 1, replyname:"C S Ghosh", replyText: "Thank you", replylikes: 466 }],
             },
           ],
         },

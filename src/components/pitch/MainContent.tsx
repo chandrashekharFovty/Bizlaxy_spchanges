@@ -44,17 +44,16 @@ type Props = {
 type Reply = {
   replyId: number;
   replyText: string;
-  likes: number;
+  replylikes: number;
   replies: Reply[];
 };
 
 type Comment = {
   id: number;
   text: string;
-  likes: number;
+  commentlikes: number;
   replies: Reply[];
 };
-
 type MediaItem = {
   id: number;
   type: "video" | "image" | "youtube";
@@ -80,12 +79,14 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-    comments: [
+   comments: [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 50,
@@ -99,12 +100,14 @@ const pitchMedia: MediaItem[] = [
     description:
       "🚀 Complex problems demand simple solutions. Our AI-driven framework abstracts away the noise, letting you focus on innovation—not integration.",
     likes: 2100,
-    comments: [
+   comments: [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 20,
@@ -122,8 +125,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 60,
@@ -141,8 +146,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 25,
@@ -156,12 +163,14 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-    comments: [
+   comments: [
       {
-        id: 5,
+        id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 50,
@@ -177,10 +186,12 @@ const pitchMedia: MediaItem[] = [
     likes: 3000,
     comments: [
       {
-        id: 6,
+        id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 50,
@@ -194,12 +205,14 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-    comments: [
+   comments: [
       {
-        id: 7,
+        id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 50,
@@ -212,6 +225,8 @@ export default function MainContent({ onNavigate }: Props) {
   const [openIndex, setOpenIndex] = useState(null);
   const [openReplyIndex, setOpenReplyIndex] = useState(null);
   const [likedIds, setLikedIds] = useState<number[]>([]);
+   const [commentlikedIds, setCoemmentLikedIds] = useState<number[]>([]);
+    const [replylikedIds, setReplyLikedIds] = useState<number[]>([]);
   const [animatingLikeIdx, setAnimatingLikeIdx] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [commentReplyInput, setCommentReplyInput] = useState("");
@@ -288,7 +303,7 @@ export default function MainContent({ onNavigate }: Props) {
     { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
   ];
 
-  const toggleLike = (id) => {
+   const toggleLike = (id) => {
     setMediaList((prev) =>
       prev.map((item) =>
         item.id === id
@@ -303,61 +318,19 @@ export default function MainContent({ onNavigate }: Props) {
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
-  const handleDoubleClick = (id: number, idx: number) => {
-    if (!likedIds.includes(id)) toggleLike(id);
-    setAnimatingLikeIdx(idx);
-    setTimeout(() => setAnimatingLikeIdx(null), 800);
-  };
-  const addComment = (id) => {
-    if (!commentInput.trim()) return;
+  const commenttoggleLike = (mediaId: number, commentId: number) => {
     setMediaList((prev) =>
       prev.map((item) =>
-        item.id === id
+        item.id === mediaId
           ? {
               ...item,
-              comments: [
-                ...item.comments,
-                { id: 1, text: commentInput, likes: 0, replies: [] },
-              ],
-            }
-          : item
-      )
-    );
-    setCommentInput("");
-  };
-  const addCommentReply = (id) => {
-    if (!commentInput.trim()) return;
-    if (!commentReplyInput.trim()) return;
-    // setMediaList((prev) =>
-    //   prev.map((item) =>
-    //     item.id === id
-    //       ? {
-    //           ...item,
-
-    //           replies: [...item.comments, { likes: 0, commentsReply: "" }],
-    //         }
-    //       : item
-    //   )
-    // );
-    // setCommentReplyInput("");
-    setMediaList((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              comments: item.comments.map((c, i) =>
-                i === i
+              comments: item.comments.map((c) =>
+                c.id === commentId
                   ? {
                       ...c,
-                      replies: [
-                        ...(c.replies || []),
-                        {
-                          replyId: 1,
-                          replyText: commentReplyInput,
-                          likes: 0,
-                          replies: [],
-                        },
-                      ],
+                      commentlikes:
+                        c.commentlikes +
+                        (commentlikedIds.includes(commentId) ? -1 : +1),
                     }
                   : c
               ),
@@ -365,14 +338,78 @@ export default function MainContent({ onNavigate }: Props) {
           : item
       )
     );
-
-    setCommentReplyInput("");
-    setOpenReplyIndex(null); // hide input
+    setCoemmentLikedIds((prev) =>
+      prev.includes(commentId)
+        ? prev.filter((x) => x !== commentId)
+        : [...prev, commentId]
+    );
   };
-  const addReply = (mediaId: number, commentIdx: number) => {
+  const replytoggleLike = (
+    mediaId: number,
+    commentId: number,
+    replyId: number
+  ) => {
+    setMediaList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: item.comments.map((c) =>
+                c.id === commentId
+                  ? {
+                      ...c,
+                      replies: c.replies.map((r) =>
+                        r.replyId === replyId
+                          ? {
+                              ...r,
+                              replylikes:
+                                r.replylikes +
+                                (replylikedIds.includes(replyId) ? -1 : +1),
+                            }
+                          : r
+                      ),
+                    }
+                  : c
+              ),
+            }
+          : item
+      )
+    );
+    setReplyLikedIds((prev) =>
+      prev.includes(replyId)
+        ? prev.filter((x) => x !== replyId)
+        : [...prev, replyId]
+    );
+  };
+  const handleDoubleClick = (id: number, idx: number) => {
+    if (!likedIds.includes(id)) toggleLike(id);
+    setAnimatingLikeIdx(idx);
+    setTimeout(() => setAnimatingLikeIdx(null), 800);
+  };
+  const addComment = (mediaId) => {
     if (!commentInput.trim()) return;
+    setMediaList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: [
+                ...item.comments,
+                {
+                  id: Date.now(),
+                  text: commentInput,
+                  commentlikes: 5,
+                  replies: [],
+                },
+              ],
+            }
+          : item
+      )
+    );
+    setCommentInput("");
+  };
+  const addCommentReply = (mediaId: number, commentIdx: number) => {
     if (!commentReplyInput.trim()) return;
-
     setMediaList((prev) =>
       prev.map((item) =>
         item.id === mediaId
@@ -383,11 +420,11 @@ export default function MainContent({ onNavigate }: Props) {
                   ? {
                       ...c,
                       replies: [
-                        ...(c.replies || []),
+                        ...c.replies,
                         {
-                          replyId: 1,
+                          replyId: Date.now(),
                           replyText: commentReplyInput,
-                          likes: 0,
+                          replylikes: 5,
                           replies: [],
                         },
                       ],
@@ -398,10 +435,10 @@ export default function MainContent({ onNavigate }: Props) {
           : item
       )
     );
-
     setCommentReplyInput("");
-    setOpenReplyIndex(null); // hide input
+    setOpenReplyIndex(null);
   };
+  
   const handleVideoToggle = (idx) => {
     const video = document.getElementById(
       `video-${idx}`
@@ -449,7 +486,7 @@ export default function MainContent({ onNavigate }: Props) {
   }
   return (
     <>
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-screen max-lg:w-[65vw] h-[95vh] max-h-[782px] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] overflow-y-scroll scrollbar-hide   ">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[96%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
       {/* <div className="snap-y snap-mandatory max-md:w-screen max-lg:w-[450px] max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide"> */}
         {mediaList.map((media, idx) => {
           const liked = likedIds.includes(media.id);
@@ -458,7 +495,7 @@ export default function MainContent({ onNavigate }: Props) {
             <div
               key={media.id}
               onDoubleClick={() => handleDoubleClick(media.id, idx)}
-              className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[95vh] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none  "
+              className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[98%] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none  "
               // className="snap-start mb-8 max-md:4 dark:bg-black h-full max-md:w-full max-md:h-full w-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
             >
               {media.type === "image" ? (
@@ -473,9 +510,9 @@ export default function MainContent({ onNavigate }: Props) {
                   src={media.src}
                   // controlsList="nodownload "
                   // controls
-                  // autoPlay
+                  autoPlay
                   // muted
-                  // loop
+                   loop
                   onClick={() => handleVideoToggle(idx)}
                   className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl max-md:rounded-none"
                 />
@@ -509,16 +546,16 @@ export default function MainContent({ onNavigate }: Props) {
                   <h3 className="text-lg pl-3 font-bold text-white mb-1">
                     {media.title}
                   </h3>
-                  <p className="text-sm pl-3  max-md:text-xs w-[350px] text-gray-300 mb-4 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
+                  <p className="text-sm pl-3  max-md:text-xs w-[95%] text-gray-300 mb-4 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
                     {media.description}
                   </p>
                 </div>
-                <button
-                  onClick={() => onNavigate("details")}
-                  className="cursor-pointer h-8 w-full max-md:mb-4 bg-black/40 max-md:w-full w-full rounded text-sm text-white text-center "
-                >
-                  More Details
-                </button>
+                 <button
+                    onClick={() => onNavigate("details")}
+                    className="cursor-pointer max-md:w-full w-full rounded text-sm text-white text-center px-5"
+                  >
+                    More Details
+                  </button>
               </div>
               {/* CENTER ANIMATED THUMB */}
               {isAnimating && (
@@ -597,11 +634,6 @@ export default function MainContent({ onNavigate }: Props) {
               </div>
 
               {/* Moving pitch card when tray opens */}
-              {/* <div
-              className={`absolute inset-0 transition-transform duration-1000 ease-out ${
-                openIndex === idx ? "-translate-x-80" : "translate-x-0"
-              }`}
-            /> */}
               {/* Comment tray */}
               <Transition
                 show={openIndex === idx}
@@ -663,10 +695,10 @@ export default function MainContent({ onNavigate }: Props) {
                               <div className="flex text-xs gap-4 mt-1 text-gray-500">
                                 <button>
                                   <div
-                                    onClick={() => toggleLike(media.id)}
+                                    onClick={() => commenttoggleLike(media.id,comm.id)}
                                     className="cursor-pointer"
                                   >
-                                    {liked ? (
+                                    {commentlikedIds.includes(comm.id) ? (
                                       <FaThumbsUp
                                         size={16}
                                         className="dark:text-white text-black  mb-2"
@@ -705,12 +737,12 @@ export default function MainContent({ onNavigate }: Props) {
                                   leaveTo="opacity-0"
                                 >
                                   <div className="max-h-full overflow-y-auto space-y-2">
-                                    {media.comments.length === 0 ? (
+                                    {comm.replies.length === 0 ? (
                                       <p className="text-sm text-gray-500 dark:text-gray-400">
                                         No Replies yet.
                                       </p>
                                     ) : (
-                                      media.comments.map((reply, idx) => (
+                                      comm.replies.map((reply, idx) => (
                                         <div
                                           key={idx}
                                           className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-md text-sm"
@@ -719,16 +751,16 @@ export default function MainContent({ onNavigate }: Props) {
                                             <span className="font-semibold mr-2">
                                               {media.user.name} :
                                             </span>
-                                            {reply.text}
+                                            {reply.replyText}
                                             <span>
                                               <button>
                                                 <div
                                                   onClick={() =>
-                                                    toggleLike(comm.id)
+                                                    replytoggleLike(media.id,comm.id,reply.replyId)
                                                   }
                                                   className="cursor-pointer"
                                                 >
-                                                  {liked ? (
+                                                  {replylikedIds.includes(reply.replyId) ? (
                                                     <FaThumbsUp
                                                       size={16}
                                                       className="dark:text-white text-black  mb-2"
@@ -740,7 +772,7 @@ export default function MainContent({ onNavigate }: Props) {
                                                     />
                                                   )}
                                                   <p className="text-center text-[8px]">
-                                                    {formatNumber(reply.likes)}
+                                                    {formatNumber(reply.replylikes)}
                                                   </p>
                                                 </div>
                                               </button>
@@ -762,7 +794,7 @@ export default function MainContent({ onNavigate }: Props) {
                                             {commentReplyInput.trim() && (
                                               <FiSend
                                                 onClick={() =>
-                                                  addCommentReply(reply.id)
+                                                  addCommentReply(reply.replyId,comm.id)
                                                 }
                                                 className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
                                               />
@@ -785,30 +817,30 @@ export default function MainContent({ onNavigate }: Props) {
 
               {/* More Options Dialog */}
               <Dialog
-                open={showMoreOptions === idx}
-                onClose={() => setShowMoreOptions(null)}
-              >
-                <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4 w-80 h-40 rounded-xl bottom-1/2 top-1/3 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
-                  <button
-                    className="block w-full py-2 text-left text-red-600 "
-                    onClick={() => {
-                      setReport(true);
-                    }}
-                  >
-                    {report ? "you reported this profile" : "Report"}
-                  </button>
-                  <button
-                    className="block w-full py-2 text-left"
-                    onClick={() => {
-                      setBlock(true);
-                    }}
-                  >
-                    {block ? "Blocked" : "Block"}
-                  </button>
-                  <button className="block w-full py-2 text-left">
-                    <Link to="/profile">View Profile</Link>
-                  </button>
-                </Dialog.Panel>
+                           open={showMoreOptions === idx}
+                           onClose={() => setShowMoreOptions(null)}
+                         >
+                           <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4  max-xl:w-64 w-1/4 h-40 rounded-xl bottom-1/2 top-1/2 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
+                             <button
+                               className="block w-full py-2 text-left text-red-600 "
+                               onClick={() => {
+                                 setReport(true);
+                               }}
+                             >
+                               {report ? "you reported this profile" : "Report"}
+                             </button>
+                             <button
+                               className="block w-full py-2 text-left"
+                               onClick={() => {
+                                 setBlock(true);
+                               }}
+                             >
+                               {block ? "Blocked" : "Block"}
+                             </button>
+                             <button className="block w-full py-2 text-left">
+                               <Link to="/profile">View Profile</Link>
+                             </button>
+                           </Dialog.Panel>
               </Dialog>
 
               {isShareOpen && (

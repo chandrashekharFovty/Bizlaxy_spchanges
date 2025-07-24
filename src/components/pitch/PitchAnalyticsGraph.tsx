@@ -39,8 +39,10 @@ export default function PitchAnalysis({ onNavigate }: Props) {
   const [view, setView] = useState("Monthly");
 
   return (
-    <div className="p-6 bg-white min-h-screen">
-      <p onClick={() => onNavigate('details')} className="text-sm text-gray-500 mb-2">&lt; Back to Pitch</p>
+    <div className="p-6 bg-white min-h-screen dark:bg-black
+    dark:text-white">
+      <p onClick={() => onNavigate('details')} className="cursor-pointer dark:bg-black
+    dark:text-white text-sm text-gray-500 mb-2">&lt; Back to Pitch</p>
       <h2 className="text-2xl font-bold mb-4">Market Analysis & Sales Projection</h2>
 
       {/* Filter Buttons */}
