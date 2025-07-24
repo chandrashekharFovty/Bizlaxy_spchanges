@@ -254,7 +254,7 @@ const [recentUsers,setRecentUsers]=useState( [
               <Link to="/feed" className="hidden max-md:block flex items-center font-semibold mb-4">
                 <ArrowLeft className="transform text-[30px] mr-2" />
               </Link>
-              <div className="max-md:hidden w-full">
+              <div className="max-lg:hidden max-md:hidden w-full">
  <SearchInput />
  </div>
       <div onClick={handleClick} className="w-full lg:w-8/12 lg:hidden">
@@ -349,7 +349,7 @@ return (
         >
           <ArrowLeft className="transform text-[30px] mr-2" />
         </Link>
-        <div className="w-full">
+        <div className="w-full ">
           {/* Bind SearchInput to searchQuery */}
           <SearchInput
             value={searchQuery}

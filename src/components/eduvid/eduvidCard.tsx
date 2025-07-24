@@ -481,19 +481,16 @@ export default function MainContent() {
      
        {/* SHARE BUTTON */}
        <div
-          onClick={() => setIsShareOpen(true)}
-         className="cursor-pointer flex flex-col items-center"
-       >
-           <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
-           <img
-             src="/SendPitch.png"
-             alt="Share"
-             className="w-5 h-5"
-           />
-
-       </div>
-       
-      </div>
+                  onClick={() => setIsShareOpen(true)}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+                    <img src="/SendPitch.png" alt="Share" className="w-5 h-5" />
+                  </div>
+                  <p className="text-center text-sm text-white">
+                    {formatNumber(media.shares)}
+                  </p>
+                </div>
        {/* MORE OPTIONS BUTTON */}
        <div
          onClick={() => setShowMoreOptions(idx)}
@@ -738,7 +735,7 @@ export default function MainContent() {
                       )
                     }
                     className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                      isSelected ? "bg-black" : ""
+                      isSelected ? "bg-gray-300 dark:bg-black" : ""
                     } cursor-pointer relative`}
                   >
                     <div className="relative w-16 h-16 mx-auto">

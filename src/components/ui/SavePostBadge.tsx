@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Single toggleable save badge
 export default function SavePostBadge({
-  size = 24,
+  size = 20,
   color = "#000",
   filled = false,
 }: {

@@ -57,7 +57,7 @@ const SelectAccountType = () => {
           <div className="w-full h-full flex justify-end items-center">
             {selected ? (
               <button
-                className="w-32 max-md:w-24 h-14 max-md:h-12 cursor-pointer mt-6 px-6 py-2 border text-lg rounded-[10px] border-[#B0B0B0] text-white font-semibold btn-gradient hover:bg-blue-700"
+                className="w-32 max-md:w-24 h-14 max-md:h-12 cursor-pointer mt-6 px-6 py-2 border text-lg rounded-[10px] border-[#B0B0B0] text-white font-semibold bg-blue-700 hover:bg-blue-700"
                 onClick={() => navigate("/infoform", { state: { userType: selected } })}
               >
                 Next

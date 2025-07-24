@@ -44,7 +44,7 @@ export default function DynamicForm({ userType }: Props) {
   const SelectedForm = formComponents[userType];
 
   return (
-    <div className="flex max-md:flex-col min-h-screen min-w-screen scrollbar-hide overflow-hidden">
+    <div className="flex max-md:flex-col  min-w-screen scrollbar-hide overflow-hidden">
       {/* Left side */}
       <div className="max-w-3xl max-md:hidden w-4/12 max-md:w-screen h-screen max-md:pt-1  fixed bg-gradient-to-r from-purple-500 to-blue-700 bg-opacity-60 backdrop-blur-lg text-white flex overflow-hidden items-center justify-center">
        <div className="border border-white p-6 bg-white/10 w-[400px] rounded-xl">
@@ -52,7 +52,7 @@ export default function DynamicForm({ userType }: Props) {
            </div>
            </div>
       {/* Right side */}
-      <div className="w-9/12 ml-[35%] px-5 max-md:w-screen max-md:h-full max-md:mx-auto bg-white">
+      <div className="w-9/12 ml-[35%] px-5 max-md:w-screen max-md:mx-auto bg-white">
         {headings.map((heading: FieldHead, idx: number) => (
           <div
             key={idx}

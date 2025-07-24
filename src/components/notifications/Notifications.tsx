@@ -219,27 +219,33 @@ export default function Notifications() {
 
       {/* Desktop View */}
       {/* <div className="max-md:hidden">  <Sidebar/></div> */}
-      <div className="max-lg:hidden dark:text-white dark:dark-color w-full h-auto mx-auto bg-gray-50 overflow-hidden">
-        <div className="w-1/12 z-50">
-          <Sidebar />
-        </div>
-        <div className="w-7/12 mt-2 mx-auto">
-          <h1 className="text-2xl  font-bold mb-6">Notifications</h1>
-          <div className="space-y-10 ">
-            <NotificationSection
-              title="Today"
-              notifications={notificationsToday}
-            />
-            <NotificationSection
-              title="Last 7 Days"
-              notifications={notificationsLastWeek}
-            />
-          </div>
-          <div className="fixed right-0 top-0 w-[350px] h-full z-50 bg-white">
-            <RightSidebar />
-          </div>
-        </div>
-      </div>
+   <div className="hidden lg:flex w-full h-screen dark:text-white dark:dark-color bg-gray-50 overflow-hidden">
+  {/* Sidebar */}
+  <div className="w-[240px] flex-shrink-0">
+    <Sidebar />
+  </div>
+
+  {/* Main Notification Content */}
+  <div className="flex-1 px-6 py-4 overflow-y-auto scrollbar-hide">
+    <h1 className="text-2xl font-bold mb-6">Notifications</h1>
+    <div className="space-y-10">
+      <NotificationSection
+        title="Today"
+        notifications={notificationsToday}
+      />
+      <NotificationSection
+        title="Last 7 Days"
+        notifications={notificationsLastWeek}
+      />
+    </div>
+  </div>
+
+  {/* Right Sidebar */}
+  <div className="w-[350px] h-full flex-shrink-0 border-l dark:border-white bg-white dark:bg-dark z-50">
+    <RightSidebar />
+  </div>
+</div>
+
     </>
   );
 }

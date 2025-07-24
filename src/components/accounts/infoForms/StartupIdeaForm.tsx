@@ -715,7 +715,7 @@ const CompanyForm: React.FC = () => {
             </div>
           </div>
         {/* Submit */}
-        <div className="h-8 w-full">
+        <div className="h-20 w-full">
           <div className="w-[97%] h-full flex justify-end">
             <button
               onClick={() => {
@@ -725,7 +725,7 @@ const CompanyForm: React.FC = () => {
               disabled={!isValid}
               className={`w-[122px] h-[51px] rounded-xl font-semibold text-lg ${
                 isValid
-                  ? "btn-gradient text-white"
+                  ? "bg-blue-700 text-white"
                   : "bg-gray-300 text-gray-600 cursor-not-allowed"
               }`}
             >

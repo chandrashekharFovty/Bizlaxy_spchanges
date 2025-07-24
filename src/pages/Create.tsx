@@ -41,7 +41,7 @@ function Create() {
           {showCreatePostPopover && (
         <PostCreate
           onClose={() => {
-            Navigate("/createPost")
+            Navigate("/postcreate")
             setShowCreatePostPopover(false);
             setShowCreatePopover(true);
           }}

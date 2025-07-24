@@ -490,7 +490,8 @@ export function Post({
                 title={`Download ${content.documentName || "attachment"}`}
               />
             )}
-            <img src="/savePost.svg" alt="savepost" className="h-5 w-5 text-black dark:invert"/>
+            {/* <img src="/savePost.svg" alt="savepost" className="h-5 w-5 text-black dark:invert"/> */}
+        <SavePostBadge/>
           </div>
         </div>
       </div>

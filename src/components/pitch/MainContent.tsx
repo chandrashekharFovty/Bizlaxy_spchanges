@@ -812,7 +812,7 @@ export default function MainContent({ onNavigate }: Props) {
               </Dialog>
 
               {isShareOpen && (
-                <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+                <div className="fixed inset-0 bg-black/30 z-50 flex justify-center items-center">
                   <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
                     {/* Close Button */}
                     <button
@@ -851,7 +851,7 @@ export default function MainContent({ onNavigate }: Props) {
                                 )
                               }
                               className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                                isSelected ? "bg-black" : ""
+                                isSelected ? "bg-gray-300 dark:bg-black" : ""
                               } cursor-pointer relative`}
                             >
                               <div className="relative w-16 h-16 mx-auto">

@@ -552,7 +552,7 @@ const MessagePage = () => {
           {/* Chat Section */}
       <div
   ref={chatSectionRef}
-  className="dark:dark-color xl:w-[870px] max-lg:w-[500px] flex-1 flex flex-col bg-gray-50 mb-3"
+  className="dark:dark-color xl:w-[870px]  max-lg:[768px] md:w-[375px] flex-1 flex flex-col bg-gray-50 mb-3"
 >
   {selectedUser ? (
     <>

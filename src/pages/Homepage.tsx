@@ -11,7 +11,7 @@ const Homepage = () => {
       {/* <div className="absolute top-[40%] left-[15%] w-[400px] h-[400px] rounded-full bg-purple-500 z-0" /> */}
 
       {/* Glass effect */}
-      <div className="absolute inset-0 backdrop-blur-[60px] z-10" />
+      <div className="absolute inset-0  z-10" />
 
       {/* Page Content */}
       <div className="relative z-20 flex flex-col min-h-screen">
@@ -22,12 +22,12 @@ const Homepage = () => {
 
         <div className="flex flex-1 dark:dark-color">
           {/* Sidebar */}
-          <aside className="max-md:hidden  lg:block w-[240px] flex-shrink-0">
+          <aside className="max-md:hidden max-lg:w-[20px]  lg:block w-[240px] flex-shrink-0">
             <Sidebar />
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 px-4 max-md:px-0 md:px-8 lg:px-12 py-4">
+          <main className="flex-1 px-4 max-md:px-0 max-lg:ml-[200px] max-md:ml-0 md:px-8 lg:px-12 py-4">
             < PostList />
           </main>
 

@@ -5,16 +5,20 @@ import React from "react";
 
 const Notofications = () => {
   return (
-    <>
-      <div className="dark:dark-color w-screen h-screen flex  bg-gray-100">
-        
-        <div className=" dark:dark-color w-full ml-2 overflow-X-hidden z-10 ">
-          <Notifications />
-        </div>
-        {/* Right Sidebar */}
-      
-      </div>
-    </>
+   <>
+  <div className="dark:dark-color w-full h-screen flex flex-col lg:flex-row overflow-hidden">
+    {/* Main Notification Area */}
+    <div className="w-full lg:w-full px-4 py-6 overflow-x-hidden z-10">
+      <Notifications />
+    </div>
+
+    {/* Optional Right Sidebar for Desktop */}
+    {/* <div className="max-md:hidden  lg:block lg:w-[350px] h-full bg-white dark:bg-dark shadow-lg"> */}
+      {/* <RightSidebar /> */}
+    {/* </div> */}
+  </div>
+</>
+
   );
 };
 
