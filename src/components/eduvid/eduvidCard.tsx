@@ -27,14 +27,14 @@ import { HiMiniArrowTurnUpRight } from "react-icons/hi2";
 type Reply = {
   replyId: number;
   replyText: string;
-  likes: number;
+  replylikes: number;
   replies: Reply[];
 };
 
 type Comment = {
   id: number;
   text: string;
-  likes: number;
+  commentlikes: number;
   replies: Reply[];
 };
 
@@ -57,8 +57,8 @@ type MediaItem = {
 const pitchMedia: MediaItem[] = [
   {
     id: 1,
-    type: "image",
-    src: "/pitch.png",
+   type: "video",
+    src: "/insta_reel.mp4",
     profile: "/pitch.png",
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
@@ -67,8 +67,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 50,
@@ -86,8 +88,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 20,
@@ -95,8 +99,8 @@ const pitchMedia: MediaItem[] = [
   },
   {
     id: 3,
-    type: "youtube",
-    src: "https://www.youtube.com/embed/IuxxSldSvYw",
+    type: "video",
+    src: "/post_video.mp4",
     profile: "/pitch.png",
     description:
       "⚡ Our platform transforms visionary concepts into real-world impact. With cutting-edge tech and market-first features, we empower startups to leap high—and fast.",
@@ -105,8 +109,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 60,
@@ -124,8 +130,10 @@ const pitchMedia: MediaItem[] = [
       {
         id: 1,
         text: "First comment!",
-        likes: 5,
-        replies: [{ replyId: 11, replyText: "Nice!", likes: 2, replies: [] }],
+        commentlikes: 5,
+        replies: [
+          { replyId: 11, replyText: "Nice!", replylikes: 2, replies: [] },
+        ],
       },
     ],
     shares: 25,
@@ -141,45 +149,48 @@ export default function MainContent() {
   const [commentReplyInput, setCommentReplyInput] = useState("");
   // const [likedIds, setLikedIds] = useState([]);
   const [likedIds, setLikedIds] = useState<number[]>([]);
+  const [commentlikedIds, setCoemmentLikedIds] = useState<number[]>([]);
+  const [replylikedIds, setReplyLikedIds] = useState<number[]>([]);
   const [animatingLikeIdx, setAnimatingLikeIdx] = useState<number | null>(null);
   const [activeVideo, setActiveVideo] = useState(null);
   const [showMoreOptions, setShowMoreOptions] = useState(null);
   const [report, setReport] = useState(false);
   const [block, setBlock] = useState(false);
-    const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-   const [selectedUsers, setSelectedUsers] = useState([]);
-   const scrollRef = useRef(null);
-     const [isHovering, setIsHovering] = useState(false);
-     const [showLeftArrow, setShowLeftArrow] = useState(false);
-     const [showRightArrow, setShowRightArrow] = useState(true);
-   
-     // Update arrow visibility
-     const updateArrows = () => {
-       const el = scrollRef.current;
-       if (el) {
-         setShowLeftArrow(el.scrollLeft > 0);
-         setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
-       }
-     };
-   
-     useEffect(() => {
-       const el = scrollRef.current;
-       if (!el) return;
-       updateArrows();
-       el.addEventListener("scroll", updateArrows);
-       return () => el.removeEventListener("scroll", updateArrows);
-     }, []);
-   
-   
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const scrollRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
 
-  
+  // Update arrow visibility
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (el) {
+      setShowLeftArrow(el.scrollLeft > 0);
+      setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows);
+    return () => el.removeEventListener("scroll", updateArrows);
+  }, []);
+
   const handleSearch = (e) => {
-      setSearchTerm(e.target.value);
-      setFilteredUsers(users.filter(user => user.name.toLowerCase().includes(e.target.value.toLowerCase())));
-    };
-    const users = [
+    setSearchTerm(e.target.value);
+    setFilteredUsers(
+      users.filter((user) =>
+        user.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+  const users = [
     { id: 1, name: "imkr", title: "Follows you", img: "/Hide.jpg" },
     {
       id: 2,
@@ -212,7 +223,6 @@ export default function MainContent() {
     { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
   ];
 
-
   const toggleLike = (id) => {
     setMediaList((prev) =>
       prev.map((item) =>
@@ -228,63 +238,19 @@ export default function MainContent() {
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
-
-  const handleDoubleClick = (id: number, idx: number) => {
-    if (!likedIds.includes(id)) toggleLike(id);
-    setAnimatingLikeIdx(idx);
-    setTimeout(() => setAnimatingLikeIdx(null), 800);
-  };
-
-  const addComment = (id) => {
-    if (!commentInput.trim()) return;
+  const commenttoggleLike = (mediaId: number, commentId: number) => {
     setMediaList((prev) =>
       prev.map((item) =>
-        item.id === id
+        item.id === mediaId
           ? {
               ...item,
-              comments: [
-                ...item.comments,
-                { id: 1, text: commentInput, likes: 0, replies: [] },
-              ],
-            }
-          : item
-      )
-    );
-    setCommentInput("");
-  };
-  const addCommentReply = (id) => {
-    if (!commentInput.trim()) return;
-    if (!commentReplyInput.trim()) return;
-    // setMediaList((prev) =>
-    //   prev.map((item) =>
-    //     item.id === id
-    //       ? {
-    //           ...item,
-
-    //           replies: [...item.comments, { likes: 0, commentsReply: "" }],
-    //         }
-    //       : item
-    //   )
-    // );
-    // setCommentReplyInput("");
-    setMediaList((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              comments: item.comments.map((c, i) =>
-                i === i
+              comments: item.comments.map((c) =>
+                c.id === commentId
                   ? {
                       ...c,
-                      replies: [
-                        ...(c.replies || []),
-                        {
-                          replyId: 1,
-                          replyText: commentReplyInput,
-                          likes: 0,
-                          replies: [],
-                        },
-                      ],
+                      commentlikes:
+                        c.commentlikes +
+                        (commentlikedIds.includes(commentId) ? -1 : +1),
                     }
                   : c
               ),
@@ -292,14 +258,78 @@ export default function MainContent() {
           : item
       )
     );
-
-    setCommentReplyInput("");
-    setOpenReplyIndex(null); // hide input
+    setCoemmentLikedIds((prev) =>
+      prev.includes(commentId)
+        ? prev.filter((x) => x !== commentId)
+        : [...prev, commentId]
+    );
   };
-  const addReply = (mediaId: number, commentIdx: number) => {
+  const replytoggleLike = (
+    mediaId: number,
+    commentId: number,
+    replyId: number
+  ) => {
+    setMediaList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: item.comments.map((c) =>
+                c.id === commentId
+                  ? {
+                      ...c,
+                      replies: c.replies.map((r) =>
+                        r.replyId === replyId
+                          ? {
+                              ...r,
+                              replylikes:
+                                r.replylikes +
+                                (replylikedIds.includes(replyId) ? -1 : +1),
+                            }
+                          : r
+                      ),
+                    }
+                  : c
+              ),
+            }
+          : item
+      )
+    );
+    setReplyLikedIds((prev) =>
+      prev.includes(replyId)
+        ? prev.filter((x) => x !== replyId)
+        : [...prev, replyId]
+    );
+  };
+  const handleDoubleClick = (id: number, idx: number) => {
+    if (!likedIds.includes(id)) toggleLike(id);
+    setAnimatingLikeIdx(idx);
+    setTimeout(() => setAnimatingLikeIdx(null), 800);
+  };
+   const addComment = (mediaId) => {
     if (!commentInput.trim()) return;
+    setMediaList((prev) =>
+      prev.map((item) =>
+        item.id === mediaId
+          ? {
+              ...item,
+              comments: [
+                ...item.comments,
+                {
+                  id: Date.now(),
+                  text: commentInput,
+                  commentlikes: 5,
+                  replies: [],
+                },
+              ],
+            }
+          : item
+      )
+    );
+    setCommentInput("");
+  };
+  const addCommentReply = (mediaId: number, commentIdx: number) => {
     if (!commentReplyInput.trim()) return;
-
     setMediaList((prev) =>
       prev.map((item) =>
         item.id === mediaId
@@ -310,11 +340,11 @@ export default function MainContent() {
                   ? {
                       ...c,
                       replies: [
-                        ...(c.replies || []),
+                        ...c.replies,
                         {
-                          replyId: 1,
+                          replyId: Date.now(),
                           replyText: commentReplyInput,
-                          likes: 0,
+                          replylikes: 5,
                           replies: [],
                         },
                       ],
@@ -325,9 +355,8 @@ export default function MainContent() {
           : item
       )
     );
-
     setCommentReplyInput("");
-    setOpenReplyIndex(null); // hide input
+    setOpenReplyIndex(null);
   };
 
   const handleVideoToggle = (idx) => {
@@ -343,8 +372,7 @@ export default function MainContent() {
     }
   };
 
-
-   function formatNumber(num) {
+  function formatNumber(num) {
     if (num >= 1000000000) {
       return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
     }
@@ -358,8 +386,7 @@ export default function MainContent() {
   }
 
   return (
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-screen max-lg:w-[65vw] h-[95vh] max-h-[782px] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] overflow-y-scroll scrollbar-hide  ">
- {/* <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen h-[95vh] max-lg:w-full max-md:my-0 my-5 rounded-xl max-md:rounded-none w-[440px] overflow-y-scroll scrollbar-hide"> */}
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[97%] max-lg:w-[35vw] h-[95vh] max-md:my-0 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[550px] overflow-y-scroll scrollbar-hide">
       {mediaList.map((media, idx) => {
         const liked = likedIds.includes(media.id);
         const isAnimating = animatingLikeIdx === idx;
@@ -367,8 +394,7 @@ export default function MainContent() {
           <div
             key={media.id}
             onDoubleClick={() => handleDoubleClick(media.id, idx)}
-            className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[110vh] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
-            // className="snap-start mb-8 max-md:4 dark:bg-black h-screen max-md:w-screen max-md:h-[98vh] max-lg:w- w-[440px] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+            className="snap-start max-md:4 dark:bg-black max-md:w-screen max-md:h-[97%] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
           >
             {media.type === "image" ? (
               <img
@@ -381,7 +407,7 @@ export default function MainContent() {
                 id={`video-${idx}`}
                 src={media.src}
                 autoPlay
-                muted
+               // muted
                 loop
                 onClick={() => handleVideoToggle(idx)}
                 className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl max-md:rounded-none"
@@ -405,7 +431,7 @@ export default function MainContent() {
                         className="w-full h-full rounded-full"
                       />
                     </div>
-                    <span className="font-semibold cursor-pointer">
+                    <span className="font-semibold max-[769px]:text-sm cursor-pointer">
                       {media.user.name}
                     </span>
                   </Link>
@@ -414,14 +440,14 @@ export default function MainContent() {
                       <img src="/whiteOfficialIcon.png" alt="✔️" />
                     </span>
                   )}
-              <div className="border ">    <FollowButtonCard /></div>
+                  <FollowButtonCard />
                 </div>
               </div>
               <div className="mb-5 pb-5 pr-8">
                 {/* <h3 className="text-lg font-bold text-white mb-1">
                   {media.title}
                 </h3> */}
-                <p className="text-sm text-gray-300 w-[350px] mb-2 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
+                <p className="text-sm text-gray-300 w-[95%] mb-2 line-clamp-3 max-h-16 overflow-y-auto scrollbar-hide">
                   {media.description}
                 </p>
                 {/* <Link to="/pitch-details" className="flex justify-center">
@@ -441,8 +467,7 @@ export default function MainContent() {
               </div>
             )}
 
-
-           <div className="absolute flex flex-col right-4 top-3/4 mt-12 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+                 <div className="absolute flex flex-col right-4 top-3/4 mt-12 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
        {/* LIKE BUTTON */}
        <div
          onClick={() => toggleLike(media.id)}
@@ -507,23 +532,23 @@ export default function MainContent() {
        </div>
      </div>
             {/* Moving pitch card when tray opens */}
-            <div
+            {/* <div
               className={`absolute inset-0 transition-transform duration-1000 ease-out ${
                 openIndex === idx ? "-translate-x-80" : "translate-x-0"
               }`}
-            />
+            /> */}
             {/* Comment tray */}
             <Transition
               show={openIndex === idx}
-              enter="transition ease-out duration-1000 transform"
+              enter="transition ease-out duration-200 transform"
               enterFrom="translate-x-full"
               enterTo="translate-x-[60%] max-md:translate-x-0"
-              leave="transition ease-in duration-1000 transform"
-              leaveFrom="translate-x-[60%] max-md:translate-x-0"
+              leave="transition ease-in duration-200 transform"
+              leaveFrom="translate-x-[30%] max-md:translate-x-0"
               leaveTo="translate-x-full"
             >
-              <aside className="fixed right-0 top-0 h-full w-full max-w-[440px] text-black z-50 overflow-y-auto">
-                <div className="fixed inset-0 p-4 max-w-[440px] left-[62%] max-md:left-0 max-md:right-0 max-md:top-[25%] z-50 bg-opacity-50 flex items-center">
+              <aside className="fixed right-0 top-0 h-full left-[62%] w-full text-black z-50 overflow-y-auto">
+                <div className="fixed inset-0 p-4 left-[62%] max-md:left-0 max-md:right-0 max-md:top-[25%] z-50 bg-opacity-50 flex items-center">
                   <div className="bg-white dark:bg-gray-800 mx-auto dark:text-white rounded-xl shadow-lg w-full h-full max-w-md p-6 relative">
                     {" "}
                     {/* Close Button */}
@@ -533,7 +558,9 @@ export default function MainContent() {
                     >
                       ✕
                     </button>
-                    <h3 className="text-lg font-semibold mb-4">Comments</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                      <span>{media.user.name} : </span>Comments
+                    </h3>
                     {/* Comment Input */}
                     <div className="relative mb-4">
                       <input
@@ -553,7 +580,7 @@ export default function MainContent() {
                     {/* Comment List */}
                     <div className="max-h-[80%] scrollbar-hide overflow-y-auto space-y-2 bg-gray-100 dark:bg-gray-700 dark:text-white">
                       {media.comments.length === 0 ? (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-300">
                           No comments yet.
                         </p>
                       ) : (
@@ -569,12 +596,14 @@ export default function MainContent() {
                               {comm.text}
                             </p>
                             <div className="flex text-xs gap-4 mt-1 text-gray-500">
-                              <button>
+                              <button className="top-0 h-12">
                                 <div
-                                  onClick={() => toggleLike(media.id)}
+                                  onClick={() =>
+                                    commenttoggleLike(media.id, comm.id)
+                                  }
                                   className="cursor-pointer"
                                 >
-                                  {liked ? (
+                                  {commentlikedIds.includes(comm.id) ? (
                                     <FaThumbsUp
                                       size={16}
                                       className="dark:text-white text-black  mb-2"
@@ -585,8 +614,8 @@ export default function MainContent() {
                                       className="dark:text-white text-black mb-2"
                                     />
                                   )}
-                                  <p className="text-center text-[8px]">
-                                    {media.likes}
+                                  <p className="text-center text-[8px] dark:text-gray-300">
+                                    {formatNumber(comm.commentlikes)}
                                   </p>
                                 </div>
                               </button>
@@ -596,6 +625,7 @@ export default function MainContent() {
                                     openReplyIndex === idx ? null : idx
                                   )
                                 }
+                                className="top-0 h-12 dark:text-gray-300"
                               >
                                 {openReplyIndex === idx
                                   ? "Hide replies"
@@ -605,7 +635,7 @@ export default function MainContent() {
                               {/* Comment Reply Box */}
                               <Transition
                                 show={openReplyIndex === idx}
-                                enter="transition-opacity duration-300"
+                                enter="transition-opacity duration-200"
                                 enterFrom="opacity-0"
                                 enterTo="opacity-100"
                                 leave="transition-opacity duration-200"
@@ -613,44 +643,89 @@ export default function MainContent() {
                                 leaveTo="opacity-0"
                               >
                                 <div className="max-h-full overflow-y-auto space-y-2">
-                                  {media.comments.length === 0 ? (
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="relative mb-4">
+                                    {/* Comment Reply Input */}
+                                    <input
+                                      type="text"
+                                      placeholder="Add a comment reply..."
+                                      value={commentReplyInput}
+                                      onChange={(e) =>
+                                        setCommentReplyInput(e.target.value)
+                                      }
+                                      className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                                    />
+                                    {commentReplyInput.trim() && (
+                                     <FiSend
+                                        onClick={() =>
+                                          addCommentReply(comm.id, idx)
+                                        }
+                                        className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
+                                      />
+                                    )}
+                                  </div>
+                                  {comm.replies.length === 0 ? (
+                                    <p className="text-sm text-gray-500 dark:text-gray-300">
                                       No Replies yet.
                                     </p>
                                   ) : (
-                                    media.comments.map((reply, idx) => (
+                                    comm.replies.map((reply, idx) => (
                                       <div
                                         key={idx}
                                         className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-md text-sm"
                                       >
-                                        <p className="text-sm">
+                                        <p className="text-sm dark:text-white">
                                           <span className="font-semibold mr-2">
                                             {media.user.name} :
                                           </span>
-                                          {reply.text}
-                                        </p>
-                                        <div className="relative mb-4">
-                                          {/* Comment Reply Input */}
-                                          <input
-                                            type="text"
-                                            placeholder="Add a comment reply..."
-                                            value={commentReplyInput}
-                                            onChange={(e) =>
-                                              setCommentReplyInput(
-                                                e.target.value
-                                              )
-                                            }
-                                            className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                                          />
-                                          {commentReplyInput.trim() && (
-                                            <FiSend
+                                          {reply.replyText}
+                                          <span>
+                                            <button className="">
+                                              <div
+                                                onClick={() =>
+                                                  replytoggleLike(
+                                                    media.id,
+                                                    comm.id,
+                                                    reply.replyId
+                                                  )
+                                                }
+                                                className="cursor-pointer flex gap-4 p-2"
+                                              >
+                                                {replylikedIds.includes(
+                                                  reply.replyId
+                                                ) ? (
+                                                  <FaThumbsUp
+                                                    size={16}
+                                                    className="dark:text-white text-black  mb-2"
+                                                  />
+                                                ) : (
+                                                  <FaRegThumbsUp
+                                                    size={16}
+                                                    className="dark:text-white text-black mb-2"
+                                                  />
+                                                )}
+                                                <p className="text-center text-[8px] dark:text-gray-300">
+                                                  {formatNumber(
+                                                    reply.replylikes
+                                                  )}
+                                                </p>
+                                              </div>
+                                            </button>
+                                            <button
                                               onClick={() =>
-                                                addCommentReply(reply.id)
+                                                setOpenReplyIndex(
+                                                  openReplyIndex === idx
+                                                    ? null
+                                                    : idx
+                                                )
                                               }
-                                              className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
-                                            />
-                                          )}
-                                        </div>
+                                              className="top-0 h-12 dark:text-gray-300"
+                                            >
+                                              {openReplyIndex === idx
+                                                ? "Hide replies"
+                                                : "Reply"}
+                                            </button>
+                                          </span>
+                                        </p>
                                       </div>
                                     ))
                                   )}
@@ -665,13 +740,12 @@ export default function MainContent() {
                 </div>
               </aside>
             </Transition>
-
             {/* More Options Dialog */}
             <Dialog
               open={showMoreOptions === idx}
               onClose={() => setShowMoreOptions(null)}
             >
-              <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4 w-80 h-40 rounded-xl bottom-1/2 top-1/3 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
+              <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4  max-xl:w-64 w-1/4 h-40 rounded-xl bottom-1/2 top-1/2 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
                 <button
                   className="block w-full py-2 text-left text-red-600 "
                   onClick={() => {
@@ -694,159 +768,161 @@ export default function MainContent() {
               </Dialog.Panel>
             </Dialog>
 
-
-
-
-
-    {isShareOpen && (
-      <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-        <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
-          {/* Close Button */}
-          <button
-            onClick={() => setIsShareOpen(false)}
-            className="absolute top-4 right-4 text-2xl text-black dark:text-white"
-          >
-            ×
-          </button>
-    
-          <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
-            Share Eduvid To
-          </h2>
-    
-          {/* Search Input */}
-          <input
-            type="text"
-            placeholder="Search Users"
-            // value={searchTerm}
-            onChange={handleSearch}
-            className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
-          />
-    
-          {/* Scrollable Horizontal Users */}
-          <div className="relative mb-4">
-       <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
-              {filteredUsers.map((user) => {
-                const isSelected = selectedUsers.includes(user.id);
-                return (
-                  <div
-                    key={user.id}
-                    onClick={() =>
-                      setSelectedUsers((prev) =>
-                        prev.includes(user.id)
-                          ? prev.filter((id) => id !== user.id)
-                          : [...prev, user.id]
-                      )
-                    }
-                    className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                      isSelected ? "bg-black" : ""
-                    } cursor-pointer relative`}
+            {isShareOpen && (
+              <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+                <div className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 dark:border dark:border-white p-6 relative">
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setIsShareOpen(false)}
+                    className="absolute top-4 right-4 text-2xl text-black dark:text-white"
                   >
-                    <div className="relative w-16 h-16 mx-auto">
-                      <img
-                        src={user.img}
-                        alt={user.name}
-                        className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                    ×
+                  </button>
+
+                  <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
+                    Share Eduvid To
+                  </h2>
+
+                  {/* Search Input */}
+                  <input
+                    type="text"
+                    placeholder="Search Users"
+                    // value={searchTerm}
+                    onChange={handleSearch}
+                    className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:text-white focus:outline-none"
+                  />
+
+                  {/* Scrollable Horizontal Users */}
+                  <div className="relative mb-4">
+                    <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
+                      {filteredUsers.map((user) => {
+                        const isSelected = selectedUsers.includes(user.id);
+                        return (
+                          <div
+                            key={user.id}
+                            onClick={() =>
+                              setSelectedUsers((prev) =>
+                                prev.includes(user.id)
+                                  ? prev.filter((id) => id !== user.id)
+                                  : [...prev, user.id]
+                              )
+                            }
+                            className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
+                              isSelected ? "bg-gray-200" : ""
+                            } cursor-pointer relative`}
+                          >
+                            <div className="relative w-16 h-16 mx-auto">
+                              <img
+                                src={user.img}
+                                alt={user.name}
+                                className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                              />
+                              {isSelected && (
+                                <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+                              )}
+                            </div>
+                            <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
+                              {user.name}
+                            </p>
+                            {user.verified && (
+                              <span className="text-blue-500 text-xs">✔</span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Conditional Message and Send OR Social Buttons */}
+                  {selectedUsers.length > 0 ? (
+                    <div className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:bg-gray-700 dark:text-white focus:outline-none">
+                      {/* Message Field */}
+                      <input
+                        type="text"
+                        placeholder="Write a message..."
+                        className="w-full h-full focus:outline-none text-black"
                       />
-                      {isSelected && (
-                        <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+
+                      {/* Send Button */}
+                      <button
+                        onClick={() => {
+                          // your send logic here
+                          setIsShareOpen(false);
+                        }}
+                        className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  ) : (
+                    // Social Share Buttons
+                    <div
+                      className="relative mt-4"
+                      onMouseEnter={() => setIsHovering(true)}
+                      onMouseLeave={() => setIsHovering(false)}
+                    >
+                      {/* Scrollable Social Buttons */}
+                      <div
+                        ref={scrollRef}
+                        className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+                      >
+                        {[
+                          { icon: <MdOutlineInsertLink />, label: "Copy Link" },
+                          { icon: <RiFacebookCircleLine />, label: "Facebook" },
+                          { icon: <BsChatDots />, label: "Messenger" },
+                          { icon: <FaWhatsapp />, label: "WhatsApp" },
+                          { icon: <FaThreads />, label: "Threads" },
+                          { icon: <FaXTwitter />, label: "X" },
+                          { icon: <HiMiniArrowTurnUpRight />, label: "More" },
+                        ].map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                          >
+                            <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
+                              {item.icon}
+                            </button>
+                            <span className="pt-1 text-black text-xs">
+                              {item.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Left Arrow */}
+                      {isHovering && showLeftArrow && (
+                        <button
+                          onClick={() =>
+                            scrollRef.current.scrollBy({
+                              left: -250,
+                              behavior: "smooth",
+                            })
+                          }
+                          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                        >
+                          <SlArrowLeft />
+                        </button>
+                      )}
+
+                      {/* Right Arrow */}
+                      {isHovering && showRightArrow && (
+                        <button
+                          onClick={() =>
+                            scrollRef.current.scrollBy({
+                              left: 200,
+                              behavior: "smooth",
+                            })
+                          }
+                          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                        >
+                          <SlArrowRight />
+                        </button>
                       )}
                     </div>
-                    <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
-                      {user.name}
-                    </p>
-                    {user.verified && (
-                      <span className="text-blue-500 text-xs">✔</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-    
-          {/* Conditional Message and Send OR Social Buttons */}
-          {selectedUsers.length > 0 ? (
-            <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none"
-             >
-              {/* Message Field */}
-              <input
-                type="text"
-                placeholder="Write a message..." 
-            className="w-full h-full focus:outline-none text-black dark:dark-color"
-    
-                />
-    
-              {/* Send Button */}
-              <button
-                onClick={() => {
-                  // your send logic here
-                  setIsShareOpen(false);
-                }}
-                className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
-              >
-                Send
-              </button>
-            </div>
-          ) : (
-            // Social Share Buttons
-         <div
-              className="relative mt-4"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              {/* Scrollable Social Buttons */}
-              <div
-                ref={scrollRef}
-                className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
-              >
-                {[
-                  { icon: <MdOutlineInsertLink />, label: "Copy Link" },
-                  { icon: <RiFacebookCircleLine />, label: "Facebook" },
-                  { icon: <BsChatDots />, label: "Messenger" },
-                  { icon: <FaWhatsapp />, label: "WhatsApp" },
-                  { icon: <FaThreads />, label: "Threads" },
-                  { icon: <FaXTwitter/>, label: "X" },
-                  { icon: <HiMiniArrowTurnUpRight/>, label: "More" },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col items-center text-center flex-shrink-0 w-16"
-                  >
-                    <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
-                      {item.icon}
-                    </button>
-                    <span className="pt-1 text-black dark:text-white text-xs">{item.label}</span>
-                  </div>
-                ))}
+                  )}
+                </div>
               </div>
-        
-              {/* Left Arrow */}
-              {isHovering && showLeftArrow && (
-                <button
-                  onClick={() =>
-                    scrollRef.current.scrollBy({ left: -250, behavior: "smooth" })
-                  }
-                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                >
-                  <SlArrowLeft/>
-                </button>
-              )}
-        
-              {/* Right Arrow */}
-              {isHovering && showRightArrow && (
-                <button
-                  onClick={() =>
-                    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
-                  }
-                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                >
-                  <SlArrowRight />
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    )}
+            )}
           </div>
         );
       })}
