@@ -166,7 +166,7 @@ const CompanyForm: React.FC = () => {
   const [valuebusinessModel, setvaluebusinessModel] = useState([]);
   const [customBusinessModel, setCustomBusinessModel] = useState("");
   const [showFundField, setShowFundField] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   // const [selectedBusinessTypes, setSelectedBusinessTypes] = useState<
   //   OptionType[]
@@ -408,6 +408,14 @@ const CompanyForm: React.FC = () => {
     navigate("/feed");
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpen(false); // set to false after 30 seconds
+    }, 30000); // 30 seconds
+
+    return () => clearTimeout(timer); // cleanup if unmounted
+  }, []);
+
   return (
     <>
       <div className="w-full h-auto">
@@ -616,12 +624,13 @@ const CompanyForm: React.FC = () => {
               )}
             </div>
             {showFundField ? (
-              <span
-                className="text-indigo-600 cursor-pointer ml-5 hover:underline"
-                onClick={() => setShowFundField(false)}
-              >
-                Undo
-              </span>
+              // <span
+              //   className="text-indigo-600 cursor-pointer ml-5 hover:underline"
+              //   onClick={() => setShowFundField(false)}
+              // >
+              //   Undo
+              // </span>
+              ""
             ) : (
               <div className="w-full flex flex-col mx-auto">
                 <label className="text-sm font-medium">
@@ -916,90 +925,53 @@ const CompanyForm: React.FC = () => {
           </div>
         </form>
 
-        <Dialog open={open} onClose={setOpen} className="relative z-10">
+        <Dialog open={open} onClose={() => {}} className="relative z-10">
           <DialogBackdrop
             transition
-            className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+            className="fixed inset-0 bg-gray-transparent transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
           />
 
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pb-4">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <DialogPanel
-                transition
-                className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+          transition
+          className="relative transform overflow-hidden rounded-lg text-left transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
               >
-                <div
-                  id="alert-additional-content-4"
-                  class="p-4 mb-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
-                  role="alert"
-                >
-                  <div class="flex items-center">
-                    <svg
-                      class="shrink-0 w-4 h-4 me-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <h3 class="text-lg font-medium">This is a warning alert</h3>
-                  </div>
-                  <div class="mt-2 mb-4 text-sm">
-                    More info about this info warning goes here. This example
-                    text is going to run a bit longer so that you can see how
-                    spacing within an alert works with this kind of content.
-                  </div>
-                  <div class="flex">
-                    <button
-                      type="button"
-                      class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
-                    >
-                      <svg
-                        class="me-2 h-3 w-3"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 14"
-                      >
-                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                      </svg>
-                      View more
-                    </button>
-                    <button
-                      type="button"
-                      class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
-                      data-dismiss-target="#alert-additional-content-4"
-                      aria-label="Close"
-                    >
-                      Dismiss
-                    </button>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowFundField(true), setOpen(false);
-                    }}
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    data-autofocus
-                    onClick={() => {
-                      setShowFundField(false), setOpen(false);
-                    }}
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                  >
-                    {" "}
-                    Undo
-                    <IoArrowUndoCircle className="ml-2 w-5 h-5" />
-                  </button>
-                </div>
+          <div
+            id="alert-additional-content-4"
+            className="p-4 mb-4 text-yellow-800 flex gap-3 items-center border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+            role="alert"
+          >
+            <div className="flex items-center"> 
+              <svg
+                className="shrink-0 w-4 h-4 me-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Info</span>
+              <h3 className="text-sm font-medium">
+                Are you sure you want to skip the funding details?
+              </h3>
+            </div>                                                                                                                                      
+              
+            <div className="flex">
+              <button
+                type="button"
+                onClick={() => {
+            setShowFundField(false), setOpen(false);
+                }}
+                className="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
+              >
+                Undo
+                <IoArrowUndoCircle className="ml-2 w-5 h-5" />
+              </button>
+            </div>
+          </div>
+               
               </DialogPanel>
             </div>
           </div>
