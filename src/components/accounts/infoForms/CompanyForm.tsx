@@ -2,28 +2,36 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
-
-import { MultiSelect } from "react-multi-select-component";
+//import { MultiSelect } from "react-multi-select-component";
+import Multiselect from "multiselect-react-dropdown";
 // import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../../../customDropDwon.css"; // Assuming you have some custom styles
-
 // import type { ICountry, IState, ICity } from "country-state-city";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { CiUndo } from "react-icons/ci";
+import { Undo2 } from "lucide-react";
+import { IoArrowUndoCircle } from "react-icons/io5";
+
 type OptionType = { label: string; value: string };
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessTypes = [
-  { label: "Manufacturer", value: "manufacturer" },
-  { label: "Wholesaler", value: "wholesaler" },
-  { label: "Exporter", value: "exporter" },
-  { label: "Importer", value: "importer" },
-  { label: "Distributor", value: "distributor" },
-  { label: "Retailer", value: "retailer" },
+  { label: "Physical Product", value: "physical_product" },
   { label: "Service Provider", value: "service_provider" },
-  { label: "Trader", value: "trader" },
   { label: "Supplier", value: "supplier" },
-  {
-    label: "Other ", //(custom category for specific type of business not listed)
-    value: "other",
-  },
+  { label: "Manufacturer", value: "manufacturer" },
+  { label: "Distributor", value: "distributor" },
+  { label: "Wholesaler", value: "wholesaler" },
+  { label: "Retailer", value: "retailer" },
+  { label: "Trader", value: "trader" },
+  { label: "Importer", value: "importer" },
+  { label: "Exporter", value: "exporter" },
+  { label: "Other", value: "other" },
 ];
 // Options for MultiSelect businessType, industrySector, and businessModel
 const industrySectors = [
@@ -85,18 +93,21 @@ const industrySectors = [
     label: "Hospital, Clinic & Consultation",
     value: "hospital_clinic_consultation",
   },
-  { label: "OTHER", value: "other" },
+  { label: "Other", value: "other" },
 ];
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessModels = [
-  { label: "B2B", value: "b2b" },
-  { label: "B2C", value: "b2c" },
-  { label: "SaaS", value: "saas" },
+  { label: "Business to Consumer (B2C)", value: "b2c" },
+  { label: "Business to Business (B2B)", value: "b2b" },
   { label: "E‑Commerce", value: "e_commerce" },
-  { label: "Subscription", value: "subscription" },
-  { label: "Marketplace", value: "marketplace" },
-  { label: "Advertising Based", value: "advertising_based" },
-  { label: "Franchise", value: "franchise" },
+  { label: "Direct to Consumer (D2C)", value: "d2c" },
+  { label: "Consumer to Consumer (C2C)", value: "c2c" },
+  { label: "Business to Government (B2G)", value: "b2g" },
+  // { label: "Software as a Service (SaaS)", value: "saas" },
+  // { label: "Recurring Revenue Model (Subscription)", value: "subscription" },
+  // { label: "Buyer-Seller Platform (Marketplace)", value: "marketplace" },
+  // { label: "Ad Revenue Model (Advertising Based)", value: "advertising_based" },
+  // { label: "Licensed Business Model (Franchise)", value: "franchise" },
   { label: "Other", value: "other" },
 ];
 
@@ -148,36 +159,151 @@ const CompanyForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Touched>({});
-  const [businessvalue, setbusinessvalue] = useState();
-  const [industryvalue, setindustryvalue] = useState();
-  const [valuebusinessModel, setvaluebusinessModel] = useState();
-  const [selectedBusinessTypes, setSelectedBusinessTypes] = useState<
-    OptionType[]
-  >([]);
-  const [selectedIndustries, setSelectedIndustries] = useState<OptionType[]>(
-    []
-  );
-  const [selectedBusinessModels, setSelectedBusinessModels] = useState<
-    OptionType[]
-  >([]);
+  const [businessvalue, setbusinessvalue] = useState([]);
+  const [customBusiness, setCustomBusiness] = useState("");
+  const [industryvalue, setindustryvalue] = useState([]);
+  const [customIndustry, setCustomIndustry] = useState("");
+  const [valuebusinessModel, setvaluebusinessModel] = useState([]);
+  const [customBusinessModel, setCustomBusinessModel] = useState("");
+  const [showFundField, setShowFundField] = useState(false);
+  const [open, setOpen] = useState(true);
 
-  const handleOnbusinesschange = (val) => {
-    setSelectedBusinessTypes(val);
-    setbusinessvalue(val);
-    handleChange(val);
-    handleBlur(val);
+  // const [selectedBusinessTypes, setSelectedBusinessTypes] = useState<
+  //   OptionType[]
+  // >([]);
+  // const [selectedIndustries, setSelectedIndustries] = useState<OptionType[]>(
+  //   []
+  // );
+  // const [selectedBusinessModels, setSelectedBusinessModels] = useState<
+  //   OptionType[]
+  // >([]);
+
+  // const handleOnbusinesschange = (val) => {
+  //   setSelectedBusinessTypes(val);
+  //   setbusinessvalue(val);
+  //   handleChange(val);
+  //   handleBlur(val);
+  // };
+
+  // const handleOnindustrychange = (val) => {
+  //   setSelectedIndustries(val);
+  //   setindustryvalue(val);
+  //   handleChange(val);
+  //   handleBlur(val);
+  // };
+
+  // const handleOnbusinessModelchange = (val) => {
+  //   setSelectedBusinessModels(val);
+  //   setvaluebusinessModel(val);
+  //   handleChange(val);
+  //   handleBlur(val);
+  // };
+
+  const handleOnbusinessSelect = (selectedList) => {
+    setbusinessvalue(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
   };
-  const handleOnindustrychange = (val) => {
-    setSelectedIndustries(val);
-    setindustryvalue(val);
-    handleChange(val);
-    handleBlur(val);
+
+  const handleOnbusinessRemove = (selectedList) => {
+    setbusinessvalue(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
+    if (!selectedList.find((item) => item.value === "other")) {
+      setCustomBusiness(""); // clear input if Other is removed
+    }
   };
-  const handleOnbusinessModelchange = (val) => {
-    setSelectedBusinessModels(val);
-    setvaluebusinessModel(val);
-    handleChange(val);
-    handleBlur(val);
+
+  const handleAddCustomBusiness = () => {
+    if (customBusiness.trim() !== "") {
+      const customOption = {
+        label: customBusiness.trim(),
+        value: customBusiness.trim().toLowerCase().replace(/\s+/g, "_"),
+      };
+
+      // Avoid duplicates
+      if (!businessvalue.find((item) => item.value === customOption.value)) {
+        // Add custom option and remove "Other"
+        setbusinessvalue([
+          ...businessvalue.filter((item) => item.value !== "other"),
+          customOption,
+        ]);
+
+        setCustomBusiness(""); // clear input
+      }
+    }
+  };
+
+  const handleOnindustrySelect = (selectedList) => {
+    setindustryvalue(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
+  };
+
+  const handleOnindustryRemove = (selectedList) => {
+    setindustryvalue(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
+    if (!selectedList.find((item) => item.value === "other")) {
+      setCustomIndustry(""); // clear input if Other is removed
+    }
+  };
+
+  const handleAddCustomIndustry = () => {
+    if (customIndustry.trim() !== "") {
+      const customOption = {
+        label: customIndustry.trim(),
+        value: customIndustry.trim().toLowerCase().replace(/\s+/g, "_"),
+      };
+
+      // Avoid duplicates
+      if (!industryvalue.find((item) => item.value === customOption.value)) {
+        // Add custom option and remove "Other"
+        setindustryvalue([
+          ...industryvalue.filter((item) => item.value !== "other"),
+          customOption,
+        ]);
+
+        setCustomIndustry(""); // clear input
+      }
+    }
+  };
+
+  const handleOnbusinessModelSelect = (selectedList) => {
+    setvaluebusinessModel(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
+  };
+
+  const handleOnbusinessModelRemove = (selectedList) => {
+    setvaluebusinessModel(selectedList);
+    handleChange(selectedList);
+    handleBlur(selectedList);
+    if (!selectedList.find((item) => item.value === "other")) {
+      setCustomBusinessModel(""); // clear input if Other is removed
+    }
+  };
+
+  const handleAddCustomBusinessModel = () => {
+    if (customBusinessModel.trim() !== "") {
+      const customOption = {
+        label: customBusinessModel.trim(),
+        value: customBusinessModel.trim().toLowerCase().replace(/\s+/g, "_"),
+      };
+
+      // Avoid duplicates
+      if (
+        !valuebusinessModel.find((item) => item.value === customOption.value)
+      ) {
+        // Add custom option and remove "Other"
+        setvaluebusinessModel([
+          ...valuebusinessModel.filter((item) => item.value !== "other"),
+          customOption,
+        ]);
+
+        setCustomBusinessModel(""); // clear input
+      }
+    }
   };
 
   form.businessType = businessvalue;
@@ -327,15 +453,34 @@ const CompanyForm: React.FC = () => {
             <div className="w-full  flex flex-col mx-auto">
               <label className="text-sm font-medium">Business Type</label>
               {/* MultiSelect Component */}
-              <div className="w-full mt-2">
-                <MultiSelect
+              <div className="w-full mt-2 z-40">
+                <Multiselect
                   options={businessTypes}
-                  value={selectedBusinessTypes}
-                  onChange={handleOnbusinesschange}
-                  labelledBy="Business Type"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  displayValue="label" // shows label to user
+                  selectedValues={businessvalue}
+                  onSelect={handleOnbusinessSelect}
+                  onRemove={handleOnbusinessRemove}
+                  showCheckbox
+                  placeholder="Select Business type"
+                  className="custom-multiselect  w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
                 />
+                {businessvalue.find((item) => item.value === "other") && (
+                  <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
+                    <input
+                      type="text"
+                      value={customBusiness}
+                      onChange={(e) => setCustomBusiness(e.target.value)}
+                      placeholder="Enter your custom business model"
+                      className="rounded-md w-full text-sm outline-none"
+                    />
+                    <button
+                      onClick={handleAddCustomBusiness}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Add
+                    </button>
+                  </div>
+                )}
               </div>
 
               {errors.businessType && (
@@ -350,14 +495,33 @@ const CompanyForm: React.FC = () => {
               <label className="text-sm font-medium">Industry & Sector</label>
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
-                <MultiSelect
+                <Multiselect
                   options={industrySectors}
-                  value={selectedIndustries}
-                  onChange={handleOnindustrychange}
-                  labelledBy="Industry & Sector"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  displayValue="label" // shows label to user
+                  selectedValues={industryvalue}
+                  onSelect={handleOnindustrySelect}
+                  onRemove={handleOnindustryRemove}
+                  showCheckbox
+                  placeholder="Select Industry&Sector type"
+                  className="custom-multiselect w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
                 />
+                {industryvalue.find((item) => item.value === "other") && (
+                  <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
+                    <input
+                      type="text"
+                      value={customIndustry}
+                      onChange={(e) => setCustomIndustry(e.target.value)}
+                      placeholder="Enter your custom business model"
+                      className="rounded-md w-full text-sm outline-none"
+                    />
+                    <button
+                      onClick={handleAddCustomIndustry}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Add
+                    </button>
+                  </div>
+                )}
               </div>
 
               {errors.industrySector && (
@@ -372,14 +536,33 @@ const CompanyForm: React.FC = () => {
               <label className="text-sm font-medium">Business Model</label>
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
-                <MultiSelect
+                <Multiselect
                   options={businessModels}
-                  value={selectedBusinessModels}
-                  onChange={handleOnbusinessModelchange}
-                  labelledBy="Business Model"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  displayValue="label" // shows label to user
+                  selectedValues={valuebusinessModel}
+                  onSelect={handleOnbusinessModelSelect}
+                  onRemove={handleOnbusinessModelRemove}
+                  showCheckbox
+                  placeholder="Select Business Model"
+                  className="custom-multiselect  w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
                 />
+                {valuebusinessModel.find((item) => item.value === "other") && (
+                  <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
+                    <input
+                      type="text"
+                      value={customBusinessModel}
+                      onChange={(e) => setCustomBusinessModel(e.target.value)}
+                      placeholder="Enter your custom business model"
+                      className="rounded-md w-full text-sm outline-none"
+                    />
+                    <button
+                      onClick={handleAddCustomBusinessModel}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Add
+                    </button>
+                  </div>
+                )}
               </div>
 
               {errors.businessModel && (
@@ -432,83 +615,103 @@ const CompanyForm: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="w-full flex flex-col mx-auto">
-              <label className="text-sm font-medium">
-                Amount Required for Funding
-              </label>
-              <div className="w-full h-[46px] flex flex-row justify-between items-center mt-1">
-                {/* Funding Range: Min */}
-                <div className="w-4/12 flex flex-col">
-                  <input
-                    type="number"
-                    name="minFunding"
-                    placeholder="Min"
-                    value={form.minFunding}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
-                  />
-                  {errors.minFunding && (
-                    <div className="text-red-500 text-sm">
-                      {errors.minFunding}
-                    </div>
-                  )}
-                </div>
-                {/* Currency for funding */}
-                <div className="w-2/12 h-[46px]">
-                  <select
-                    name="currency"
-                    id="currency"
-                    value={selectedCurrency}
-                    onChange={(e) => {
-                      setSelectedcurrency(e.target.value);
-                      setForm((prev) => ({
-                        ...prev,
-                       fundingCurrency: e.target.value,
-                      }));
-                      setTouched((prev) => ({ ...prev, fundingCurrency: true }));
-                      validateField("fundingCurrency", e.target.value);
+            {showFundField ? (
+              <span
+                className="text-indigo-600 cursor-pointer ml-5 hover:underline"
+                onClick={() => setShowFundField(false)}
+              >
+                Undo
+              </span>
+            ) : (
+              <div className="w-full flex flex-col mx-auto">
+                <label className="text-sm font-medium">
+                  Amount Required for Funding{" "}
+                  <span
+                    className="text-indigo-600 cursor-pointer ml-5 hover:underline"
+                    onClick={() => {
+                      setShowFundField(true), setOpen(true);
                     }}
-                    onBlur={handleBlur}
-                    className="w-full h-full placeholder:text-black mt-1 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
                   >
-                    <option value="" disabled>
-                      Select Currency
-                    </option>
-                    {data.map((c: any) => (
-                      <option key={c.countryCode} value={c.currency}>
-                        {c.currency}{" "}
-                        <span className="text-red-800 ml-3">
-                          {c.currency_symbol}
-                        </span>
+                    Skip
+                  </span>
+                </label>
+                <div className="w-full h-[46px] flex flex-row justify-between items-center mt-3">
+                  {/* Funding Range: Min */}
+                  <div className="w-4/12 flex flex-col">
+                    <input
+                      type="number"
+                      name="minFunding"
+                      placeholder="Min"
+                      value={form.minFunding}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
+                    />
+                    {errors.minFunding && (
+                      <div className="text-red-500 text-sm">
+                        {errors.minFunding}
+                      </div>
+                    )}
+                  </div>
+                  {/* Currency for funding */}
+                  <div className="w-2/12 h-[46px]">
+                    <select
+                      name="currency"
+                      id="currency"
+                      value={selectedCurrency}
+                      onChange={(e) => {
+                        setSelectedcurrency(e.target.value);
+                        setForm((prev) => ({
+                          ...prev,
+                          fundingCurrency: e.target.value,
+                        }));
+                        setTouched((prev) => ({
+                          ...prev,
+                          fundingCurrency: true,
+                        }));
+                        validateField("fundingCurrency", e.target.value);
+                      }}
+                      onBlur={handleBlur}
+                      className="w-full h-full placeholder:text-black mt-1 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
+                    >
+                      <option value="" disabled>
+                        Select Currency
                       </option>
-                    ))}
-                  </select>
-                  {errors.fundingCurrency && (
-                    <div className="text-red-500 text-sm">
-                      {errors.fundingCurrency}
-                    </div>
-                  )}
-                </div>
-                {/* Funding Range: Max */}
-                <div className="w-4/12 flex flex-col">
-                  <input
-                    type="number"
-                    name="maxFunding"
-                    placeholder="Max"
-                    value={form.maxFunding}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center  text-sm"
-                  />
-                  {errors.maxFunding && (
-                    <div className="text-red-500 text-sm">
-                      {errors.maxFunding}
-                    </div>
-                  )}
+                      {data.map((c: any) => (
+                        <option key={c.countryCode} value={c.currency}>
+                          {c.currency}{" "}
+                          <span className="text-red-800 ml-3">
+                            {c.currency_symbol}
+                          </span>
+                        </option>
+                      ))}
+                    </select>
+                    {errors.fundingCurrency && (
+                      <div className="text-red-500 text-sm">
+                        {errors.fundingCurrency}
+                      </div>
+                    )}
+                  </div>
+                  {/* Funding Range: Max */}
+                  <div className="w-4/12 flex flex-col">
+                    <input
+                      type="number"
+                      name="maxFunding"
+                      placeholder="Max"
+                      value={form.maxFunding}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center  text-sm"
+                    />
+                    {errors.maxFunding && (
+                      <div className="text-red-500 text-sm">
+                        {errors.maxFunding}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* Country */}
             <div className="w-full flex flex-col mx-auto">
               <label className="text-sm font-medium">Country</label>
@@ -712,6 +915,95 @@ const CompanyForm: React.FC = () => {
             </div>
           </div>
         </form>
+
+        <Dialog open={open} onClose={setOpen} className="relative z-10">
+          <DialogBackdrop
+            transition
+            className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+          />
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <DialogPanel
+                transition
+                className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+              >
+                <div
+                  id="alert-additional-content-4"
+                  class="p-4 mb-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+                  role="alert"
+                >
+                  <div class="flex items-center">
+                    <svg
+                      class="shrink-0 w-4 h-4 me-2"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <h3 class="text-lg font-medium">This is a warning alert</h3>
+                  </div>
+                  <div class="mt-2 mb-4 text-sm">
+                    More info about this info warning goes here. This example
+                    text is going to run a bit longer so that you can see how
+                    spacing within an alert works with this kind of content.
+                  </div>
+                  <div class="flex">
+                    <button
+                      type="button"
+                      class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
+                    >
+                      <svg
+                        class="me-2 h-3 w-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 20 14"
+                      >
+                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                      </svg>
+                      View more
+                    </button>
+                    <button
+                      type="button"
+                      class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
+                      data-dismiss-target="#alert-additional-content-4"
+                      aria-label="Close"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowFundField(true), setOpen(false);
+                    }}
+                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  >
+                    Deactivate
+                  </button>
+                  <button
+                    type="button"
+                    data-autofocus
+                    onClick={() => {
+                      setShowFundField(false), setOpen(false);
+                    }}
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  >
+                    {" "}
+                    Undo
+                    <IoArrowUndoCircle className="ml-2 w-5 h-5" />
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
+          </div>
+        </Dialog>
       </div>
     </>
   );

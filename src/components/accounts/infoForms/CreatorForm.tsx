@@ -10,19 +10,17 @@ import "../../../customDropDwon.css"; // Assuming you have some custom styles
 type OptionType = { label: string; value: string };
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessTypes = [
-  { label: "Manufacturer", value: "manufacturer" },
-  { label: "Wholesaler", value: "wholesaler" },
-  { label: "Exporter", value: "exporter" },
-  { label: "Importer", value: "importer" },
-  { label: "Distributor", value: "distributor" },
-  { label: "Retailer", value: "retailer" },
+  { label: "Physical Product", value: "physical_product" },
   { label: "Service Provider", value: "service_provider" },
-  { label: "Trader", value: "trader" },
   { label: "Supplier", value: "supplier" },
-  {
-    label: "Other ", //(custom category for specific type of business not listed)
-    value: "other",
-  },
+  { label: "Manufacturer", value: "manufacturer" },
+  { label: "Distributor", value: "distributor" },
+  { label: "Wholesaler", value: "wholesaler" },
+  { label: "Retailer", value: "retailer" },
+  { label: "Trader", value: "trader" },
+  { label: "Importer", value: "importer" },
+  { label: "Exporter", value: "exporter" },
+  { label: "Other", value: "other" }
 ];
 // Options for MultiSelect businessType, industrySector, and businessModel
 const industrySectors = [
