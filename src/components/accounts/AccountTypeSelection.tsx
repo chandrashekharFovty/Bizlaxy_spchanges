@@ -5,13 +5,30 @@ import AccountOption from "./AccountOptions";
 import InfoCrousel from "./InfoCrousel";
 
 const options = [
-  { id: "company", title: "Company", desc: "Get connected with tools and resources to grow your business." },
-  { id: "investor", title: "Investor", desc: "Discover and track promising investment opportunities." },
-  { id: "startup", title: "Startup", desc: "Access funding, mentorship, and marketing support." },
-  { id: "learner", title: "Learner", desc: "Gain knowledge through insights to enhance your skills." },
-  { id: "startupidea", title: "Startup Idea", desc: "Elevate your idea with funding and expert guidance." },
-  { id: "businessowner", title: "Business Owner", desc: "Gain knowledge through insights to enhance your skills." },
-  { id: "creator", title: "Content Creator", desc: "Elevate your idea with funding and expert guidance." },
+  { id: "company", title: "Company",
+     desc: "Get connected with tools and resources to grow your business.",
+      tooltip: "Select this if your business is registered and in the early growth stage but not yet fully established.", },
+  { id: "investor", title: "Investor",
+     desc: "Discover and track promising investment opportunities." ,
+      tooltip: "For angels, VCs, or firms exploring high-potential startups and deal flow opportunities.",},
+  { id: "startup", title: "Startup", 
+    desc: "Access funding, mentorship, and marketing support.",
+    tooltip: "For early-stage or scaling startups seeking funding, partnerships, and growth support.", },
+  { id: "learner", title: "Learner",
+     desc: "Gain knowledge through insights to enhance your skills.",
+      tooltip: "For students or professionals who want to learn from industry experts and real startup journeys.", },
+  { id: "startupidea", title: "Startup Idea",
+     desc: "Elevate your idea with funding and expert guidance.",
+      tooltip: "For aspiring founders with an idea. Validate, build, and explore funding and mentorship.", },
+  { id: "businessowner", title: "Business Owner",
+     desc: "Gain knowledge through insights to enhance your skills." ,
+      tooltip: "For individual entrepreneurs or solopreneurs managing their own business operations.",},
+       { id: "professionals", title: "Professionals", 
+    desc: "Elevate your idea with funding and expert guidance." ,
+    tooltip: "For working professionals exploring networking, upskilling, or freelance opportunities.",},
+  { id: "creator", title: "Content Creator", 
+    desc: "Elevate your idea with funding and expert guidance." ,
+    tooltip: "For creators sharing business insights, tips, or educational videos with the Bizlaxy community.",},
 ];
 
 const InfoBox = [
@@ -19,6 +36,8 @@ const InfoBox = [
   { title: "Explore Opportunities", descp: "Find events, groups, and collaborations." },
   { title: "Share & Learn", descp: "Share insights, ask questions, and grow your knowledge." },
 ];
+
+
 
 const SelectAccountType = () => {
   const [selected, setSelected] = useState(null);
@@ -46,6 +65,7 @@ const SelectAccountType = () => {
               key={idx}
               id={opt.id}
               title={opt.title}
+              tooltip={opt.tooltip}
               desc={opt.desc}
               selected={selected === opt.id}
               onClick={() => setSelected(opt.id)}

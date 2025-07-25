@@ -165,8 +165,8 @@ const Register = function () {
                   Create Your Account
                 </p>
                 <p className="text-sm font-normal tracking-[0.2px] mt-1">
-                  Join Now & Unlock Your Digital
-                  <span className="font-medium">Galaxy!</span>
+                  Join Now & Unlock Your Digital 
+                  <span className="font-medium ml-1">Galaxy!</span>
                 </p>
               </div>
               <div className="w-full">
@@ -233,8 +233,9 @@ const Register = function () {
                           placeholder="Enter your password"
                           name="password"
                           value={password}
+                          maxLength={45}
                           onChange={onPasswordChange}
-                          className={`inputBox ${
+                          className={`inputBox  ${
                             errors.password
                               ? "invalidInputBox"
                               : "validInputBox"
@@ -325,11 +326,11 @@ const Register = function () {
                 </form>
               </div>
               <div className="w-full flex justify-center items-center gap-1">
-                <p className="text-center text-[14px]">
+                <p className="text-center text-[14px] pt-3">
                   Already have an account?
                 </p>
 
-                <span className="underline">
+                <span className="underline pt-3">
                   <Link to="/">Sign in</Link>
                 </span>
               </div>

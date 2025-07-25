@@ -109,6 +109,9 @@ export default function PhoneInputWithModal() {
         const updatedPhoneNumber = { ...phoneNumber, mobile: phone };
         console.log(updatedPhoneNumber, selected.name,selected.dialCode);
 
+console.log(updatedPhoneNumber, selected.name, selected.dialCode);
+localStorage.setItem("mobilecode", selected?.dialCode || "");
+sessionStorage.setItem("mobile", updatedPhoneNumber.mobile);
 
         sessionStorage.setItem("mobile", updatedPhoneNumber.mobile);
         //alert("Submitted!");
@@ -167,7 +170,7 @@ export default function PhoneInputWithModal() {
                       Phone Number
                     </label>
                     <div
-                      className={`flex border-2 focus:border-2 rounded-xl overflow-hidden ${
+                      className={`flex border-2 focus:border-2  rounded-xl overflow-hidden ${
                         errors.phone ? "invalidInputBox" : "border-blue-300 "
                       }`}
                     >
@@ -198,7 +201,7 @@ export default function PhoneInputWithModal() {
                         value={phone}
                         onChange={onPhoneChange}
                         placeholder="Enter your phone number"
-                        className={`"phoneDialInput w-8/12 px-3 py-2 scrollbar-hide required:normal-nums text-sm outline-none bg-transparent placeholder:text-white placeholder:opacity-75" ${
+                        className={`"phoneDialInput w-8/12 px-3 py-2 scrollbar-hide required:normal-nums text-sm outline-none bg-transparent placeholder:text-slate-300 placeholder:opacity-40" ${
                           errors.phone ? "" : "validInputBox"
                         }`}
                         maxLength={10}

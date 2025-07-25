@@ -515,7 +515,12 @@ export function Post({
                 title={`Download ${content.documentName || "attachment"}`}
               />
             )}
-            <img src="/savePost.svg" alt="savepost" className="h-5 w-5 text-black dark:invert"/>
+            {/* <img
+              src="/savePost.svg"
+              alt="savepost"
+              className="h-5 w-5 text-black dark:invert"
+            /> */}
+            <SavePostBadge />
           </div>
         </div>
       </div>
@@ -1192,7 +1197,10 @@ export function Post({
                   className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
                 >
                   {[
-                    { icon: <MdOutlineInsertLink />, label: "Copy Link" },
+                    { icon: <MdOutlineInsertLink />, label: "Copy Link" ,  onClick: () => {
+      navigator.clipboard.writeText(shareUrl);
+      alert("Link copied! Paste it in Instagram DM or Story.");
+    },},
                     { icon: <RiFacebookCircleLine />, label: "Facebook" },
                     { icon: <BsChatDots />, label: "Messenger" },
                     { icon: <FaWhatsapp />, label: "WhatsApp" },

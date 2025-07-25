@@ -85,10 +85,9 @@ const [offerType, setOfferType] = useState<"description" | "pdf">("description")
            {activeTab === "company" ? (
   <>
     <FormField  label="Company Name" disabled={!isEditing} />
-    <FormField label="Business Type" disabled={!isEditing} />
+    <FormField label="Business Name" disabled={!isEditing} />
     <FormField label="Industry & Sector" disabled={!isEditing} />
     <FormField label="Business Model" disabled={!isEditing} />
-    <FormField label="Company CEO Name" disabled={!isEditing} />
     <FormField label="Company Establishment Year" disabled={!isEditing} />
     <FormField label="Legal Status of Firm" disabled={!isEditing}>
       <select

@@ -12,6 +12,8 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { IoMdNotificationsOff, IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineInsertLink } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import { BsFillPersonFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export function PostModal() {
   const [open, setOpen] = useState(false);
@@ -25,7 +27,7 @@ export function PostModal() {
       pauseOnHover: true,
     });
   };
-
+const navigate = useNavigate();
   const actions = [
     {
       icon: <PostPopoverSaveBadge/>,
@@ -63,6 +65,19 @@ export function PostModal() {
       msg: "Report the Creator",
       danger: true,
     },
+  {
+    icon: (
+      <BsFillPersonFill
+        onClick={(e) => {
+          e.stopPropagation(); 
+          navigate("/addmanager");
+        }}
+        className="cursor-pointer text-lg"
+      />
+    ),
+    label: "Get more visibility",
+      onClick: () => navigate("/adds")
+  },
   ];
 
   return (
@@ -81,22 +96,27 @@ export function PostModal() {
           <DialogPanel className="w-full max-w-md mx-auto  bg-white rounded-2xl border shadow-xl overflow-hidden">
             <div className="dark:dark-color  bg-white py-1 px-0">
               <div className="dark:dark-color  text-sm text-[#050505]">
-                {actions.map(({ icon, label, msg, danger }, i) => (
-                  <div
-                    key={i}
-                    onClick={() => showToast(msg)}
-                    className="border-b last:border-b-0 px-6 cursor-pointer"
-                  >
-                    <div
-                      className={`flex items-center h-14 gap-3 font-medium ${
-                        danger ? "text-red-500" : ""
-                      }`}
-                    >
-                      {icon}
-                      <span>{label}</span>
-                    </div>
-                  </div>
-                ))}
+              {actions.map(({ icon, label, msg, danger, onClick }, i) => (
+  <div
+    key={i}
+    onClick={() => {
+      if (onClick) onClick(); 
+      if (msg) showToast(msg);
+      setOpen(false); 
+    }}
+    className="border-b last:border-b-0 px-6 cursor-pointer"
+  >
+    <div
+      className={`flex items-center h-14 gap-3 font-medium ${
+        danger ? "text-red-500" : ""
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </div>
+  </div>
+))}
+
               </div>
             </div>
           </DialogPanel>

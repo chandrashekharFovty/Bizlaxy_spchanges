@@ -1,7 +1,8 @@
 // AccountOption.tsx
 import React from "react";
+import { FiAlertCircle } from "react-icons/fi";
 
-const AccountOption = ({ id, title, desc, selected, onClick }) => {
+const AccountOption = ({ id, title, desc,tooltip, selected, onClick }) => {
   return (
     <div
       className={`border-2 w-full h-26 max-md:h-32 px-8 max-md:px-4 py-4 max-md:py-1 bg-[#eef4fd] rounded-[12px] cursor-pointer transition duration-200 ${
@@ -11,7 +12,17 @@ const AccountOption = ({ id, title, desc, selected, onClick }) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <h4 className="font-bold text-xl max-md:text-lg">{title}</h4>
+          <h4 className="font-bold text-xl max-md:text-lg">{title}
+              <div className="relative z-0 overflow-visible group ml-2 mt-1 inline-block">
+  <FiAlertCircle className="text-black cursor-pointer" />
+
+  {/* Tooltip */}
+  <span className="absolute left-14 -translate-x-1/2 top-full mt-2 w-72 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gray-800 text-white rounded px-3 py-2 text-xs whitespace-normal shadow-lg text-left">
+    {tooltip || "Info not available"}
+  </span>
+</div>
+
+          </h4>
           <span className="hidden">{id}</span>
           <p className="text-sm font-normal text-gray-500 max-md:text-sm">{desc}</p>
         </div>
