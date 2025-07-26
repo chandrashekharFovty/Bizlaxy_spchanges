@@ -120,19 +120,6 @@ export function Post({
   showOfficialIcon = false,
   isMediaContent = false,
 }: PostProps) {
-  //const [isFollowing, setIsFollowing] = useState(false);
-  // const [comment, setComment] = useState(parseInt(engagement.comments));
-  // const [likes, setLikes] = useState(parseInt(engagement.likes));
-  // const [isLiked, setIsLiked] = useState(false);
-  //const [showComment, setShowComment] = useState(false);
-  // const [commentList, setCommentList] = useState<CommentListItem[]>(() => [
-  //   ...(Array.isArray(commentsList) ? commentsList : []),
-  // ]);
-  // const [commentText, setCommentText] = useState("");
-  // const [postComment, setPostComment] = useState<string[]>([]);
-  // const [showShareUsers, setShowShareUsers] = useState(false);
-  // const [sharedUsers, setSharedUsers] = useState<string[]>([]);
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shares, setShares] = useState(parseInt(engagement.shares));
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -157,6 +144,97 @@ export function Post({
   const [isHovering, setIsHovering] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+
+
+
+
+// Social Media Share Functionality
+const shareUrl = "https://yourwebsite.com/post"; // actual share link
+const shareText = "Check out this Post!";
+
+const socialPlatforms = [
+  {
+    icon: <MdOutlineInsertLink />,
+    label: "Copy Link",
+    onClick: () => {
+      navigator.clipboard.writeText(shareUrl);
+      alert("Link copied! You can paste it anywhere.");
+    },
+  },
+  {
+    icon: <RiFacebookCircleLine />,
+    label: "Facebook",
+    onClick: () => {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <BsChatDots />,
+    label: "Messenger",
+    onClick: () => {
+      window.open(
+        `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaWhatsapp />,
+    label: "WhatsApp",
+    onClick: () => {
+      window.open(
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaThreads />,
+    label: "Threads",
+    onClick: () => {
+      window.open(
+        `https://threads.net/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaXTwitter />,
+    label: "Twitter",
+    onClick: () => {
+      window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <HiMiniArrowTurnUpRight />,
+    label: "More",
+    onClick: () => {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "Eduvid",
+            text: shareText,
+            url: shareUrl,
+          })
+          .catch((err) => console.log("Share failed:", err));
+      } else {
+        alert("Sharing not supported on this device.");
+      }
+    },
+  },
+];
+
+
+
+
+
+
   // Update arrow visibility
   const updateArrows = () => {
     const el = scrollRef.current;
@@ -934,167 +1012,8 @@ export function Post({
         </Dialog.Portal>
       </Dialog.Root> */}
 
-      <Dialog.Root open={isShareOpen} onOpenChange={setIsShareOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
-          <Dialog.Content className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-              <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
-                {/* Close Button */}
-                <button
-                  onClick={() => setIsShareOpen(false)}
-                  className="absolute top-4 right-4 text-2xl text-black dark:text-white"
-                >
-                  ×
-                </button>
-
-                <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
-                  Share Eduvid To
-                </h2>
-
-                {/* Search Input */}
-                <input
-                  type="text"
-                  placeholder="Search Users"
-                  // value={searchTerm}
-                  onChange={handleSearch}
-                  className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
-                />
-
-                {/* Scrollable Horizontal Users */}
-                <div className="relative mb-4">
-                  <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
-                    {filteredUsers.map((user) => {
-                      const isSelected = selectedUsers.includes(user.id);
-                      return (
-                        <div
-                          key={user.id}
-                          onClick={() =>
-                            setSelectedUsers((prev) =>
-                              prev.includes(user.id)
-                                ? prev.filter((id) => id !== user.id)
-                                : [...prev, user.id]
-                            )
-                          }
-                          className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                            isSelected ? "dark:bg-black bg-gray-300" : ""
-                          } cursor-pointer relative`}
-                        >
-                          <div className="relative w-16 h-16 mx-auto">
-                            <img
-                              src={user.img}
-                              alt={user.name}
-                              className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
-                            />
-                            {isSelected && (
-                              <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
-                            )}
-                          </div>
-                          <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
-                            {user.name}
-                          </p>
-                          {user.verified && (
-                            <span className="text-blue-500 text-xs">✔</span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Conditional Message and Send OR Social Buttons */}
-                {selectedUsers.length > 0 ? (
-                  <div className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none">
-                    {/* Message Field */}
-                    <input
-                      type="text"
-                      placeholder="Write a message..."
-                      className="w-full h-full focus:outline-none dark:dark-color text-black"
-                    />
-
-                    {/* Send Button */}
-                    <button
-                      onClick={() => {
-                        // your send logic here
-                        setIsShareOpen(false);
-                      }}
-                      className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
-                    >
-                      Send
-                    </button>
-                  </div>
-                ) : (
-                  // Social Share Buttons
-                  <div
-                    className="relative mt-4"
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
-                  >
-                    {/* Scrollable Social Buttons */}
-                    <div
-                      ref={scrollRef}
-                      className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
-                    >
-                      {[
-                        { icon: <MdOutlineInsertLink />, label: "Copy Link" },
-                        { icon: <RiFacebookCircleLine />, label: "Facebook" },
-                        { icon: <BsChatDots />, label: "Messenger" },
-                        { icon: <FaWhatsapp />, label: "WhatsApp" },
-                        { icon: <FaThreads />, label: "Threads" },
-                        { icon: <FaXTwitter />, label: "Twitter" },
-                        { icon: <HiMiniArrowTurnUpRight />, label: "More" },
-                      ].map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="flex flex-col items-center text-center flex-shrink-0 w-16"
-                        >
-                          <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
-                            {item.icon}
-                          </button>
-                          <span className="pt-1 text-black text-xs dark:text-white">
-                            {item.label}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Left Arrow */}
-                    {isHovering && showLeftArrow && (
-                      <button
-                        onClick={() =>
-                          scrollRef.current.scrollBy({
-                            left: -250,
-                            behavior: "smooth",
-                          })
-                        }
-                        className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                      >
-                        <SlArrowLeft />
-                      </button>
-                    )}
-
-                    {/* Right Arrow */}
-                    {isHovering && showRightArrow && (
-                      <button
-                        onClick={() =>
-                          scrollRef.current.scrollBy({
-                            left: 200,
-                            behavior: "smooth",
-                          })
-                        }
-                        className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                      >
-                        <SlArrowRight />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
+   
+                                                    
       {isShareOpen && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
           <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
@@ -1189,35 +1108,28 @@ export function Post({
                 onMouseLeave={() => setIsHovering(false)}
               >
                 {/* Scrollable Social Buttons */}
-                <div
-                  ref={scrollRef}
-                  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
-                >
-                  {[
-                    { icon: <MdOutlineInsertLink />, label: "Copy Link" ,  onClick: () => {
-      navigator.clipboard.writeText(shareUrl);
-      alert("Link copied! Paste it in Instagram DM or Story.");
-    },},
-                    { icon: <RiFacebookCircleLine />, label: "Facebook" },
-                    { icon: <BsChatDots />, label: "Messenger" },
-                    { icon: <FaWhatsapp />, label: "WhatsApp" },
-                    { icon: <FaThreads />, label: "Threads" },
-                    { icon: <FaXTwitter />, label: "Twitter" },
-                    { icon: <HiMiniArrowTurnUpRight />, label: "More" },
-                  ].map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col items-center text-center flex-shrink-0 w-16"
-                    >
-                      <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
-                        {item.icon}
-                      </button>
-                      <span className="pt-1 text-black text-xs dark:text-white">
-                        {item.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+             <div
+  ref={scrollRef}
+  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+>
+  {socialPlatforms.map((item, idx) => (
+    <div
+      key={idx}
+      className="flex flex-col items-center text-center flex-shrink-0 w-16"
+    >
+      <button
+        onClick={item.onClick}
+        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
+      >
+        {item.icon}
+      </button>
+      <span className="pt-1 text-black text-xs dark:text-white">
+        {item.label}
+      </span>
+    </div>
+  ))}
+</div>
+
 
                 {/* Left Arrow */}
                 {isHovering && showLeftArrow && (

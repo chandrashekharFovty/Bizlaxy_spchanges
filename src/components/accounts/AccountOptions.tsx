@@ -13,7 +13,7 @@ const AccountOption = ({ id, title, desc,tooltip, selected, onClick }) => {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <h4 className="font-bold text-xl max-md:text-lg">{title}
-              <div className="relative z-0 overflow-visible group ml-2 mt-1 inline-block">
+              <div className="lg:hidden xl:hidden relative z-0 overflow-visible group ml-2 mt-1 inline-block">
   <FiAlertCircle className="text-black cursor-pointer" />
 
   {/* Tooltip */}

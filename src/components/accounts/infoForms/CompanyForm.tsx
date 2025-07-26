@@ -502,7 +502,7 @@ const CompanyForm: React.FC = () => {
             <div className="w-full  flex flex-col mx-auto">
               <label className="text-sm font-medium">Industry & Sector</label>
               {/* MultiSelect Component */}
-              <div className="w-full mt-2">
+              <div className="w-full mt-2 ">
                 <Multiselect
                   options={industrySectors}
                   displayValue="label" // shows label to user
@@ -915,7 +915,7 @@ const CompanyForm: React.FC = () => {
                 disabled={!isValid}
                 className={`w-[122px] h-[51px] rounded-xl font-semibold text-lg ${
                   isValid
-                    ? "bg-blue-700 text-white"
+                    ? "bg-[#1C4BC4] text-white"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
                 }`}
               >

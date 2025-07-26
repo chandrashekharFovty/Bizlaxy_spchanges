@@ -702,7 +702,7 @@ const CompanyForm: React.FC = () => {
               disabled={!isValid}
               className={`w-[122px] h-[51px] rounded-xl font-semibold text-lg ${
                 isValid
-                  ? "bg-blue-700 text-white"
+                  ? "bg-[#1C4BC4] text-white"
                   : "bg-gray-300 text-gray-600 cursor-not-allowed"
               }`}
             >

@@ -201,7 +201,7 @@ sessionStorage.setItem("mobile", updatedPhoneNumber.mobile);
                         value={phone}
                         onChange={onPhoneChange}
                         placeholder="Enter your phone number"
-                        className={`"phoneDialInput w-8/12 px-3 py-2 scrollbar-hide required:normal-nums text-sm outline-none bg-transparent placeholder:text-slate-300 placeholder:opacity-40" ${
+                        className={`"phoneDialInput w-8/12 px-3 py-2 scrollbar-hide required:normal-nums text-sm outline-none bg-transparent placeholder:text-slate-300 font-sans placeholder:opacity-40" ${
                           errors.phone ? "" : "validInputBox"
                         }`}
                         maxLength={10}

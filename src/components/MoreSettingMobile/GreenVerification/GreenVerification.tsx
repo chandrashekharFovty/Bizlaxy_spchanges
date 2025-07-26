@@ -128,13 +128,13 @@ function GreenVerification() {
 }
 
 // === APPLY VERIFICATION STEPS ===
-export function ApplyVerificationGreen({ 
-  onBack,
-} ) {
+export function ApplyVerificationGreen({ onBack }) {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [activePopup, setActivePopup] = useState(null);
   const [activeComponent, setActiveComponent] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const steps = [
     { id: 1, label: "Nature of Business" },
@@ -149,6 +149,8 @@ export function ApplyVerificationGreen({
     setCurrentStep(step.id);
     if (step.id === 1 || step.id === 2 || step.id === 3) {
       setActivePopup(step);
+      setInputValue("");
+      setErrorMessage("");
     } else if (step.id === 4) {
       setActiveComponent("Business");
     } else if (step.id === 5) {
@@ -158,7 +160,10 @@ export function ApplyVerificationGreen({
     }
   };
 
-  const handleClosePopup = () => setActivePopup(null);
+  const handleClosePopup = () => {
+    setActivePopup(null);
+    setErrorMessage("");
+  };
   const handleChildBack = () => setActiveComponent(null);
 
   if (activeComponent === "Business") {
@@ -173,12 +178,13 @@ export function ApplyVerificationGreen({
     return <Address onBack={handleChildBack} />;
   }
 
- const renderPopupContent = () => {
+  const renderPopupContent = () => {
     if (!activePopup) return null;
 
     let placeholder = "";
     let title = "";
     let description = " ";
+    let validationRegex = null;
 
     if (activePopup.id === 1) {
       title = "Define Your Business Nature";
@@ -190,30 +196,55 @@ export function ApplyVerificationGreen({
       description =
         "Enter your GST number to enable seamless tax compliance and invoicing.";
       placeholder = "Enter your GST Number";
+      validationRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
     } else if (activePopup.id === 3) {
       title = "PAN Number";
       description =
         "Provide your PAN number to verify your business identity and ensure regulatory compliance.";
       placeholder = "Enter your PAN Number";
+      validationRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     }
+
+    const handleSave = () => {
+      if (validationRegex && !validationRegex.test(inputValue)) {
+        setErrorMessage(`Invalid ${title}. Please enter a valid format.`);
+        return;
+      }
+      console.log(`${title} saved:`, inputValue);
+      handleClosePopup();
+    };
 
     return (
       <>
         <button
           onClick={handleClosePopup}
-          className="text-blue-600 font-semibold mb-4"
+          className="text-blue-600 font-semibold mb-1"
         >
           Back
         </button>
 
-        <h1 className="text-lg font-bold mb-2">{title}</h1>
-        <p>{description}</p>
+        <h1 className="text-lg font-bold mb-1">{title}</h1>
+        <p className="text-gray-500 mb-3 font-sans text-sm">{description}</p>
+
         <input
           type="text"
           placeholder={placeholder}
-          className="w-full border px-4 py-2 rounded mb-4"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            setErrorMessage("");
+          }}
+          className="w-full border border-gray-300 px-4 py-2 rounded mb-2 focus:outline-none placeholder:font-sans placeholder:text-gray-400 placeholder:text-sm"
         />
-        <button className="w-full bg-blue-600 text-white py-2 rounded-xl">
+
+        {errorMessage && (
+          <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
+        )}
+
+        <button
+          onClick={handleSave}
+          className="w-full bg-blue-600 text-white py-2 rounded-xl"
+        >
           Save
         </button>
       </>
@@ -221,7 +252,7 @@ export function ApplyVerificationGreen({
   };
 
   return (
-    <div className="dark:dark-color p-6  w-full h-full">
+    <div className="dark:dark-color p-6 w-full h-full">
       {/* Back Button */}
       <button onClick={onBack} className="flex items-center font-semibold mb-4">
         <MdExpandLess className="transform rotate-[-90deg] text-[40px] cursor-pointer" />
@@ -229,11 +260,10 @@ export function ApplyVerificationGreen({
 
       <h1 className="text-2xl font-bold mb-2">Complete Your Verification</h1>
       <p className="dark:text-gray-400 text-gray-600">
-        Select the pending documents to finish verifying your account and
-        ensure secure access.
+        Select the pending documents to finish verifying your account and ensure secure access.
       </p>
 
-      <div className="mt-8 space-y-6 ">
+      <div className="mt-8 space-y-6">
         {steps.map((step) => (
           <div
             key={step.id}
@@ -242,7 +272,7 @@ export function ApplyVerificationGreen({
           >
             <div className="mt-1 flex items-center justify-center w-4 h-4 flex-shrink-0">
               {step.id < currentStep ? (
-                <div className="bg-purple-600 w-4 h-4  rounded-full flex items-center justify-center">
+                <div className="bg-purple-600 w-4 h-4 rounded-full flex items-center justify-center">
                   <FaCheck className="text-white text-[8px] lg:text-[10px]" />
                 </div>
               ) : step.id === currentStep ? (
@@ -287,8 +317,8 @@ export function ApplyVerificationGreen({
       </Transition>
     </div>
   );
-
 }
+
 
 // export function Basic() {
 //   const [activePopup, setActivePopup] = useState(null);

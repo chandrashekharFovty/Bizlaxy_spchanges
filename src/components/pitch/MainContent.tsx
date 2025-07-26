@@ -245,6 +245,93 @@ export default function MainContent({ onNavigate }: Props) {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
+
+  // social media share links
+  const shareUrl = "https://yourwebsite.com/eduvid"; // your actual share link
+const shareText = "Check out this Eduvid!";
+
+const socialPlatforms = [
+  {
+    icon: <MdOutlineInsertLink />,
+    label: "Copy Link",
+    onClick: () => {
+      navigator.clipboard.writeText(shareUrl);
+      alert("Link copied! You can paste it anywhere.");
+    },
+  },
+  {
+    icon: <RiFacebookCircleLine />,
+    label: "Facebook",
+    onClick: () => {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <BsChatDots />,
+    label: "Messenger",
+    onClick: () => {
+      window.open(
+        `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaWhatsapp />,
+    label: "WhatsApp",
+    onClick: () => {
+      window.open(
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaThreads />,
+    label: "Threads",
+    onClick: () => {
+      window.open(
+        `https://threads.net/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <FaXTwitter />,
+    label: "Twitter",
+    onClick: () => {
+      window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank"
+      );
+    },
+  },
+  {
+    icon: <HiMiniArrowTurnUpRight />,
+    label: "More",
+    onClick: () => {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "Eduvid",
+            text: shareText,
+            url: shareUrl,
+          })
+          .catch((err) => console.log("Share failed:", err));
+      } else {
+        alert("Sharing not supported on this device.");
+      }
+    },
+  },
+];
+
+
+
+
+
   // Update arrow visibility
   const updateArrows = () => {
     const el = scrollRef.current;
@@ -937,38 +1024,28 @@ export default function MainContent({ onNavigate }: Props) {
                         onMouseLeave={() => setIsHovering(false)}
                       >
                         {/* Scrollable Social Buttons */}
-                        <div
-                          ref={scrollRef}
-                          className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
-                        >
-                          {[
-                            {
-                              icon: <MdOutlineInsertLink />,
-                              label: "Copy Link",
-                            },
-                            {
-                              icon: <RiFacebookCircleLine />,
-                              label: "Facebook",
-                            },
-                            { icon: <BsChatDots />, label: "Messenger" },
-                            { icon: <FaWhatsapp />, label: "WhatsApp" },
-                            { icon: <FaThreads />, label: "Threads" },
-                            { icon: <FaXTwitter />, label: "X" },
-                            { icon: <HiMiniArrowTurnUpRight />, label: "More" },
-                          ].map((item, idx) => (
-                            <div
-                              key={idx}
-                              className="flex flex-col items-center text-center flex-shrink-0 w-16"
-                            >
-                              <button className="bg-gray-200 shadow text-black text-2xl rounded-full p-3">
-                                {item.icon}
-                              </button>
-                              <span className="pt-1 text-black dark:text-white text-xs">
-                                {item.label}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                <div
+  ref={scrollRef}
+  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+>
+  {socialPlatforms.map((item, idx) => (
+    <div
+      key={idx}
+      className="flex flex-col items-center text-center flex-shrink-0 w-16"
+    >
+      <button
+        onClick={item.onClick}
+        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
+      >
+        {item.icon}
+      </button>
+      <span className="pt-1 text-black text-xs dark:text-white">
+        {item.label}
+      </span>
+    </div>
+  ))}
+</div>
+
 
                         {/* Left Arrow */}
                         {isHovering && showLeftArrow && (

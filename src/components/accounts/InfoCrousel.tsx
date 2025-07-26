@@ -1,4 +1,3 @@
-// InfoCarousel.tsx
 import React, { useEffect, useState } from "react";
 
 export interface InfoBox {
@@ -13,6 +12,12 @@ export interface InfoBoxProps {
 export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Reset index when InfoBoxes change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [InfoBoxes]);
+
+  // Auto-slide effect
   useEffect(() => {
     const id = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % InfoBoxes.length);
@@ -20,7 +25,7 @@ export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
     return () => clearInterval(id);
   }, [InfoBoxes.length]);
 
-  const { title, descp } = InfoBoxes[currentIndex];
+  const { title, descp } = InfoBoxes[currentIndex] || {};
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-start">
@@ -32,7 +37,7 @@ export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-[6px] rounded-full cursor-pointer transition-all duration-300
-            ${idx === currentIndex ? "w-16 bg-white" : "w-8 bg-white/50"}`}
+            ${idx === currentIndex ? "w-10 bg-white" : "w-8 bg-white/50"}`}
           ></div>
         ))}
       </div>
