@@ -16,6 +16,8 @@ const OtpPage = () => {
     mobile: sessionStorage.getItem('mobile'),
     otp: "",
   });
+
+
   const [error, setError] = useState("");
 
   const inputsRef = useRef([]);
@@ -73,18 +75,30 @@ const OtpPage = () => {
       );
   };
 
-  //useEffect(() => {
-  //   if (showSuccess) {
-      //console.log(showSuccess);
-  //     toast.success(showSuccess);
-  //   } else if (showError) {
-  //     toast.error(showError);
-      // console.log(showError);
-  //   }
-  // }, [showSuccess, showError]);
+
+
+
+  const handlePaste = (e) => {
+  const paste = e.clipboardData.getData("text");
+  if (/^\d{6}$/.test(paste)) {
+    const otpArray = paste.split("");
+    setOtp(otpArray);
+    otpArray.forEach((digit, index) => {
+      if (inputsRef.current[index]) {
+        inputsRef.current[index].value = digit;
+      }
+    });
+    inputsRef.current[5]?.focus();
+    e.preventDefault();
+  }
+};
+
+const mobileCode = localStorage.getItem("mobilecode");
+
 
   //hasshed phone number show in the otp page
   function maskPhonenumber (){
+    
     const mobile = fullotps.mobile;
     if (mobile && mobile.length >= 10) {
       return `${mobile.slice(0, 3)}****${mobile.slice(-3)}`;
@@ -107,8 +121,8 @@ const OtpPage = () => {
                     <ArrowLeftCircleIcon />
                   </span>
                 </p>
-                <p className="text-base font-normal">
-                  6 digit Otp sent to your mobile  <span className="font-medium">{maskPhonenumber()}</span>
+                <p className="text-base font-normal max-md:text-sm">
+                  6 digit Otp sent to your mobile  <span className=" font-medium max-md:font-normal">+{mobileCode}<span></span> {maskPhonenumber()}</span>
                   {/* <br /> */} 
                  
                 </p>
@@ -126,6 +140,7 @@ const OtpPage = () => {
                         type="text"
                         maxLength={1}
                         value={digit}
+                        onPaste={(e) => handlePaste(e)}
                         onChange={(e) => handleChange(idx, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, idx)}
                         ref={(el) => (inputsRef.current[idx] = el)}

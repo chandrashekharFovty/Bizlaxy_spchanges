@@ -449,10 +449,10 @@ export function Business({ onBack }) {
 
 
   const options = [
-    { id: "GST Certificate", title: "GST Certificate", desc: "Upload GST certificate." },
-    { id: "Shop License", title: "Shop License", desc: "Upload Shop Act License." },
-    { id: "Udyam Certificate", title: "Udyam Certificate", desc: "Upload MSME Udyam Registration." },
-    { id: "ImportExport", title: "Import Export Code", desc: "Provide Import Export Code." },
+    { id: "Certificate of Inscorporation", title: "Certificate of Inscorporation", desc: "Company registration proof from MCA for Pvt Ltd, LLP, or OPC." },
+    { id: "Trade License", title: "Trade License", desc: "Local authority's approval to run your business operation" },
+    { id: "Gumasta License", title: "Gumasta License", desc: "Local Shop and Establishment License for sole proprietorships." },
+    { id: "MSME Registration", title: "MSME Registration", desc: "Govt certificate for MSME status with related benefits." },
   ];
 
  const handleOptionClick = (id) => {
@@ -479,7 +479,7 @@ export function Business({ onBack }) {
             Business Registration Proof
           </h1>
           <p className="text-sm pt-1">
-            To proceed, please upload one of the following documents.
+           To verify your business, Please upload any one of the following documents applicable to your business type.
           </p>
 
           <div className="w-full dark:dark-color overflow-y-auto scrollbar-hide mt-12 flex flex-col gap-5">
@@ -691,8 +691,8 @@ const option = [
     desc: "Valid rental or lease document.",
   },
   {
-    id: "Official Document",
-    title: "Official Document",
+    id: "Any other Official Document that verify the business address.",
+    title: "Any other Official Document that verify the business address.",
     desc: "Government-issued proof with business address.",
   },
 ];

@@ -5,6 +5,7 @@ import { Country, State, City } from "country-state-city";
 import { MultiSelect } from "react-multi-select-component";
 // import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../../../customDropDwon.css"; // Assuming you have some custom styles
+import IndustrySectors from "../../../../public/industrySectors.json"
 
 // import type { ICountry, IState, ICity } from "country-state-city";
 type OptionType = { label: string; value: string };
@@ -23,67 +24,59 @@ const businessTypes = [
   { label: "Other", value: "other" }
 ];
 // Options for MultiSelect businessType, industrySector, and businessModel
-const industrySectors = [
-  { label: "Drugs & Pharmaceuticals", value: "drugs_pharmaceuticals" },
-  { label: "Hospital & Diagnostics", value: "hospital_diagnostics" },
-  { label: "Food & Beverages", value: "food_beverages" },
-  {
-    label: "Industrial Plants & Machinery",
-    value: "industrial_plants_machinery",
-  },
-  { label: "Industrial Supplies", value: "industrial_supplies" },
-  { label: "Building & Construction", value: "building_construction" },
-  { label: "Apparel & Garments", value: "apparel_garments" },
-  { label: "Electronics & Electrical", value: "electronics_electrical" },
-  { label: "Packaging Machines & Goods", value: "packaging_machines_goods" },
-  { label: "Chemicals, Dyes & Solvents", value: "chemicals_dyes_solvents" },
-  { label: "Mechanical Parts & Spares", value: "mechanical_parts_spares" },
-  { label: "Lab Instruments & Supplies", value: "lab_instruments_supplies" },
-  { label: "Furniture & Supplies", value: "furniture_supplies" },
-  { label: "Automobile, Parts & Spares", value: "automobile_parts_spares" },
-  { label: "Agriculture & Farming", value: "agriculture_farming" },
-  { label: "Housewares & Supplies", value: "housewares_supplies" },
-  { label: "Metals, Alloys & Minerals", value: "metals_alloys_minerals" },
-  { label: "Hand & Machine Tools", value: "hand_machine_tools" },
-  { label: "Handicrafts & Decoratives", value: "handicrafts_decoratives" },
-  {
-    label: "Kitchen Utensils & Appliances",
-    value: "kitchen_utensils_appliances",
-  },
-  { label: "Textiles, Yarn & Fabrics", value: "textiles_yarn_fabrics" },
-  { label: "Books & Stationery", value: "books_stationery" },
-  { label: "Cosmetics & Personal Care", value: "cosmetics_personal_care" },
-  { label: "Home Textile & Furnishing", value: "home_textile_furnishing" },
-  { label: "Engineering Services", value: "engineering_services" },
-  { label: "Gems & Jewelry", value: "gems_jewelry" },
-  { label: "Computer & IT Solutions", value: "computer_it_solutions" },
-  { label: "Fashion Accessories & Gear", value: "fashion_accessories_gear" },
-  { label: "Herbal & Ayurvedic Products", value: "herbal_ayurvedic_products" },
-  { label: "Security Systems & Services", value: "security_systems_services" },
-  { label: "Sports Goods, Toys & Games", value: "sports_toys_games" },
-  { label: "Telecom Equipment & Goods", value: "telecom_equipment_goods" },
-  { label: "Paper & Paper Products", value: "paper_paper_products" },
-  { label: "Bags, Belts & Wallets", value: "bags_belts_wallets" },
-  { label: "Media, PR & Publishing", value: "media_pr_publishing" },
-  { label: "IT & Telecom Services", value: "it_telecom_services" },
-  { label: "Transportation & Logistics", value: "transportation_logistics" },
-  { label: "Business & Audit Services", value: "business_audit_services" },
-  { label: "Financial & Legal Services", value: "financial_legal_services" },
-  { label: "Call Center & BPO Services", value: "call_center_bpo_services" },
-  { label: "Bicycle, Rickshaw & Spares", value: "bicycle_rickshaw_spares" },
-  { label: "R&D and Testing Labs", value: "rnd_testing_labs" },
-  { label: "Architecture & Interiors", value: "architecture_interiors" },
-  { label: "HR Planning & Recruitment", value: "hr_planning_recruitment" },
-  { label: "Rail, Shipping & Aviation", value: "rail_shipping_aviation" },
-  { label: "Leather Products", value: "leather_products" },
-  { label: "Electronics Components", value: "electronics_components" },
-  { label: "Electrical Equipment", value: "electrical_equipment" },
-  {
-    label: "Hospital, Clinic & Consultation",
-    value: "hospital_clinic_consultation",
-  },
-  { label: "OTHER", value: "other" },
-];
+// const industrySectors = [
+//   { "label": "Drugs & Pharmaceuticals", "value": "drugs_pharmaceuticals" },
+//   { "label": "Hospital & Diagnostics", "value": "hospital_diagnostics" },
+//   { "label": "Food & Beverages", "value": "food_beverages" },
+//   { "label": "Industrial Plants & Machinery", "value": "industrial_plants_machinery" },
+//   { "label": "Industrial Supplies", "value": "industrial_supplies" },
+//   { "label": "Building & Construction", "value": "building_construction" },
+//   { "label": "Apparel & Garments", "value": "apparel_garments" },
+//   { "label": "Electronics & Electrical", "value": "electronics_electrical" },
+//   { "label": "Packaging Machines & Goods", "value": "packaging_machines_goods" },
+//   { "label": "Chemicals, Dyes & Solvents", "value": "chemicals_dyes_solvents" },
+//   { "label": "Mechanical Parts & Spares", "value": "mechanical_parts_spares" },
+//   { "label": "Lab Instruments & Supplies", "value": "lab_instruments_supplies" },
+//   { "label": "Furniture & Supplies", "value": "furniture_supplies" },
+//   { "label": "Automobile, Parts & Spares", "value": "automobile_parts_spares" },
+//   { "label": "Agriculture & Farming", "value": "agriculture_farming" },
+//   { "label": "Housewares & Supplies", "value": "housewares_supplies" },
+//   { "label": "Metals, Alloys & Minerals", "value": "metals_alloys_minerals" },
+//   { "label": "Hand & Machine Tools", "value": "hand_machine_tools" },
+//   { "label": "Handicrafts & Decoratives", "value": "handicrafts_decoratives" },
+//   { "label": "Kitchen Utensils & Appliances", "value": "kitchen_utensils_appliances" },
+//   { "label": "Textiles, Yarn & Fabrics", "value": "textiles_yarn_fabrics" },
+//   { "label": "Books & Stationery", "value": "books_stationery" },
+//   { "label": "Cosmetics & Personal Care", "value": "cosmetics_personal_care" },
+//   { "label": "Home Textile & Furnishing", "value": "home_textile_furnishing" },
+//   { "label": "Engineering Services", "value": "engineering_services" },
+//   { "label": "Gems & Jewelry", "value": "gems_jewelry" },
+//   { "label": "Computer & IT Solutions", "value": "computer_it_solutions" },
+//   { "label": "Fashion Accessories & Gear", "value": "fashion_accessories_gear" },
+//   { "label": "Herbal & Ayurvedic Products", "value": "herbal_ayurvedic_products" },
+//   { "label": "Security Systems & Services", "value": "security_systems_services" },
+//   { "label": "Sports Goods, Toys & Games", "value": "sports_toys_games" },
+//   { "label": "Telecom Equipment & Goods", "value": "telecom_equipment_goods" },
+//   { "label": "Paper & Paper Products", "value": "paper_paper_products" },
+//   { "label": "Bags, Belts & Wallets", "value": "bags_belts_wallets" },
+//   { "label": "Media, PR & Publishing", "value": "media_pr_publishing" },
+//   { "label": "IT & Telecom Services", "value": "it_telecom_services" },
+//   { "label": "Transportation & Logistics", "value": "transportation_logistics" },
+//   { "label": "Business & Audit Services", "value": "business_audit_services" },
+//   { "label": "Financial & Legal Services", "value": "financial_legal_services" },
+//   { "label": "Call Center & BPO Services", "value": "call_center_bpo_services" },
+//   { "label": "Bicycle, Rickshaw & Spares", "value": "bicycle_rickshaw_spares" },
+//   { "label": "R&D and Testing Labs", "value": "rnd_testing_labs" },
+//   { "label": "Architecture & Interiors", "value": "architecture_interiors" },
+//   { "label": "HR Planning & Recruitment", "value": "hr_planning_recruitment" },
+//   { "label": "Rail, Shipping & Aviation", "value": "rail_shipping_aviation" },
+//   { "label": "Leather Products", "value": "leather_products" },
+//   { "label": "Electronics Components", "value": "electronics_components" },
+//   { "label": "Electrical Equipment", "value": "electrical_equipment" },
+//   { "label": "Hospital, Clinic & Consultation", "value": "hospital_clinic_consultation" },
+//   { "label": "OTHER", "value": "other" }
+// ]
+;
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessModels = [
   { label: "B2B", value: "b2b" },
@@ -157,6 +150,7 @@ const CompanyForm: React.FC = () => {
   const [selectedBusinessModels, setSelectedBusinessModels] = useState<
     OptionType[]
   >([]);
+    const [sectors, setSectors] = useState([]);
 
   const handleOnbusinesschange = (val) => {
     setSelectedBusinessTypes(val);
@@ -279,6 +273,26 @@ const CompanyForm: React.FC = () => {
     navigate("/feed");
   };
 
+  const IndustrySector=async()=>{
+    try{
+      const response=await fetch("/industrySectors.json")
+      const data=await  response.json();
+     setSectors(data)
+    }catch(error){
+      console.error("Faild to load industry data",error)
+    }
+  }
+
+
+  useEffect(()=>{
+   IndustrySector();
+  },[])
+useEffect(() => {
+    fetch("/industrySectors.json") // remove ../../.. for public/ path
+      .then((res) => res.json())
+      .then((json) => setSectors(json))
+      .catch((err) => console.error("Failed to load industries:", err));
+  }, []);
   return (
     <>
       <div className="w-full h-auto">
@@ -348,7 +362,7 @@ const CompanyForm: React.FC = () => {
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
                 <MultiSelect
-                  options={industrySectors}
+                 options={sectors}
                   value={selectedIndustries}
                   onChange={handleOnindustrychange}
                   labelledBy="Industry & Sector"

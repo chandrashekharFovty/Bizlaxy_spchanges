@@ -71,7 +71,7 @@ const Editprofile: React.FC<EditprofileProps> = ({
               <div className="dark:dark-color h-[34px] w-[148px] rounded-[6px] bg-black/30 max-md:ml-36 ml-[300px] mt-5 border border-transparent">
                 <label
                   htmlFor="coverimage"
-                  className="text-white px-2 py-1 text-[14px] cursor-pointer block w-full h-full text-center"
+                  className="text-white  px-2 py-1 text-[14px] cursor-pointer block w-full h-full text-center"
                 >
                   Edit Cover Image
                 </label>
@@ -81,12 +81,12 @@ const Editprofile: React.FC<EditprofileProps> = ({
           </div>
 
           {/* Form */}
-          <div className="dark:dark-color dark:border-none w-full bg-white z-10 flex flex-col items-center rounded-t-[22px] text-center justify-start border-solid border-l-2 border-[#f3f2fa] relative">
+          <div className="dark:dark-color max-md:bottom-[80px] dark:border-none w-full bg-white z-10 flex flex-col items-center max-md:rounded-t-xl text-center justify-start border-solid border-l-2 border-[#f3f2fa] relative">
             {/* Profile image for mobile */}
-            <div className="relative xl:hidden">
+            <div className="relative xl:hidden max-md:rounded-xl">
               <img
                 src={selectedProfile || img}
-                className="w-[150px] h-[150px] rounded-full object-cover border-4 border-white shadow-md mx-auto"
+                className="w-[150px] h-[150px] rounded-full max-md:mt-4 object-cover border-4 border-white shadow-md mx-auto"
               />
               <label htmlFor="profileimage">
                 <div className="absolute bottom-[2rem] right-[calc(50%-60px)] bg-blue-500 border border-gray-300 rounded-full p-1 cursor-pointer">
@@ -114,7 +114,7 @@ const Editprofile: React.FC<EditprofileProps> = ({
 
             {/* Inputs */}
             <div className="text-center md:mt-4 mt-6 w-full px-6 border-r border-[#dfdede]">
-              <form className="text-left w-[700px] space-y-4 pb-28">
+              <form className="text-left w-[700px] max-md:w-[280px] space-y-4 pb-28">
                 <div>
                   <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                   <input

@@ -153,7 +153,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   <div className="dark:dark-color p-[2px] rounded-xl ">
     <Link
       to="/editprofile"
-      className=" px-4 py-2  block  text-black bg-gray-200 border border-gray-400 rounded-xl"
+      className=" px-4 py-2 block  text-black bg-gray-200 border border-gray-400 rounded-xl"
     >
       Edit Profile
     </Link>
