@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 // Create the context
 export const ThemeContext = createContext();
@@ -7,12 +7,32 @@ export const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev);
-    // Optional: toggle a `dark` class on the `html` for Tailwind
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark");
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
     }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => {
+      const newTheme = !prev;
+      // Save to localStorage
+      localStorage.setItem("theme", newTheme ? "dark" : "light");
+
+      // Toggle the class on <html>
+      if (typeof document !== "undefined") {
+        if (newTheme) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+
+      return newTheme;
+    });
   };
 
   return (

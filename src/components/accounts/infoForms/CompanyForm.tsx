@@ -850,7 +850,7 @@ const CompanyForm: React.FC = () => {
               >
                 <div
                   id="alert-additional-content-4"
-                  className="p-4 mb-4 text-white flex gap-3 items-center border rounded-lg btn-gradient dark:bg-gray-800"
+                  className="p-4 mb-4 text-black flex gap-3 items-center border rounded-xl bg-white shadow-xl dark:bg-gray-800"
                   role="alert"
                 >
                   <div className="flex items-center">
@@ -881,10 +881,10 @@ const CompanyForm: React.FC = () => {
                         }));
                         setShowFundField(false), setOpen(false);
                       }}
-                      className="text-white bg-[#1C4BC4]  focus:ring-4 focus:outline-none font-medium rounded-lg text-xs px-2 me-2 text-center inline-flex items-center dark:bg-gray-800 dark:focus:ring-yellow-800"
+                      className="text-white bg-[#1C4BC4]  focus:ring-4 focus:outline-none font-medium rounded-xl text-xs px-3 py-2 me-2 text-center inline-flex items-center dark:bg-gray-800 dark:focus:ring-yellow-800"
                     >
                       Undo
-                      <IoArrowUndoCircle className="ml-2 w-5 h-5" />
+                      {/* <IoArrowUndoCircle className="ml-2 w-5 h-5" /> */}
                     </button>
                     <button
                       type="button"
@@ -897,7 +897,7 @@ const CompanyForm: React.FC = () => {
                         }));
                         setShowFundField(true), setOpen(false);
                       }}
-                      className="text-white bg-[#1C4BC4] dark:bg-gray-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-xs px-2 me-2 text-center inline-flex items-center"
+                      className="text-white bg-[#1C4BC4] dark:bg-gray-800 focus:ring-4 focus:outline-none font-medium rounded-xl text-xs px-2 me-2 text-center inline-flex items-center"
                     >
                       Dismiss
                     </button>
