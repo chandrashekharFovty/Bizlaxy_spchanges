@@ -102,7 +102,7 @@ const navigate = useNavigate();
     onClick={() => {
       if (onClick) onClick(); 
       if (msg) showToast(msg);
-      setOpen(false); 
+      setOpen(true); 
     }}
     className="border-b last:border-b-0 px-6 cursor-pointer"
   >
