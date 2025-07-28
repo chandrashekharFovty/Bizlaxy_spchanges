@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 //import { MultiSelect } from "react-multi-select-component";
 import Multiselect from "multiselect-react-dropdown";
+import MultiSelectDropdown, {
+  OptionType,
+} from "../../../hooks/MultiSelectDropdown";
 // import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../../../customDropDwon.css"; // Assuming you have some custom styles
 // import type { ICountry, IState, ICity } from "country-state-city";
@@ -18,7 +21,7 @@ import { CiUndo } from "react-icons/ci";
 import { Undo2 } from "lucide-react";
 import { IoArrowUndoCircle } from "react-icons/io5";
 
-type OptionType = { label: string; value: string };
+//type OptionType = { label: string; value: string };
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessTypes = [
   { label: "Physical Product", value: "physical_product" },
@@ -160,151 +163,14 @@ const CompanyForm: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Touched>({});
   const [businessvalue, setbusinessvalue] = useState([]);
-  const [customBusiness, setCustomBusiness] = useState("");
   const [industryvalue, setindustryvalue] = useState([]);
-  const [customIndustry, setCustomIndustry] = useState("");
   const [valuebusinessModel, setvaluebusinessModel] = useState([]);
-  const [customBusinessModel, setCustomBusinessModel] = useState("");
   const [showFundField, setShowFundField] = useState(false);
   const [open, setOpen] = useState(false);
+  const [skippedFields, setSkippedFields] = useState<
+    Partial<Record<keyof Form, boolean>>
+  >({});
 
-  // const [selectedBusinessTypes, setSelectedBusinessTypes] = useState<
-  //   OptionType[]
-  // >([]);
-  // const [selectedIndustries, setSelectedIndustries] = useState<OptionType[]>(
-  //   []
-  // );
-  // const [selectedBusinessModels, setSelectedBusinessModels] = useState<
-  //   OptionType[]
-  // >([]);
-
-  // const handleOnbusinesschange = (val) => {
-  //   setSelectedBusinessTypes(val);
-  //   setbusinessvalue(val);
-  //   handleChange(val);
-  //   handleBlur(val);
-  // };
-
-  // const handleOnindustrychange = (val) => {
-  //   setSelectedIndustries(val);
-  //   setindustryvalue(val);
-  //   handleChange(val);
-  //   handleBlur(val);
-  // };
-
-  // const handleOnbusinessModelchange = (val) => {
-  //   setSelectedBusinessModels(val);
-  //   setvaluebusinessModel(val);
-  //   handleChange(val);
-  //   handleBlur(val);
-  // };
-
-  const handleOnbusinessSelect = (selectedList) => {
-    setbusinessvalue(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-  };
-
-  const handleOnbusinessRemove = (selectedList) => {
-    setbusinessvalue(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-    if (!selectedList.find((item) => item.value === "other")) {
-      setCustomBusiness(""); // clear input if Other is removed
-    }
-  };
-
-  const handleAddCustomBusiness = () => {
-    if (customBusiness.trim() !== "") {
-      const customOption = {
-        label: customBusiness.trim(),
-        value: customBusiness.trim().toLowerCase().replace(/\s+/g, "_"),
-      };
-
-      // Avoid duplicates
-      if (!businessvalue.find((item) => item.value === customOption.value)) {
-        // Add custom option and remove "Other"
-        setbusinessvalue([
-          ...businessvalue.filter((item) => item.value !== "other"),
-          customOption,
-        ]);
-
-        setCustomBusiness(""); // clear input
-      }
-    }
-  };
-
-  const handleOnindustrySelect = (selectedList) => {
-    setindustryvalue(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-  };
-
-  const handleOnindustryRemove = (selectedList) => {
-    setindustryvalue(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-    if (!selectedList.find((item) => item.value === "other")) {
-      setCustomIndustry(""); // clear input if Other is removed
-    }
-  };
-
-  const handleAddCustomIndustry = () => {
-    if (customIndustry.trim() !== "") {
-      const customOption = {
-        label: customIndustry.trim(),
-        value: customIndustry.trim().toLowerCase().replace(/\s+/g, "_"),
-      };
-
-      // Avoid duplicates
-      if (!industryvalue.find((item) => item.value === customOption.value)) {
-        // Add custom option and remove "Other"
-        setindustryvalue([
-          ...industryvalue.filter((item) => item.value !== "other"),
-          customOption,
-        ]);
-
-        setCustomIndustry(""); // clear input
-      }
-    }
-  };
-
-  const handleOnbusinessModelSelect = (selectedList) => {
-    setvaluebusinessModel(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-  };
-
-  const handleOnbusinessModelRemove = (selectedList) => {
-    setvaluebusinessModel(selectedList);
-    handleChange(selectedList);
-    handleBlur(selectedList);
-    if (!selectedList.find((item) => item.value === "other")) {
-      setCustomBusinessModel(""); // clear input if Other is removed
-    }
-  };
-
-  const handleAddCustomBusinessModel = () => {
-    if (customBusinessModel.trim() !== "") {
-      const customOption = {
-        label: customBusinessModel.trim(),
-        value: customBusinessModel.trim().toLowerCase().replace(/\s+/g, "_"),
-      };
-
-      // Avoid duplicates
-      if (
-        !valuebusinessModel.find((item) => item.value === customOption.value)
-      ) {
-        // Add custom option and remove "Other"
-        setvaluebusinessModel([
-          ...valuebusinessModel.filter((item) => item.value !== "other"),
-          customOption,
-        ]);
-
-        setCustomBusinessModel(""); // clear input
-      }
-    }
-  };
 
   form.businessType = businessvalue;
   form.industrySector = industryvalue;
@@ -316,9 +182,19 @@ const CompanyForm: React.FC = () => {
     industrySector: (v) => (!v ? "Pick at least one" : ""),
     businessModel: (v) => (!v ? "Pick at least one" : ""),
     companyStage: (v) => (!v ? "Please select a stage" : ""),
-    fundingCurrency: (v) => (!v ? "Required" : ""),
-    minFunding: (v) => (!v ? "Required" : ""),
+    // fundingCurrency: (v) => (!v ? "Required" : ""),
+    // minFunding: (v) => (!v ? "Required" : ""),
+    // maxFunding: (v) => {
+    //   if (!v) return "Required";
+    //   if (form.minFunding && Number(v) < Number(form.minFunding))
+    //     return "Max must be ≥ Min";
+    //   return "";
+    // },
+    fundingCurrency: (v) =>
+      skippedFields.fundingCurrency ? "" : !v ? "Required" : "",
+    minFunding: (v) => (skippedFields.minFunding ? "" : !v ? "Required" : ""),
     maxFunding: (v) => {
+      if (skippedFields.maxFunding) return "";
       if (!v) return "Required";
       if (form.minFunding && Number(v) < Number(form.minFunding))
         return "Max must be ≥ Min";
@@ -376,10 +252,15 @@ const CompanyForm: React.FC = () => {
     validateField("companyStage", stage);
   };
   //Progress bar simulation
+  // const progressbarArray = Object.keys(form).map((key) => {
+  //   key = key as keyof Form;
+  //   return form[key] ? 1 : 0;
+  // });
   const progressbarArray = Object.keys(form).map((key) => {
-    key = key as keyof Form;
-    return form[key] ? 1 : 0;
+    const k = key as keyof Form;
+    return skippedFields[k] ? 1 : form[k] ? 1 : 0;
   });
+
   const progress = progressbarArray.reduce((acc, curr) => acc + curr, 0);
   const progressPercentage = (progress / progressbarArray.length) * 100;
   // console.log("Progress Percentage:", progressPercentage);
@@ -448,7 +329,7 @@ const CompanyForm: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Enter your company name here"
-                className="w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="w-full h-[60px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
               />
               {errors.companyName && (
                 <div className="text-red-500 text-sm mt-1">
@@ -459,36 +340,18 @@ const CompanyForm: React.FC = () => {
 
             {/* Business Type */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Business Type</label>
+              {/* <label className="text-sm font-medium">Business Type</label> */}
               {/* MultiSelect Component */}
               <div className="w-full mt-2 z-40">
-                <Multiselect
+                <MultiSelectDropdown
+                  label="Business Type"
                   options={businessTypes}
-                  displayValue="label" // shows label to user
-                  selectedValues={businessvalue}
-                  onSelect={handleOnbusinessSelect}
-                  onRemove={handleOnbusinessRemove}
-                  showCheckbox
+                  value={businessvalue}
+                  onChange={setbusinessvalue}
                   placeholder="Select Business type"
-                  className="custom-multiselect  w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  error={errors.businessType}
+                  
                 />
-                {businessvalue.find((item) => item.value === "other") && (
-                  <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
-                    <input
-                      type="text"
-                      value={customBusiness}
-                      onChange={(e) => setCustomBusiness(e.target.value)}
-                      placeholder="Enter your custom business model"
-                      className="rounded-md w-full text-sm outline-none"
-                    />
-                    <button
-                      onClick={handleAddCustomBusiness}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
-                    >
-                      Add
-                    </button>
-                  </div>
-                )}
               </div>
 
               {errors.businessType && (
@@ -500,27 +363,38 @@ const CompanyForm: React.FC = () => {
 
             {/* Industry Sector */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Industry & Sector</label>
+              {/* <label className="text-sm font-medium">Industry & Sector</label> */}
               {/* MultiSelect Component */}
               <div className="w-full mt-2 ">
-                <Multiselect
+                {/* <Multiselect
                   options={industrySectors}
                   displayValue="label" // shows label to user
                   selectedValues={industryvalue}
                   onSelect={handleOnindustrySelect}
                   onRemove={handleOnindustryRemove}
                   showCheckbox
+                  showArrow
+                  avoidHighlightFirstOption
                   placeholder="Select Industry&Sector type"
-                  className="custom-multiselect w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  className="custom-multiselect w-full h-[60px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                /> */}
+                <MultiSelectDropdown
+                  label="Industry & Sector"
+                  options={industrySectors}
+                  value={industryvalue}
+                  onChange={setindustryvalue}
+                  placeholder="Select Industry&Sector"
+                  error={errors.industrySector}
+                  
                 />
-                {industryvalue.find((item) => item.value === "other") && (
+                {/* {industryvalue.find((item) => item.value === "other") && (
                   <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
                     <input
                       type="text"
                       value={customIndustry}
                       onChange={(e) => setCustomIndustry(e.target.value)}
                       placeholder="Enter your custom business model"
-                      className="rounded-md w-full text-sm outline-none"
+                      className="rounded-md w-full text-sm outline-none placeholder:text-[#707070]"
                     />
                     <button
                       onClick={handleAddCustomIndustry}
@@ -529,7 +403,7 @@ const CompanyForm: React.FC = () => {
                       Add
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
 
               {errors.industrySector && (
@@ -541,27 +415,38 @@ const CompanyForm: React.FC = () => {
 
             {/* Business Model */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Business Model</label>
+              {/* <label className="text-sm font-medium">Business Model</label> */}
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
-                <Multiselect
+                {/* <Multiselect
                   options={businessModels}
                   displayValue="label" // shows label to user
                   selectedValues={valuebusinessModel}
                   onSelect={handleOnbusinessModelSelect}
                   onRemove={handleOnbusinessModelRemove}
                   showCheckbox
+                  showArrow
+                  avoidHighlightFirstOption
                   placeholder="Select Business Model"
-                  className="custom-multiselect  w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  className="custom-multiselect  w-full h-[60px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                /> */}
+                <MultiSelectDropdown
+                  label="Business Model"
+                  options={businessModels}
+                  value={valuebusinessModel}
+                  onChange={setvaluebusinessModel}
+                  placeholder="Select Business Model"
+                  error={errors.businessModel}
+                  
                 />
-                {valuebusinessModel.find((item) => item.value === "other") && (
+                {/* {valuebusinessModel.find((item) => item.value === "other") && (
                   <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
                     <input
                       type="text"
                       value={customBusinessModel}
                       onChange={(e) => setCustomBusinessModel(e.target.value)}
                       placeholder="Enter your custom business model"
-                      className="rounded-md w-full text-sm outline-none"
+                      className="rounded-md w-full text-sm outline-none placeholder:text-[#707070]"
                     />
                     <button
                       onClick={handleAddCustomBusinessModel}
@@ -570,7 +455,7 @@ const CompanyForm: React.FC = () => {
                       Add
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
 
               {errors.businessModel && (
@@ -638,6 +523,12 @@ const CompanyForm: React.FC = () => {
                   <span
                     className="text-indigo-600 cursor-pointer ml-5 hover:underline"
                     onClick={() => {
+                      setSkippedFields((prev) => ({
+                        ...prev,
+                        fundingCurrency: true,
+                        minFunding: true,
+                        maxFunding: true,
+                      }));
                       setShowFundField(true), setOpen(true);
                     }}
                   >
@@ -654,7 +545,7 @@ const CompanyForm: React.FC = () => {
                       value={form.minFunding}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
+                      className="w-full h-[46px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
                     />
                     {errors.minFunding && (
                       <div className="text-red-500 text-sm">
@@ -681,13 +572,17 @@ const CompanyForm: React.FC = () => {
                         validateField("fundingCurrency", e.target.value);
                       }}
                       onBlur={handleBlur}
-                      className="w-full h-full placeholder:text-black mt-1 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
+                      className="w-full h-full text-[#707070] mt-1 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center text-sm"
                     >
                       <option value="" disabled>
                         Select Currency
                       </option>
                       {data.map((c: any) => (
-                        <option key={c.countryCode} value={c.currency}>
+                        <option
+                          key={c.countryCode}
+                          value={c.currency}
+                          className="text-black"
+                        >
                           {c.currency}{" "}
                           <span className="text-red-800 ml-3">
                             {c.currency_symbol}
@@ -710,7 +605,7 @@ const CompanyForm: React.FC = () => {
                       value={form.maxFunding}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full h-[46px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center  text-sm"
+                      className="w-full h-[46px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl text-center  text-sm"
                     />
                     {errors.maxFunding && (
                       <div className="text-red-500 text-sm">
@@ -740,13 +635,17 @@ const CompanyForm: React.FC = () => {
                   validateField("country", e.target.value);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
                 <option value="" disabled>
                   Select Country
                 </option>
                 {data.map((c: any) => (
-                  <option key={c.countryCode} value={c.name}>
+                  <option
+                    key={c.countryCode}
+                    value={c.name}
+                    className="hover:bg-[#E0ECFF] text-black"
+                  >
                     {c.name} {c.flag ? `(${c.flag})` : ""}
                   </option>
                 ))}
@@ -776,7 +675,7 @@ const CompanyForm: React.FC = () => {
                   validateField("state", stateVal);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
                 <option value="" disabled>
                   Select State
@@ -785,7 +684,11 @@ const CompanyForm: React.FC = () => {
                 {data
                   .find((c) => c.name === selectedCountry)
                   ?.states?.map((state: any, idx: number) => (
-                    <option key={idx} value={state.name}>
+                    <option
+                      key={idx}
+                      value={state.name}
+                      className="hover:bg-[#E0ECFF] text-black"
+                    >
                       {state.name}
                     </option>
                   ))}
@@ -811,16 +714,24 @@ const CompanyForm: React.FC = () => {
                   validateField("city", cityVal);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
-                <option value="" disabled>
+                <option
+                  value=""
+                  disabled
+                  className="text-[#707070] text-[#707070]"
+                >
                   Select City
                 </option>
                 {data
                   .find((country) => country.name === selectedCountry)
                   ?.states.find((state) => state.name === selectedState)
                   ?.cities.map((city: any, idx: number) => (
-                    <option key={idx} value={city.name}>
+                    <option
+                      key={idx}
+                      value={city.name}
+                      className="hover:bg-[#E0ECFF] text-black"
+                    >
                       {city.name}
                     </option>
                   ))}
@@ -845,7 +756,7 @@ const CompanyForm: React.FC = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className="btn-gradient"
-                  />{" "}
+                  />
                   Facebook
                 </label>
                 <label className="flex items-center gap-2">
@@ -934,44 +845,64 @@ const CompanyForm: React.FC = () => {
           <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pb-4">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <DialogPanel
-          transition
-          className="relative transform overflow-hidden rounded-lg text-left transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                transition
+                className="relative transform overflow-hidden rounded-lg text-left transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
               >
-          <div
-            id="alert-additional-content-4"
-            className="p-4 mb-4 text-yellow-800 flex gap-3 items-center border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
-            role="alert"
-          >
-            <div className="flex items-center"> 
-              <svg
-                className="shrink-0 w-4 h-4 me-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <h3 className="text-sm font-medium">
-                Are you sure you want to skip the funding details?
-              </h3>
-            </div>                                                                                                                                      
-              
-            <div className="flex">
-              <button
-                type="button"
-                onClick={() => {
-            setShowFundField(false), setOpen(false);
-                }}
-                className="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
-              >
-                Undo
-                <IoArrowUndoCircle className="ml-2 w-5 h-5" />
-              </button>
-            </div>
-          </div>
-               
+                <div
+                  id="alert-additional-content-4"
+                  className="p-4 mb-4 text-white flex gap-3 items-center border rounded-lg btn-gradient dark:bg-gray-800"
+                  role="alert"
+                >
+                  <div className="flex items-center">
+                    <svg
+                      className="shrink-0 w-4 h-4 me-2"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <h3 className="text-sm font-medium">
+                      Are you sure you want to skip the funding details?
+                    </h3>
+                  </div>
+
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSkippedFields((prev) => ({
+                          ...prev,
+                          fundingCurrency: false,
+                          minFunding: false,
+                          maxFunding: false,
+                        }));
+                        setShowFundField(false), setOpen(false);
+                      }}
+                      className="text-white bg-[#1C4BC4]  focus:ring-4 focus:outline-none font-medium rounded-lg text-xs px-2 me-2 text-center inline-flex items-center dark:bg-gray-800 dark:focus:ring-yellow-800"
+                    >
+                      Undo
+                      <IoArrowUndoCircle className="ml-2 w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSkippedFields((prev) => ({
+                          ...prev,
+                          fundingCurrency: true,
+                          minFunding: true,
+                          maxFunding: true,
+                        }));
+                        setShowFundField(true), setOpen(false);
+                      }}
+                      className="text-white bg-[#1C4BC4] dark:bg-gray-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-xs px-2 me-2 text-center inline-flex items-center"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
               </DialogPanel>
             </div>
           </div>

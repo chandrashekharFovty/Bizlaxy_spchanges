@@ -101,7 +101,7 @@
   cursor: pointer;
 }
 
-.option:hover{
+.custom-multiselect .option:hover{
   background-color: #E0ECFF;
   color:black;
 }
@@ -124,7 +124,7 @@
 }
 
 .custom-multiselect input::placeholder {
-  color: black !important;
+  color: #707070 !important;
 }
 
 .custom-multiselect .option input[type="checkbox"] {
@@ -158,4 +158,9 @@
   border-radius: 6px;
   padding: 4px 8px;
   margin-right: 6px;
+}
+
+.custom-hover option:hover {
+  color: black;
+  background-color: #E0ECFF;
 }
