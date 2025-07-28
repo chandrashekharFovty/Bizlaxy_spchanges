@@ -10,6 +10,8 @@ interface EditprofileProps {
   website: string;
   profileImage: string;
   coverImage: string;
+  email: string; // Added for private info
+  phone: string; // Added for private info
 }
 
 const Editprofile: React.FC<EditprofileProps> = ({
@@ -18,10 +20,12 @@ const Editprofile: React.FC<EditprofileProps> = ({
   website,
   profileImage,
   coverImage,
+  email,
+  phone,
 }) => {
   const [selectedCover, setSelectedCover] = useState<string>(coverImage);
   const [selectedProfile, setSelectedProfile] = useState<string>(profileImage);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -115,49 +119,71 @@ const Editprofile: React.FC<EditprofileProps> = ({
             {/* Inputs */}
             <div className="text-center md:mt-4 mt-6 w-full px-6 border-r border-[#dfdede]">
               <form className="text-left w-[700px] max-md:w-[280px] space-y-4 pb-28">
+                {/* Full Name */}
                 <div>
                   <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                   <input
                     type="text"
                     placeholder="Michael Roberts"
                     disabled={!isEditing}
-                    className="dark:bg-[#181818] dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
+                    className="dark:bg-[#181818] focus:outline-none dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
                   />
                 </div>
+
+                {/* Username */}
                 <div>
                   <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Username</label>
                   <input
                     type="text"
                     placeholder="michael_roberts"
                     disabled={!isEditing}
-                    className="dark:bg-[#181818] dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
+                    className="dark:bg-[#181818] focus:outline-none dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
                   />
                 </div>
+
+                {/* Bio */}
                 <div>
                   <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Bio</label>
                   <input
                     type="text"
                     placeholder="Tell us about yourself"
                     disabled={!isEditing}
-                    className="dark:bg-[#181818] dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
+                    className="dark:bg-[#181818] focus:outline-none dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
                   />
                 </div>
+
+                {/* Private Phone */}
                 <div>
-                  <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Phone Number </label>
                   <input
                     type="text"
-                    placeholder="+91-12345-67890"
-                    disabled={!isEditing}
-                    className="dark:bg-[#181818] dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
+                    placeholder="+1 234 567 8900"
+                    value={phone}
+                    disabled={true}
+                    className="dark:bg-[#181818]  focus:outline-none placeholder:text-gray-500 dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm cursor-not-allowed"
                   />
                 </div>
+
+                {/* Private Email */}
+                <div>
+                  <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Email </label>
+                  <input
+                    type="email"
+                    placeholder="content@gmail.com"
+                    value={email}
+                    disabled={true}
+                    className="dark:bg-[#181818] focus:outline-none placeholder:text-gray-500 dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Links */}
                 <div>
                   <label className="dark:text-white block text-sm font-medium text-gray-700 mb-1">Add Links</label>
                   <input
                     type="text"
                     placeholder="https://yourwebsite.com"
                     disabled={!isEditing}
-                    className="dark:bg-[#181818] dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
+                    className="dark:bg-[#181818] focus:outline-none dark:border-white dark:border dark:text-white w-full p-3 border border-[#BED6FF] rounded-xl text-sm"
                   />
                 </div>
               </form>
@@ -172,7 +198,7 @@ const Editprofile: React.FC<EditprofileProps> = ({
           </div>
         </div>
 
-        {/*  Right Side Fixed Sidebar */}
+        {/* Right Side Fixed Sidebar */}
         <div className="dark:dark-color hidden xl:flex fixed right-0 top-0 h-screen max-w-[370px] w-full bg-white px-5 py-10 flex-col items-center text-center overflow-y-auto z-30">
           <div className="dark:dark-color relative w-[110px] h-[110px]">
             <img
@@ -198,12 +224,22 @@ const Editprofile: React.FC<EditprofileProps> = ({
           </a>
 
           <div className="mt-6 flex gap-4">
-            <button
-              className="px-4 py-2 text-sm rounded-xl border border-gray-400 hover:bg-gray-100 font-medium"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Details
-            </button>
+            {!isEditing ? (
+              <button
+                className="px-4 py-2 text-sm rounded-[8px] border border-gray-300 hover:bg-gray-100 font-medium"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Details
+              </button>
+            ) : (
+              <button
+                className="px-4 py-2 text-sm rounded-[8px] border border-blue-500 bg-blue-100 font-medium text-blue-700"
+                onClick={() => setIsEditing(false)}
+              >
+                Save Details
+              </button>
+            )}
+
             <label htmlFor="profileimage-upload" className="cursor-pointer">
               <div className="border border-gray-400 bg-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-gray-100">
                 Edit Profile Image

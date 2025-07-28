@@ -68,15 +68,6 @@ const EmailOtpPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (showSuccess) {
-  //     // console.log(showSuccess);
-  //     toast.success(showSuccess);
-  //   } else if (showError) {
-  //     toast.error(showError);
-  //     // console.log(showError);
-  //   }
-  // }, [showSuccess, showError]);
 //hasshed Email show in the otp page
   function maskGmail (){
     const email = "0810chandrashekhar@gmail.com"; // Replace with the actual email from sessionStorage or props

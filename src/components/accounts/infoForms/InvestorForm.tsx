@@ -299,7 +299,7 @@ useEffect(() => {
         <div className="fixed w-full flex gap-1">
           {progressbarArray.map((_, index) => (
             <div
-              className="w-[5.8%] bg-gray-200 max-md:w-full  rounded-full h-2.5 mb-4 "
+              className="w-[4.8%] bg-gray-200 max-md:w-full  rounded-full h-2.5 mb-4 "
               key={index}
             >
               <div

@@ -194,7 +194,7 @@ useEffect(() => {
 
   return (
     <>
-      <div className="max-md:hidden bg-white fixed overflow-hidden flex w-[300px] h-[982px] flex-col items-stretch border-[rgb(28, 75, 196, 100)] border-l">
+      <div className="z-40 max-md:hidden bg-white fixed overflow-hidden flex w-[300px] h-[982px] flex-col items-stretch border-[rgb(28, 75, 196, 100)] border-l">
         <div className="dark:dark-color overflow-hidden dark:text-white fixed w-[370px] h-screen scrollbar-hide bg-white flex flex-col items-stretch px-3">
           <div
             style={{ position: "relative", width: 300 }}

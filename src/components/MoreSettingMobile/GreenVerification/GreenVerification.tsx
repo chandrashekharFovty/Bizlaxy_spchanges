@@ -713,17 +713,17 @@ const option = [
   {
     id: "Utility Bill",
     title: "Utility Bill",
-    desc: "Recent electricity, water, or gas bill.",
+    // desc: "Recent electricity, water, or gas bill.",
   },
   {
     id: "Lease Agreement",
     title: "Lease Agreement",
-    desc: "Valid rental or lease document.",
+    // desc: "Valid rental or lease document.",
   },
   {
     id: "Any other Official Document that verify the business address.",
     title: "Any other Official Document that verify the business address.",
-    desc: "Government-issued proof with business address.",
+    // desc: "Government-issued proof with business address.",
   },
 ];
   const handleOptionClick = (id: string) => {

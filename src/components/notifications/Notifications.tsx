@@ -241,7 +241,7 @@ export default function Notifications() {
   </div>
 
   {/* Right Sidebar */}
-  <div className="w-[350px] h-full flex-shrink-0 border-l dark:border-white bg-white dark:bg-dark z-50">
+  <div className="w-[350px] h-full flex-shrink-0 border-l dark:border-white bg-white dark:bg-dark z-30">
     <RightSidebar />
   </div>
 </div>

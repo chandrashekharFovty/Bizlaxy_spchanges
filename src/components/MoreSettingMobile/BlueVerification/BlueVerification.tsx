@@ -307,6 +307,8 @@ export function IdentityVerification({ onBack }) {
               onClick={() => handleOptionClick(opt.id)}
             />
           ))}
+        <h1 className="font-semibold">Both side image</h1>
+
         </div>
       </div>
 

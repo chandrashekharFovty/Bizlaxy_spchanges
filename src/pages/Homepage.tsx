@@ -32,7 +32,7 @@ const Homepage = () => {
           </main>
 
           {/* Right Sidebar */}
-          <aside className="hidden xl:block w-[350px] flex-shrink-0">
+          <aside className="hidden xl:block z-30 w-[350px] flex-shrink-0">
             <RightSidebar />
           </aside>
         </div>

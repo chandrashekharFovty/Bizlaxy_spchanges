@@ -174,7 +174,7 @@ const LogIn = () => {
               {/* Forgot Password */}
               <div className="text-end">
                 <p className="text-sm text-white font-normal tracking-[0.2px]">
-                  <Link to="/forgotpassword">Forgot Password? </Link>
+                  <Link to="/forgetpassword">Forgot Password? </Link>
                 </p>
               </div>
               {/* Submit Button */}

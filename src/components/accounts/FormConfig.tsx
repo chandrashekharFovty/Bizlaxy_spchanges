@@ -23,7 +23,7 @@ export const formHeadConfig: Record<UserType, FieldHead[]> = {
   ],
   investor: [
     {
-      formheading: "Complete Your Investor Profile",
+      formheading: "Complete Your Business Profile",
       formdescription:
         "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
     },

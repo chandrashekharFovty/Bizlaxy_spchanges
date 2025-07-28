@@ -25,7 +25,7 @@ function Create() {
   const Navigate=useNavigate()
 
   return (
-    <div className="relative">
+    <div className="relative ">
 
       {/* Create Story Dialog */}
       {/* {showCreateStoryPopover && (

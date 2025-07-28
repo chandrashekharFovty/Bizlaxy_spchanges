@@ -17,6 +17,7 @@ import {
 import { error } from "console";
 import { Country } from "country-state-city";
 import * as Flags from "country-flag-icons/react/3x2";
+import { TiArrowSortedDown } from "react-icons/ti";
 
 
 type CountryOption = {
@@ -177,7 +178,7 @@ sessionStorage.setItem("mobile", updatedPhoneNumber.mobile);
                       <button
                         type="button"
                         onClick={() => setOpen(true)}
-                        className="flex w-3/12 h-[46px] items-center justify-center bg-trasparent text-[16px] border-r"
+                        className="flex w-3/12 h-[46px] items-center justify-center bg-trasparent text-[12px] border-r"
                       >
                         {selected && (
                           <div
@@ -187,13 +188,13 @@ sessionStorage.setItem("mobile", updatedPhoneNumber.mobile);
                             {" "}
                             {React.createElement(
                               (Flags as any)[selected.isoCode],
-                              { title: selected.name, style: { width: "24px" } }
+                              { title: selected.name, style: { width: "20px" } }
                             )}
                             {selected.dialCode.charAt(0) !== "+"
                               ? `+${selected.dialCode}`
                               : selected.dialCode}
                           </div>
-                        )}
+                        )}<span className="ml-2 font-medium text-sm"><TiArrowSortedDown/></span>
                       </button>
                       <input
                         type="number"

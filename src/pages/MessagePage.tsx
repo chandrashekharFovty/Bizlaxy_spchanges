@@ -5,17 +5,18 @@ import Vcall from "../../public/Vcall.png";
 import LinkIcon from "../../public/link.png";
 import SendIcon from "../../public/send.png";
 import message from "../../public/messages.png";
-import { FiArrowRight, FiCopy, FiTrash2, FiX } from "react-icons/fi";
+import { FiArrowRight, FiCopy, FiEdit2, FiTrash2, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { MdExpandLess, MdLocationOn } from "react-icons/md";
 import { IoDocumentText } from "react-icons/io5";
 import { FaCamera, FaPhoneAlt, FaVideo } from "react-icons/fa";
 import { GrGallery } from "react-icons/gr";
-import { RiContactsFill } from "react-icons/ri";
+import { RiContactsFill, RiUnpinFill, RiUnpinLine } from "react-icons/ri";
 import Sidebar, { Footer } from "../components/layout/Sidebar"
-import { BsPinAngleFill } from "react-icons/bs";
-import { ShareIcon } from "lucide-react";
+import { BsPinAngle, BsPinAngleFill } from "react-icons/bs";
+import { ReplyAllIcon, ShareIcon } from "lucide-react";
 import { IoIosSend } from "react-icons/io";
+import { HiOutlineArrowLeftCircle } from "react-icons/hi2";
 
 // Initial chat data
 const initialChatUsers = [
@@ -32,12 +33,14 @@ const initialChatUsers = [
         sender: "Akash Retail",
         text: "Hi! I'm interested in a bulk order.",
         time: "17:00",
+          timestamp: Date.now(),
         me: false,
       },
       {
         sender: "You",
         text: "Sure, I can help you with that!",
         time: "17:02",
+        timestamp: Date.now(),
         me: true,
       },
     ],
@@ -55,12 +58,14 @@ const initialChatUsers = [
         sender: "Mike Mazowski",
         text: "Did you check the vacation plan?",
         time: "18:04",
+
         me: false,
       },
       {
         sender: "You",
         text: "Yes, looks good to me!",
         time: "18:44",
+        timestamp: Date.now(),
         me: true,
       },
     ],
@@ -78,12 +83,14 @@ const initialChatUsers = [
         sender: "Sarah Connor",
         text: "Let's meet tomorrow at 5pm?",
         time: "14:30",
+        timestamp: Date.now(),
         me: false,
       },
       {
         sender: "You",
         text: "Perfect, see you then!",
         time: "14:35",
+             timestamp: Date.now(),
         me: true,
       },
     ],
@@ -100,9 +107,13 @@ const initialChatUsers = [
         sender: "Dev Team",
         text: "Don’t forget sprint planning tomorrow.",
         time: "09:00",
+              timestamp: Date.now(),
         me: false,
       },
-      { sender: "You", text: "Got it!", time: "09:05", me: true },
+      { sender: "You", text: "Got it!", time: "09:05",
+               timestamp: Date.now(),
+        
+        me: true },
     ],
   },
   {
@@ -117,6 +128,7 @@ const initialChatUsers = [
         sender: "John Doe",
         text: "Hey! Please add me.",
         time: "08:00",
+                timestamp: Date.now(),
         me: false,
       },
     ],
@@ -133,6 +145,7 @@ const initialChatUsers = [
         sender: "Jane Smith",
         text: "Hi there! I'd like to connect.",
         time: "12:00",
+               timestamp: Date.now(),
         me: false,
       },
     ],
@@ -150,12 +163,14 @@ const initialChatUsers = [
         sender: "Akash Retail",
         text: "Hi! I'm interested in a bulk order.",
         time: "17:00",
+                timestamp: Date.now(),
         me: false,
       },
       {
         sender: "You",
         text: "Sure, I can help you with that!",
         time: "17:02",
+          timestamp: Date.now(),
         me: true,
       },
     ],
@@ -172,12 +187,14 @@ const initialChatUsers = [
         sender: "Mike Mazowski",
         text: "Did you check the vacation plan?",
         time: "18:04",
+               timestamp: Date.now(),
         me: false,
       },
       {
         sender: "You",
         text: "Yes, looks good to me!",
         time: "18:44",
+          timestamp: Date.now(),
         me: true,
       },
     ],
@@ -194,12 +211,14 @@ const initialChatUsers = [
         sender: "Sarah Connor",
         text: "Let's meet tomorrow at 5pm?",
         time: "14:30",
+               timestamp: Date.now(),
         me: false,
       },
       {
         sender: "You",
         text: "Perfect, see you then!",
         time: "14:35",
+            timestamp: Date.now(),
         me: true,
       },
     ],
@@ -216,6 +235,7 @@ const initialChatUsers = [
         sender: "Dev Team",
         text: "Don’t forget sprint planning tomorrow.",
         time: "09:00",
+              timestamp: Date.now(),
         me: false,
       },
       { sender: "You", text: "Got it!", time: "09:05", me: true },
@@ -233,6 +253,7 @@ const initialChatUsers = [
         sender: "shivi mukati",
         text: "Hey! Please add me.",
         time: "08:00",
+               timestamp: Date.now(),
         me: false,
       },
     ],
@@ -249,6 +270,7 @@ const initialChatUsers = [
         sender: "Rudhra patel",
         text: "Hi there! I'd like to connect.",
         time: "12:00",
+              timestamp: Date.now(),
         me: false,
       },
     ],
@@ -275,7 +297,13 @@ const MessagePage = () => {
   const [chatWallpaper, setChatWallpaper] = useState(null);
   const [requestButton,setRequestButton]=useState(false)
   const [pinnedUserIds, setPinnedUserIds] = useState([]);
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const menuRef = useRef(null);
 
+
+  
 
   const handleView = (index) => {
   const requestUser = chats[index];
@@ -386,10 +414,44 @@ const MessagePage = () => {
     setShowPopup(false);
   };
 
-  // const handleDeleteRequests = () => {
-  //   //filter out 'Requests' chats
-  //   setChats((prev) => prev.filter((chat) => chat.type !== "Requests"));
-  // };
+
+  // Close menu on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setSelectedMessageIdx(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+// 48 hours check function
+const handleUnsend = (idx) => {
+  // Replace text with deleted placeholder
+  const updatedMessages = [...selectedUser.messages];
+  updatedMessages[idx].deleted = true;
+  updatedMessages[idx].text = ""; // clear original text
+  setSelectedUser((prev) => ({ ...prev, messages: updatedMessages }));
+
+};
+const isWithin48Hours = (timestamp) => {
+  const now = Date.now();
+  return now - timestamp <= 48 * 60 * 60 * 1000; // 48 hours in milliseconds
+};
+
+
+
+const handleDeleteForMe = (idx) => {
+  // Remove from your messages only
+  const updatedMessages = selectedUser.messages.filter((_, i) => i !== idx);
+  setSelectedUser((prev) => ({ ...prev, messages: updatedMessages }));
+};
+
+
 
   return (
      <>
@@ -522,26 +584,36 @@ const MessagePage = () => {
     {user.isOnline ? "Online" : user.lastSeen}
   </span>
         </div>
+  <div className="flex items-center gap-2">
+  {/* Status Dot */}
+  <button className="w-2 h-2 rounded-full bg-blue-600"></button>
 
-        {/* Pin/Unpin Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            if (pinnedUserIds.includes(user.id)) {
-              // Unpin
-              setPinnedUserIds(pinnedUserIds.filter((id) => id !== user.id));
-            } else {
-              if (pinnedUserIds.length < 3) {
-                setPinnedUserIds([...pinnedUserIds, user.id]);
-              } else {
-                alert("You can pin up to 3 chats only.");
-              }
-            }
-          }}
-          className="ml-2 text-xs px-1 py-1 rounded-full bg-blue-600"
-        >
-          {pinnedUserIds.includes(user.id) ? <BsPinAngleFill /> : ""}
-        </button>
+  {/* Pin/Unpin Button */}
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      if (pinnedUserIds.includes(user.id)) {
+        // Unpin
+        setPinnedUserIds(pinnedUserIds.filter((id) => id !== user.id));
+      } else {
+        if (pinnedUserIds.length < 3) {
+          setPinnedUserIds([...pinnedUserIds, user.id]);
+        } else {
+          alert("You can pin up to 3 chats only.");
+        }
+      }
+    }}
+    className={`ml-1 text-xs px-2 py-1 rounded-full transition ${
+      pinnedUserIds.includes(user.id)
+        ? " text-black"
+        : " text-black"
+    }`}
+    title={pinnedUserIds.includes(user.id) ? "Unpin Chat" : "Pin Chat"}
+  >
+    {pinnedUserIds.includes(user.id) ? <BsPinAngleFill /> : <BsPinAngle />}
+  </button>
+</div>
+
       </div>
     ))}
 </div>
@@ -689,73 +761,94 @@ const MessagePage = () => {
 
       {/* === Messages === */}
       <div
-        className="flex-1 p-4 space-y-6 overflow-y-auto"
-        style={{
-          backgroundImage: chatWallpaper ? `url(${chatWallpaper})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-       
-       
-       
-        {selectedUser?.messages?.map((msg, idx) => (
+      className="flex-1 p-4 space-y-6 overflow-y-auto"
+      style={{
+        backgroundImage: selectedUser?.chatWallpaper
+          ? `url(${selectedUser.chatWallpaper})`
+          : "none",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {selectedUser?.messages?.map((msg, idx) => (
+        <div
+          key={idx}
+          className={`relative flex ${msg.me ? "justify-end" : "justify-start"}`}
+        >
+          {/* Message Bubble */}
           <div
-            key={idx}
-            className={`relative flex ${
-              msg.me ? "justify-end" : "justify-start"
+            className={`max-w-sm p-3 rounded-xl ${
+              msg.me ? "bg-blue-600 text-white" : "bg-white text-gray-800 shadow"
             }`}
-            onClick={() => setSelectedMessageIdx(idx)}
           >
-            {/* <div
-              className={`max-w-sm p-3 rounded-xl ${
-                msg.me
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-800 shadow"
-              }`}
-            >
-              {!msg.me && (
-                <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
-              )}
-              <p className="text-sm">{msg.text}</p>
-              <p className="text-xs mt-2 text-right">{msg.time}</p>
-            </div> */}
-
-         <div
-  key={idx}
-  className={`relative flex group ${msg.me ? "justify-end" : "justify-start"}`}
->
-  <div
-    className={`max-w-sm p-3 rounded-xl ${
-      msg.me
-        ? "bg-blue-600 text-white"
-        : "bg-white text-gray-800 shadow"
-    }`}
-  >
-    {!msg.me && (
-      <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
-    )}
-    <p className="text-sm">{msg.text}</p>
-    <p className="text-xs mt-2 text-right">{msg.time}</p>
-  </div>
-
-  <div className="absolute top-0 right-0 mt-[-20px] hidden group-hover:flex gap-2 bg-white shadow p-2 rounded">
-    <button onClick={() => handleCopy(msg)}>
-      <FiCopy />
-    </button>
-    <button onClick={() => handleForward(msg)}>
-      <IoIosSend />
-    </button>
-    <button onClick={() => handleDeleteMessage(idx)}>
-      <FiTrash2 />
-    </button>
-  </div>
-</div>
-
+            {!msg.me && (
+              <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
+            )}
+            <p className="text-sm">{msg.text}</p>
+            <p className="text-xs mt-2 text-right">{msg.time}</p>
           </div>
-        ))}
-      </div>
 
+          {/* 3-dot button */}
+          <button
+            onClick={() =>
+              setSelectedMessageIdx(selectedMessageIdx === idx ? null : idx)
+            }
+            className="ml-2 text-gray-500"
+          >
+            •••
+          </button>
+
+          {/* Popup Menu */}
+          {selectedMessageIdx === idx && (
+            <div
+              ref={menuRef}
+              className="absolute top right-0 w-44 bg-white shadow-lg rounded-xl p-2 z-50"
+            >
+              <p className="text-xs text-gray-500 mb-2">{msg.time}</p>
+              <div className="flex flex-col gap-3">
+       <button
+                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+                  onClick={() => handleForward(msg)}
+                >
+                 Reply <ReplyAllIcon/>
+                </button>
+                <button
+                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+                  onClick={() => handleForward(msg)}
+                >
+                  Forward <IoIosSend />
+                </button>
+                <button
+                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+                  onClick={() => handleCopy(msg)}
+                >
+                  Copy <FiCopy />
+                </button>
+                <hr />
+{msg.me && isWithin48Hours(msg.timestamp) && (
+  <button
+    className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
+    onClick={() => handleUnsend(idx)} // no need for condition inside
+  >
+    Unsend <HiOutlineArrowLeftCircle />
+  </button>
+)}
+
+<button
+  className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
+  onClick={() => handleDeleteForMe(idx)} 
+>
+  Delete for Me <FiTrash2 />
+</button>
+
+
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+     
       {/* === Request Actions === */}
       {selectedUser?.type === "Requests" && (
         <div className="flex justify-center items-center">
@@ -951,7 +1044,7 @@ const MessagePage = () => {
     <div className="flex-1 flex items-center justify-center text-center p-10">
       <div>
         <img
-          src="https://cdn-icons-png.flaticon.com/512/4076/4076507.png"
+          src={message}
           alt="No Chat Selected"
           className="w-40 h-40 mx-auto mb-4 opacity-50"
         />
