@@ -601,17 +601,17 @@ const socialPlatforms = [
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black/70 z-40" />
           <Dialog.Content className="fixed inset-0 z-40 flex items-center justify-center mx-auto">
-            <div className="rounded-xl bg-white dark:bg-gray-800 ">
+            <div className="rounded-xl bg-white dark:bg-gray-800 border">
               <Dialog.Title className="text-lg dark:text-white flex p-3 justify-between font-bold w-full h-full">
                 <h2>Bizlaxy</h2>
                 <button onClick={() => setShowComment(false)}>X</button>
               </Dialog.Title>
               <div className="flex max-md:flex-col mx-auto max-md:h-[482px] scrollbar-hide">
-                <div className="p-3 w-1/2 max-md:w-full border border-transparent">
+                <div className="p-3 w-1/2 max-md:w-full">
                   <div className="p-2 dark:border dark:border-gray-300 dark:glass-bg-dark  max-md:w-screen bg-white rounded-xl relative z-10">
                     <div className="w-full flex justify-between">
                       <div className="flex gap-2">
-                        <UserAvatar src={user.avatar} />
+                        <UserAvatar src={user.avatar}/>
                         <div className="">
                           <div className="flex items-center gap-2">
                             <span className="max-md:text-xs dark:text-white font-medium text-base">
@@ -643,7 +643,7 @@ const socialPlatforms = [
                         <div className="max-md:text-sm w-full font-semibold dark:text-white">
                           {content.title}
                         </div>
-                        <div className="max-md:text-xs max-md:w-full dark:text-white text-[#464646] font-normal mt-2">
+                        <div className="max-md:text-xs max-md:w-full dark:text-gray-500 text-[#464646] font-normal mt-2">
                           {showFullDescription
                             ? content.description
                             : truncatedDescription}
@@ -652,7 +652,7 @@ const socialPlatforms = [
                               onClick={() =>
                                 setShowFullDescription(!showFullDescription)
                               }
-                              className="text-blue-400 text-[12px] ml-1 hover:underline"
+                              className="text-blue-400 dark:text-white text-[12px] ml-1 hover:underline"
                             >
                               {showFullDescription ? "see less" : "see more"}
                             </button>
@@ -712,9 +712,9 @@ const socialPlatforms = [
                       <div className=" max-md:gap-1 flex items-center gap-4">
                         <div
                           onClick={handleLike}
-                          className={`flex items-center gap-1 cursor-pointer border border-gray-400 h-8 px-3 rounded-full transition hover:bg-gray-100 dark:hover:bg-gray-600 ${
+                          className={`flex items-center gap-1 cursor-pointer border border-gray-400 h-8 px-3 rounded-full transition ${
                             isLiked
-                              ? "text-red-500 bg-red-50 border-red-200"
+                              ? "text-red-500 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-300 bg-red-50 border-red-200"
                               : "text-gray-700 dark:text-white"
                           }`}
                         >
@@ -768,18 +768,18 @@ const socialPlatforms = [
                     </div>
                   </div>
                 </div>
-                <div className="w-1/2 max-md:w-full scrollbar-hide  text-black z-40 overflow-y-auto border border-transparent">
+                <div className="w-1/2 max-md:w-full scrollbar-hide  text-black z-40 overflow-y-auto">
                   {/* <div className="text-lg dark:text-white text-center font-bold">
                     {user.name} : Comments
                   </div> */}
                   {/* Desktop */}
                   {commentList.map((media, idx) => (
-                    <aside className="h-full w-full text-black z-40">
-                      <div className="z-40 bg-opacity-50 flex items-center">
-                        <div className="bg-white dark:bg-gray-800 w-full h-full flex flex-col items-start justify-between mx-auto dark:text-white rounded-xl w-full h-full p-6 relative">
+                    <aside className="h-full w-full text-black z-40 p-3">
+                      <div className="z-40 bg-opacity-50 flex items-center ">
+                        <div className="bg-white dark:bg-gray-800 border w-full h-full flex flex-col items-start justify-between mx-auto dark:text-white rounded-xl px-3 py-1 relative">
                           {/* Close Button */}
                           {/* Comment List */}
-                          <div className="max-md:h-[300px] max-h-[400px] scrollbar-hide overflow-y-auto space-y-2 dark:bg-gray-800 dark:text-white">
+                          <div className="max-md:h-[300px]  max-h-[400px] scrollbar-hide overflow-y-auto space-y-2 dark:bg-gray-800 dark:text-white">
                             {media.comments.length === 0 ? (
                               <p className="text-sm text-gray-300 dark:text-gray-300">
                                 No comments yet.
@@ -845,19 +845,19 @@ const socialPlatforms = [
                                                 e.target.value
                                               )
                                             }
-                                            className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-800 text-black dark:text-gray-300 dark:border-gray-600"
+                                            className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-gray-300 dark:bg-gray-800 text-black dark:text-gray-300 dark:border-gray-600"
                                           />
                                           {commentReplyInput.trim() && (
                                             <FiSend
                                               onClick={() =>
                                                 addCommentReply(comm.id, idx)
                                               }
-                                              className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
+                                              className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 dark:text-gray-50 cursor-pointer text-xl hover:scale-110 transition"
                                             />
                                           )}
                                         </div>
                                         {comm.replies.length === 0 ? (
-                                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                                          <p className="text-sm text-gray-600 dark:text-gray-300">
                                             No Replies yet.
                                           </p>
                                         ) : (
@@ -936,12 +936,12 @@ const socialPlatforms = [
                               placeholder="Add a comment..."
                               value={commentInput}
                               onChange={(e) => setCommentInput(e.target.value)}
-                              className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                              className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                             />
                             {commentInput.trim() && (
                               <FiSend
                                 onClick={() => addComment(media.id)}
-                                className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
+                                className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 dark:text-gray-50 cursor-pointer text-xl hover:scale-110 transition"
                               />
                             )}
                           </div>

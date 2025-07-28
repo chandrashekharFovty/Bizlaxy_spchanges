@@ -91,7 +91,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
       value: trimmed.toLowerCase().replace(/\s+/g, "_"),
       custom: true,
     };
-    setOptionsState([...optionsState, newOpt]);
+    setOptionsState([...optionsState]);
     onChange([...value, newOpt]);
     setCustomOpt("");
     setShowCustomInput(false);
