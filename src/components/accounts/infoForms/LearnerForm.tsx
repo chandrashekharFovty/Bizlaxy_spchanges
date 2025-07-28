@@ -5,9 +5,12 @@ import { Country, State, City } from "country-state-city";
 import { MultiSelect } from "react-multi-select-component";
 // import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../../../customDropDwon.css"; // Assuming you have some custom styles
+import MultiSelectDropdown, {
+  OptionType,
+} from "../../../hooks/MultiSelectDropdown";
 
 // import type { ICountry, IState, ICity } from "country-state-city";
-type OptionType = { label: string; value: string };
+//type OptionType = { label: string; value: string };
 // Options for MultiSelect businessType, industrySector, and businessModel
 const businessTypes = [
   { label: "Physical Product", value: "physical_product" },
@@ -20,7 +23,7 @@ const businessTypes = [
   { label: "Trader", value: "trader" },
   { label: "Importer", value: "importer" },
   { label: "Exporter", value: "exporter" },
-  { label: "Other", value: "other" }
+  { label: "Other", value: "other" },
 ];
 // Options for MultiSelect businessType, industrySector, and businessModel
 const industrySectors = [
@@ -82,20 +85,9 @@ const industrySectors = [
     label: "Hospital, Clinic & Consultation",
     value: "hospital_clinic_consultation",
   },
-  { label: "OTHER", value: "other" },
-];
-// Options for MultiSelect businessType, industrySector, and businessModel
-const businessModels = [
-  { label: "B2B", value: "b2b" },
-  { label: "B2C", value: "b2c" },
-  { label: "SaaS", value: "saas" },
-  { label: "E‑Commerce", value: "e_commerce" },
-  { label: "Subscription", value: "subscription" },
-  { label: "Marketplace", value: "marketplace" },
-  { label: "Advertising Based", value: "advertising_based" },
-  { label: "Franchise", value: "franchise" },
   { label: "Other", value: "other" },
 ];
+
 
 type Form = {
   businessType: string[];
@@ -133,36 +125,13 @@ const CompanyForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Touched>({});
-  const [businessvalue, setbusinessvalue] = useState();
-  const [industryvalue, setindustryvalue] = useState();
-  //const [valuebusinessModel, setvaluebusinessModel] = useState();
-  const [selectedBusinessTypes, setSelectedBusinessTypes] = useState<
-    OptionType[]
-  >([]);
-  const [selectedIndustries, setSelectedIndustries] = useState<OptionType[]>(
-    []
-  );
-  // const [selectedBusinessModels, setSelectedBusinessModels] = useState<
-  //   OptionType[]
-  // >([]);
-
+  const [businessvalue, setbusinessvalue] = useState([]);
+  const [industryvalue, setindustryvalue] = useState([]);
+  
   const [selected, setSelected] = useState<OptionType[]>([]);
-  const handleOnbusinesschange = (val) => {
-    setbusinessvalue(val);
-    handleChange(val);
-  };
-  const handleOnindustrychange = (val) => {
-    setindustryvalue(val);
-    handleChange(val);
-  };
-  // const handleOnbusinessModelchange = (val) => {
-  //   setvaluebusinessModel(val);
-  //   handleChange(val);
-  // };
-
+  
   form.businessType = businessvalue;
   form.industrySector = industryvalue;
-  //form.businessModel = valuebusinessModel;
 
   const validators: Record<keyof Form, (v: any) => string> = {
    // companyName: (v) => (v.length < 3 ? "At least 5 characters required" : ""),
@@ -209,12 +178,7 @@ const CompanyForm: React.FC = () => {
 
     setForm((prev) => ({ ...prev, [key]: updatedValue }));
 
-    // if (touched[key]) {
-    //   validateField(key, updatedValue);
-    //   if (key === "minFunding") {
-    //     validateField("maxFunding", form.maxFunding);
-    //   }
-    // }
+   
   };
 
   const handleBlur = (e: React.FocusEvent<any>) => {
@@ -223,12 +187,7 @@ const CompanyForm: React.FC = () => {
     validateField(key, form[key]);
   };
 
-  // const handleStageSelect = (stage: string) => {
-  //   setForm((prev) => ({ ...prev, companyStage: stage }));
-  //   //setTouched((prev) => ({ ...prev, companyStage: true }));
-  //   validateField("companyStage", stage);
-  // };
-  //Progress bar simulation
+  
   const progressbarArray = Object.keys(form).map((key) => {
     key = key as keyof Form;
     return form[key] ? 1 : 0;
@@ -288,16 +247,17 @@ const CompanyForm: React.FC = () => {
 
             {/* Business Type */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Business Type</label>
+              {/* <label className="text-sm font-medium">Business Type</label> */}
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
-                <MultiSelect
+                <MultiSelectDropdown
+                  label="Business Type"
                   options={businessTypes}
-                  value={selectedBusinessTypes}
-                  onChange={setSelectedBusinessTypes}
-                  labelledBy="Business Type"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  value={businessvalue}
+                  onChange={setbusinessvalue}
+                  placeholder="Select Business type"
+                  error={errors.businessType}
+                  
                 />
               </div>
 
@@ -310,16 +270,17 @@ const CompanyForm: React.FC = () => {
 
             {/* Industry Sector */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Industry & Sector</label>
+              {/* <label className="text-sm font-medium">Industry & Sector</label> */}
               {/* MultiSelect Component */}
               <div className="w-full mt-2">
-                <MultiSelect
+                <MultiSelectDropdown
+                  label="Industry & Sector"
                   options={industrySectors}
-                  value={selectedIndustries}
-                  onChange={setSelectedIndustries}
-                  labelledBy="Industry & Sector"
-                  hasSelectAll
-                  className="rmsc w-full h-[60px] placeholder:text-black mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                  value={industryvalue}
+                  onChange={setindustryvalue}
+                  placeholder="Select Industry&Sector"
+                  error={errors.industrySector}
+                  
                 />
               </div>
 
@@ -350,13 +311,13 @@ const CompanyForm: React.FC = () => {
                   validateField("country", e.target.value);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-[#707070] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
                 <option value="" disabled>
                   Select Country
                 </option>
                 {data.map((c: any) => (
-                  <option key={c.countryCode} value={c.name}>
+                  <option key={c.countryCode} value={c.name} className="text-black">
                     {c.name} {c.flag ? `(${c.flag})` : ""}
                   </option>
                 ))}
@@ -386,7 +347,7 @@ const CompanyForm: React.FC = () => {
                   validateField("state", stateVal);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-[#707070] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
                 <option value="" disabled>
                   Select State
@@ -395,7 +356,7 @@ const CompanyForm: React.FC = () => {
                 {data
                   .find((c) => c.name === selectedCountry)
                   ?.states?.map((state: any, idx: number) => (
-                    <option key={idx} value={state.name}>
+                    <option key={idx} value={state.name} className="text-black">
                       {state.name}
                     </option>
                   ))}
@@ -421,7 +382,7 @@ const CompanyForm: React.FC = () => {
                   validateField("city", cityVal);
                 }}
                 onBlur={handleBlur}
-                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-gray-300 border border-[#BED6FF] rounded-xl px-7 text-sm"
+                className="mt-2 w-full h-[60px] outline-[#BED6FF] placeholder:text-[#707070] text-[#707070] border border-[#BED6FF] rounded-xl px-7 text-sm"
               >
                 <option value="" disabled>
                   Select City
@@ -430,7 +391,7 @@ const CompanyForm: React.FC = () => {
                   .find((country) => country.name === selectedCountry)
                   ?.states.find((state) => state.name === selectedState)
                   ?.cities.map((city: any, idx: number) => (
-                    <option key={idx} value={city.name}>
+                    <option key={idx} value={city.name} className="text-black">
                       {city.name}
                     </option>
                   ))}

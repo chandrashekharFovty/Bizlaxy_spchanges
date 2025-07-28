@@ -242,3 +242,11 @@ sidebar-text::before {
 .max-w-screen-xl{
   max-width: 100%;
 }
+
+/* Form styles */
+.formLabel {
+  @apply text-[#000] mb-2 text-sm font-medium;
+}
+.formPlaceholder {
+  @apply text-gray-300 text-[14px] font-normal mb-2;
+}
