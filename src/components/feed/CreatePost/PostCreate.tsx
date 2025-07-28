@@ -159,17 +159,17 @@ function PostCreate() {
 
   const handleClick = () => fileInputRef.current.click();
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
 
-    if (file.type.startsWith("image/")) {
-      setSelectedImage(file); // set selected image
-      setStep("caption"); // move to caption screen
-    } else {
-      // Handle other file types if needed
-    }
-  };
+  //   if (file.type.startsWith("image/")) {
+  //     setSelectedImage(file); // set selected image
+  //     setStep("caption"); // move to caption screen
+  //   } else {
+  //     // Handle other file types if needed
+  //   }
+  // };
 
 
   const handleShare = () => {
@@ -285,6 +285,56 @@ function PostCreate() {
     setSelectedImage(null);
     setStep("upload");
   };
+
+
+
+
+ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files;
+  if (!files) return;
+
+  let totalSize = 0;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    totalSize += file.size;
+
+    // Check if it's an image and size is EXACTLY 1MB
+    if (file.type.startsWith("image/")) {
+      if (file.size !== 1 * 1024 * 1024) {
+        alert(`Image ${file.name} must be exactly 1MB.`);
+        return;
+      }
+    }
+
+    //Check if it's a document and size <= 10MB
+    if (
+      file.type === "application/pdf" ||
+      file.type === "application/msword" ||
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      if (file.size > 10 * 1024 * 1024) {
+        alert(`Document ${file.name} cannot exceed 10MB.`);
+        return;
+      }
+    }
+  }
+
+  //Check total combined size
+  if (totalSize > 10 * 1024 * 1024) {
+    alert("Total file size cannot exceed 10MB.");
+    return;
+  }
+
+  // If only one image, set preview
+  if (files[0].type.startsWith("image/")) {
+    setSelectedImage(files[0]);
+  }
+
+  console.log("Files validated successfully!", files);
+};
+
 
   return (
     <>

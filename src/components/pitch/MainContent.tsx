@@ -571,6 +571,9 @@ const socialPlatforms = [
     }
     return num;
   }
+
+
+  
   return (
     <>
     <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[96%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
@@ -595,8 +598,10 @@ const socialPlatforms = [
                 <video
                   id={`video-${idx}`}
                   src={media.src}
-                  // controlsList="nodownload "
-                  // controls
+                  controlsList="nodownload "
+                  controls
+                
+                  disablePictureInPicture
                   autoPlay
                   // muted
                    loop
