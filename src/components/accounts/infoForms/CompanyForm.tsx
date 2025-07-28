@@ -719,7 +719,7 @@ const CompanyForm: React.FC = () => {
                 <option
                   value=""
                   disabled
-                  className="text-[#707070] text-[#707070]"
+                  className="text-[#707070]"
                 >
                   Select City
                 </option>
