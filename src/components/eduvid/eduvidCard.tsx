@@ -11,18 +11,25 @@ import {
   FaRegThumbsUp,
   FaWhatsapp,
 } from "react-icons/fa";
-import { Ellipsis, ExpandIcon } from "lucide-react";
+import { Ellipsis, ExpandIcon, PauseCircle, PlayCircle } from "lucide-react";
 import { Item } from "@radix-ui/react-accordion";
 import { FiSend } from "react-icons/fi";
 import { FollowButton, FollowButtonCard } from "../ui/FollowButton";
 import { IoMdMore } from "react-icons/io";
-import { PiCheckCircleFill } from "react-icons/pi";
+import { PiCheckCircleFill, PiFastForwardCircleBold } from "react-icons/pi";
 import { MdOutlineInsertLink } from "react-icons/md";
 import { RiFacebookCircleLine } from "react-icons/ri";
 import { BsChatDots } from "react-icons/bs";
 import { FaThreads, FaXTwitter } from "react-icons/fa6";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { HiMiniArrowTurnUpRight } from "react-icons/hi2";
+import { AiFillMuted } from "react-icons/ai";
+import { MusicalNoteIcon } from "@heroicons/react/24/outline";
+import { SiYoutubemusic } from "react-icons/si";
+import { BiVolumeMute } from "react-icons/bi";
+import { VscUnmute } from "react-icons/vsc";
+import { MdOutlinePlayCircleOutline } from "react-icons/md";
+
 
 type Reply = {
   replyId: number;
@@ -57,7 +64,7 @@ type MediaItem = {
 const pitchMedia: MediaItem[] = [
   {
     id: 1,
-   type: "video",
+    type: "video",
     src: "/insta_reel.mp4",
     profile: "/pitch.png",
     description:
@@ -164,91 +171,99 @@ export default function MainContent() {
   const [isHovering, setIsHovering] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-
-
+  
 
   // social media share links
   const shareUrl = "https://yourwebsite.com/eduvid"; // actual share link
-const shareText = "Check out this Eduvid!";
+  const shareText = "Check out this Eduvid!";
 
-const socialPlatforms = [
-  {
-    icon: <MdOutlineInsertLink />,
-    label: "Copy Link",
-    onClick: () => {
-      navigator.clipboard.writeText(shareUrl);
-      alert("Link copied! You can paste it anywhere.");
+  const socialPlatforms = [
+    {
+      icon: <MdOutlineInsertLink />,
+      label: "Copy Link",
+      onClick: () => {
+        navigator.clipboard.writeText(shareUrl);
+        alert("Link copied! You can paste it anywhere.");
+      },
     },
-  },
-  {
-    icon: <RiFacebookCircleLine />,
-    label: "Facebook",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <RiFacebookCircleLine />,
+      label: "Facebook",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <BsChatDots />,
-    label: "Messenger",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <BsChatDots />,
+      label: "Messenger",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/dialog/send?link=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaWhatsapp />,
-    label: "WhatsApp",
-    onClick: () => {
-      window.open(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaWhatsapp />,
+      label: "WhatsApp",
+      onClick: () => {
+        window.open(
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(
+            shareText + " " + shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaThreads />,
-    label: "Threads",
-    onClick: () => {
-      window.open(
-        `https://threads.net/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaThreads />,
+      label: "Threads",
+      onClick: () => {
+        window.open(
+          `https://threads.net/intent/post?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaXTwitter />,
-    label: "Twitter",
-    onClick: () => {
-      window.open(
-        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaXTwitter />,
+      label: "Twitter",
+      onClick: () => {
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <HiMiniArrowTurnUpRight />,
-    label: "More",
-    onClick: () => {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: "Eduvid",
-            text: shareText,
-            url: shareUrl,
-          })
-          .catch((err) => console.log("Share failed:", err));
-      } else {
-        alert("Sharing not supported on this device.");
-      }
+    {
+      icon: <HiMiniArrowTurnUpRight />,
+      label: "More",
+      onClick: () => {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Eduvid",
+              text: shareText,
+              url: shareUrl,
+            })
+            .catch((err) => console.log("Share failed:", err));
+        } else {
+          alert("Sharing not supported on this device.");
+        }
+      },
     },
-  },
-];
-
+  ];
 
   // Update arrow visibility
   const updateArrows = () => {
@@ -391,7 +406,7 @@ const socialPlatforms = [
     setAnimatingLikeIdx(idx);
     setTimeout(() => setAnimatingLikeIdx(null), 800);
   };
-   const addComment = (mediaId) => {
+  const addComment = (mediaId) => {
     if (!commentInput.trim()) return;
     setMediaList((prev) =>
       prev.map((item) =>
@@ -444,19 +459,6 @@ const socialPlatforms = [
     setOpenReplyIndex(null);
   };
 
-  const handleVideoToggle = (idx) => {
-    const video = document.getElementById(
-      `video-${idx}`
-    ) as HTMLVideoElement | null;
-    if (video && video.paused) {
-      video.play();
-      setActiveVideo(idx);
-    } else if (video) {
-      video.pause();
-      setActiveVideo(null);
-    }
-  };
-
   function formatNumber(num) {
     if (num >= 1000000000) {
       return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
@@ -470,8 +472,137 @@ const socialPlatforms = [
     return num;
   }
 
+  
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [playing, setPlaying] = useState<{ [key: number]: boolean }>({});
+  const [muted, setMuted] = useState<{ [key: number]: boolean }>({});
+  const [progress, setProgress] = useState<{ [key: number]: number }>({});
+  const [showcontrils, setShowControls] = useState(false);
+  
+  const handleVideoToggle = (idx) => {
+  const video = videoRefs.current[idx];
+  if (!video) return;
+  if (video.paused) {
+    video.play();
+    setPlaying(p => ({ ...p, [idx]: true }));
+    setActiveVideo(idx);
+  } else {
+    video.pause();
+    setPlaying(p => ({ ...p, [idx]: false }));
+    setActiveVideo(null);
+  }
+  setShowControls(true);
+};
+
+
+ function togglePlay(idx) {
+  const vid = videoRefs.current[idx];
+  if (!vid) return;
+  if (vid.paused) {
+    vid.play();
+    setPlaying(p => ({ ...p, [idx]: true }));
+  } else {
+    vid.pause();
+    setPlaying(p => ({ ...p, [idx]: false }));
+  }
+  setShowControls(true);
+}
+
+
+  function seek(idx, amount) {
+    const vid = videoRefs.current[idx];
+    if (vid) vid.currentTime += amount;
+  }
+
+ function toggleMute(idx) {
+  const vid = videoRefs.current[idx];
+  if (vid) {
+    vid.muted = !vid.muted;
+    setMuted(m => ({ ...m, [idx]: vid.muted }));
+  }
+  setShowControls(true);
+}
+useEffect(() => {
+  const initialMuted = {};
+  pitchMedia.forEach((_, idx) => {
+    const vid = videoRefs.current[idx];
+    if (vid) {
+      initialMuted[idx] = vid.muted;
+    } else {
+      initialMuted[idx] = false;
+    }
+  });
+  setMuted(initialMuted);
+}, []);
+
+
+  function toggleFullscreen(idx) {
+    const vid = videoRefs.current[idx];
+    if (!vid) return;
+    document.fullscreenElement
+      ? document.exitFullscreen()
+      : vid.requestFullscreen?.();
+  }
+
+  // function onTimeUpdate(idx: number) {
+  //   const vid = videoRefs.current[idx];
+  //   if (vid) {
+  //     const pct = (vid.currentTime / vid.duration) * 100;
+  //     setProgress((prev) => ({
+  //       ...prev,
+  //       [idx]: pct,
+  //     }));
+  //   }
+  // }
+
+  //   useEffect(() => {
+  //   mediaList.forEach((_, idx) => {
+  //     const vid = videoRefs.current[idx];
+  //     if (!vid) return;
+  //     const update = () => {
+  //       setProgress(p => ({
+  //         ...p,
+  //         [idx]: (vid.currentTime / vid.duration) * 100
+  //       }));
+  //     };
+  //     vid.addEventListener("timeupdate", update);
+  //     return () => vid.removeEventListener("timeupdate", update);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    pitchMedia.forEach((media, idx) => {
+      if (media.type !== 'video') return;
+      const vid = videoRefs.current[idx];
+      if (!vid) return;
+      const onPlay = () => setPlaying((p) => ({ ...p, [idx]: true }));
+      const onPause = () => setPlaying((p) => ({ ...p, [idx]: false }));
+      const onTimeUpdate = () =>
+        setProgress((p) => ({
+          ...p,
+          [idx]: (vid.currentTime / vid.duration) * 100,
+        }));
+      const update = () => {
+        setProgress((p) => ({
+          ...p,
+          [idx]: (vid.currentTime / vid.duration) * 100,
+        }));
+      };
+      vid.addEventListener("timeupdate", update);
+      vid.addEventListener("play", onPlay);
+      vid.addEventListener("pause", onPause);
+      vid.addEventListener("timeupdate", onTimeUpdate);
+      return () => {
+        vid.removeEventListener("play", onPlay);
+        vid.removeEventListener("pause", onPause);
+        vid.removeEventListener("timeupdate", onTimeUpdate);
+        vid.removeEventListener("timeupdate", update);
+      };
+    });
+  }, []);
+
   return (
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[97%] max-lg:w-[35vw] h-[95vh] max-md:my-0 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[550px] overflow-y-scroll scrollbar-hide">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-lg:w-[35vw] h-[95vh] max-md:my-0 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[550px] overflow-y-scroll scrollbar-hide">
       {mediaList.map((media, idx) => {
         const liked = likedIds.includes(media.id);
         const isAnimating = animatingLikeIdx === idx;
@@ -479,7 +610,7 @@ const socialPlatforms = [
           <div
             key={media.id}
             onDoubleClick={() => handleDoubleClick(media.id, idx)}
-            className="snap-start max-md:4 dark:bg-black max-md:w-screen max-md:h-[97%] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+            className="snap-start max-md:4 dark:bg-black max-md:w-screen max-lg:w-[35vw] h-[95vh] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
           >
             {media.type === "image" ? (
               <img
@@ -492,12 +623,80 @@ const socialPlatforms = [
                 id={`video-${idx}`}
                 src={media.src}
                 autoPlay
-               // muted
                 loop
-                onClick={() => handleVideoToggle(idx)}
+                onClick={() => {
+                  handleVideoToggle(idx), togglePlay(idx);
+                }}
+                ref={(el) => (videoRefs.current[idx] = el)}
                 className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl max-md:rounded-none"
               />
             )}
+            {/*Controllers */}
+            <div className={`absolute w-full top-1/2 opacity-0 hover:opacity-100 px-3 ${showcontrils ? "opacity-0" : "opacity-100"} transition-opacity`}>
+              <div className="group flex justify-center gap-4 items-center">
+                {/* <button
+                  className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                  onClick={() => seek(idx, -10)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                  <PiFastForwardCircleBold className="rotate-180" />
+                </button> */}
+                <button
+                  className="bg-gray-800 cursor-pointer bg-opacity-50 text-white p-3 rounded-full"
+                  onClick={() => togglePlay(idx)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                   {playing[idx] ? <PauseCircle className="w-6 h-6"/> : <MdOutlinePlayCircleOutline className="w-6 h-6"/>
+}
+                </button>
+                {/* <button
+                  className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                  onClick={() => seek(idx, 10)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                  <PiFastForwardCircleBold />
+                </button> */}
+                <button
+                  className="bg-gray-800 bg-opacity-50 cursor-pointer text-white p-3 rounded-full"
+                  onClick={() => toggleMute(idx)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                 {muted[idx] ? <VscUnmute className="w-6 h-6"/>: <BiVolumeMute className="w-6 h-6"/>}
+                </button>
+                {/* <button
+                  className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                  onClick={() => toggleFullscreen(idx)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                  ⛶
+                </button> */}
+              </div>
+              
+            </div>
+            <div className="absolute w-full bottom-0 max-md:bottom-14 max-md:px-0 px-3 opacity-100 transition-opacity">
+              
+              <div
+                className="h-1 w-full bg-gray-800 rounded cursor-pointer"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const pos = (e.clientX - rect.left) / rect.width;
+                  if (videoRefs.current[idx]) {
+                    videoRefs.current[idx].currentTime =
+                      pos * videoRefs.current[idx].duration;
+                  }
+                }}
+              >
+                <div
+                  className="h-full bg-white rounded"
+                  style={{ width: `${progress[idx] || 0}%` }}
+                />
+              </div>
+            </div>
             <div className="absolute w-full px-5 flex justify-between items-center top-5 z-10">
               {/* Upper-SIDE BUTTON */}
               <div className="dark:text-white text-white cursor-pointer font-bold tracking-[0.8px] text-lg">
@@ -505,7 +704,7 @@ const socialPlatforms = [
               </div>
               {/* <div className="dark:text-white text-white cursor-pointer font-bold tracking-[0.8px] text-lg"><ExpandIcon/></div> */}
             </div>
-            <div className="absolute w-full max-md:mb-5 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent py-2 px-5">
+            <div className="absolute w-full max-md:mb-5 bottom-0 to-transparent py-0 px-5">
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
                   <Link to="/profile" className="flex items-center gap-2">
@@ -528,7 +727,7 @@ const socialPlatforms = [
                   <FollowButtonCard />
                 </div>
               </div>
-              <div className="mb-5 pb-5 pr-8">
+              <div className="max-md:mb-5 pb-5 pr-8">
                 {/* <h3 className="text-lg font-bold text-white mb-1">
                   {media.title}
                 </h3> */}
@@ -552,67 +751,64 @@ const socialPlatforms = [
               </div>
             )}
 
-                 <div className="absolute flex flex-col right-4 top-3/4 mt-12 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
-       {/* LIKE BUTTON */}
-       <div
-         onClick={() => toggleLike(media.id)}
-         className="cursor-pointer flex flex-col items-center"
-       >
-      <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
-       {liked ? (
-          <FaThumbsUp className="w-5 h-5 text-white" />
-       
-       ) : (
-         <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
-       )}
-     </div>
-     
-         <p className="text-center text-sm text-white">
-           {formatNumber(media.likes)}
-         </p>
-       </div>
-     
-       {/* COMMENT BUTTON */}
-       <div
-         onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-         className="cursor-pointer flex flex-col items-center"
-       >
-         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
-           <img
-             src="/CommentsPitch.png"
-             alt="Comment"
-             className="w-5 h-5"
-           />
-         </div>
-         <p className="text-center text-sm text-white">
-           {formatNumber(media.comments.length)}
-         </p>
-       </div>
-     
-       {/* SHARE BUTTON */}
-       <div
-                  onClick={() => setIsShareOpen(true)}
-                  className="cursor-pointer flex flex-col items-center"
-                >
-                  <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
-                    <img src="/SendPitch.png" alt="Share" className="w-5 h-5" />
-                  </div>
-                  <p className="text-center text-sm text-white">
-                    {formatNumber(media.shares)}
-                  </p>
+            <div className="absolute flex flex-col right-4 top-3/4 mt-12 max-md:pb-20 -translate-y-3/4 space-y-4 z-10">
+              {/* LIKE BUTTON */}
+              <div
+                onClick={() => toggleLike(media.id)}
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+                  {liked ? (
+                    <FaThumbsUp className="w-5 h-5 text-white" />
+                  ) : (
+                    <img src="/LikePitch.png" alt="Like" className="w-5 h-5" />
+                  )}
                 </div>
-       {/* MORE OPTIONS BUTTON */}
-       <div
-         onClick={() => setShowMoreOptions(idx)}
-         className="cursor-pointer flex flex-col items-center"
-       >
-         <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
-         <IoMdMore
-             className="text-xl"
-           />
-         </div>
-       </div>
-     </div>
+
+                <p className="text-center text-sm text-white">
+                  {formatNumber(media.likes)}
+                </p>
+              </div>
+
+              {/* COMMENT BUTTON */}
+              <div
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+                  <img
+                    src="/CommentsPitch.png"
+                    alt="Comment"
+                    className="w-5 h-5"
+                  />
+                </div>
+                <p className="text-center text-sm text-white">
+                  {formatNumber(media.comments.length)}
+                </p>
+              </div>
+
+              {/* SHARE BUTTON */}
+              <div
+                onClick={() => setIsShareOpen(true)}
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center">
+                  <img src="/SendPitch.png" alt="Share" className="w-5 h-5" />
+                </div>
+                <p className="text-center text-sm text-white">
+                  {formatNumber(media.shares)}
+                </p>
+              </div>
+              {/* MORE OPTIONS BUTTON */}
+              <div
+                onClick={() => setShowMoreOptions(idx)}
+                className="cursor-pointer flex flex-col items-center"
+              >
+                <div className="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center mb-2">
+                  <IoMdMore className="text-xl" />
+                </div>
+              </div>
+            </div>
             {/* Moving pitch card when tray opens */}
             {/* <div
               className={`absolute inset-0 transition-transform duration-1000 ease-out ${
@@ -737,7 +933,7 @@ const socialPlatforms = [
                                       className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                                     />
                                     {commentReplyInput.trim() && (
-                                     <FiSend
+                                      <FiSend
                                         onClick={() =>
                                           addCommentReply(comm.id, idx)
                                         }
@@ -850,156 +1046,156 @@ const socialPlatforms = [
               </Dialog.Panel>
             </Dialog>
 
-
-
-
-
-    {isShareOpen && (
-      <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-        <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
-          {/* Close Button */}
-          <button
-            onClick={() => setIsShareOpen(false)}
-            className="absolute top-4 right-4 text-2xl text-black dark:text-white"
-          >
-            ×
-          </button>
-    
-          <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
-            Share Eduvid To
-          </h2>
-    
-          {/* Search Input */}
-          <input
-            type="text"
-            placeholder="Search Users"
-            // value={searchTerm}
-            onChange={handleSearch}
-            className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
-          />
-    
-          {/* Scrollable Horizontal Users */}
-          <div className="relative mb-4">
-       <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
-              {filteredUsers.map((user) => {
-                const isSelected = selectedUsers.includes(user.id);
-                return (
-                  <div
-                    key={user.id}
-                    onClick={() =>
-                      setSelectedUsers((prev) =>
-                        prev.includes(user.id)
-                          ? prev.filter((id) => id !== user.id)
-                          : [...prev, user.id]
-                      )
-                    }
-                    className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
-                      isSelected ? "bg-black" : ""
-                    } cursor-pointer relative`}
+            {isShareOpen && (
+              <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+                <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setIsShareOpen(false)}
+                    className="absolute top-4 right-4 text-2xl text-black dark:text-white"
                   >
-                    <div className="relative w-16 h-16 mx-auto">
-                      <img
-                        src={user.img}
-                        alt={user.name}
-                        className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                    ×
+                  </button>
+
+                  <h2 className="text-lg text-center text-black dark:text-white font-bold mb-4">
+                    Share Eduvid To
+                  </h2>
+
+                  {/* Search Input */}
+                  <input
+                    type="text"
+                    placeholder="Search Users"
+                    // value={searchTerm}
+                    onChange={handleSearch}
+                    className="text-black w-full mb-4 px-4 py-2 rounded-xl border border-gray-300 bg-gray-100 dark:dark-color dark:text-white focus:outline-none"
+                  />
+
+                  {/* Scrollable Horizontal Users */}
+                  <div className="relative mb-4">
+                    <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-72 pb-2 scrollbar-hide">
+                      {filteredUsers.map((user) => {
+                        const isSelected = selectedUsers.includes(user.id);
+                        return (
+                          <div
+                            key={user.id}
+                            onClick={() =>
+                              setSelectedUsers((prev) =>
+                                prev.includes(user.id)
+                                  ? prev.filter((id) => id !== user.id)
+                                  : [...prev, user.id]
+                              )
+                            }
+                            className={`min-w-[100px] flex-shrink-0 text-center rounded-xl p-2 border ${
+                              isSelected ? "bg-black" : ""
+                            } cursor-pointer relative`}
+                          >
+                            <div className="relative w-16 h-16 mx-auto">
+                              <img
+                                src={user.img}
+                                alt={user.name}
+                                className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                              />
+                              {isSelected && (
+                                <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+                              )}
+                            </div>
+                            <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
+                              {user.name}
+                            </p>
+                            {user.verified && (
+                              <span className="text-blue-500 text-xs">✔</span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Conditional Message and Send OR Social Buttons */}
+                  {selectedUsers.length > 0 ? (
+                    <div className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none">
+                      {/* Message Field */}
+                      <input
+                        type="text"
+                        placeholder="Write a message..."
+                        className="w-full h-full focus:outline-none text-black dark:dark-color"
                       />
-                      {isSelected && (
-                        <PiCheckCircleFill className="absolute bottom-0 right-0 text-blue-600 text-lg bg-white rounded-full" />
+
+                      {/* Send Button */}
+                      <button
+                        onClick={() => {
+                          // your send logic here
+                          setIsShareOpen(false);
+                        }}
+                        className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  ) : (
+                    // Social Share Buttons
+                    <div
+                      className="relative mt-4"
+                      onMouseEnter={() => setIsHovering(true)}
+                      onMouseLeave={() => setIsHovering(false)}
+                    >
+                      {/* Scrollable Social Buttons */}
+                      <div
+                        ref={scrollRef}
+                        className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+                      >
+                        {socialPlatforms.map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                          >
+                            <button
+                              onClick={item.onClick}
+                              className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
+                            >
+                              {item.icon}
+                            </button>
+                            <span className="pt-1 text-black text-xs dark:text-white">
+                              {item.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Left Arrow */}
+                      {isHovering && showLeftArrow && (
+                        <button
+                          onClick={() =>
+                            scrollRef.current.scrollBy({
+                              left: -250,
+                              behavior: "smooth",
+                            })
+                          }
+                          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                        >
+                          <SlArrowLeft />
+                        </button>
+                      )}
+
+                      {/* Right Arrow */}
+                      {isHovering && showRightArrow && (
+                        <button
+                          onClick={() =>
+                            scrollRef.current.scrollBy({
+                              left: 200,
+                              behavior: "smooth",
+                            })
+                          }
+                          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+                        >
+                          <SlArrowRight />
+                        </button>
                       )}
                     </div>
-                    <p className="mt-1 text-sm font-medium text-gray-800 dark:text-white">
-                      {user.name}
-                    </p>
-                    {user.verified && (
-                      <span className="text-blue-500 text-xs">✔</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-    
-          {/* Conditional Message and Send OR Social Buttons */}
-          {selectedUsers.length > 0 ? (
-            <div  className="w-full mt-4 p-2 rounded-xl border border-gray-200 bg-white dark:dark-color dark:text-white focus:outline-none"
-             >
-              {/* Message Field */}
-              <input
-                type="text"
-                placeholder="Write a message..." 
-            className="w-full h-full focus:outline-none text-black dark:dark-color"
-    
-                />
-    
-              {/* Send Button */}
-              <button
-                onClick={() => {
-                  // your send logic here
-                  setIsShareOpen(false);
-                }}
-                className="w-full mt-4 py-2 rounded-full text-white font-semibold bg-blue-600"
-              >
-                Send
-              </button>
-            </div>
-          ) : (
-            // Social Share Buttons
-         <div
-              className="relative mt-4"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              {/* Scrollable Social Buttons */}
-           <div
-  ref={scrollRef}
-  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
->
-  {socialPlatforms.map((item, idx) => (
-    <div
-      key={idx}
-      className="flex flex-col items-center text-center flex-shrink-0 w-16"
-    >
-      <button
-        onClick={item.onClick}
-        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
-      >
-        {item.icon}
-      </button>
-      <span className="pt-1 text-black text-xs dark:text-white">
-        {item.label}
-      </span>
-    </div>
-  ))}
-</div>
-
-              {/* Left Arrow */}
-              {isHovering && showLeftArrow && (
-                <button
-                  onClick={() =>
-                    scrollRef.current.scrollBy({ left: -250, behavior: "smooth" })
-                  }
-                  className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                >
-                  <SlArrowLeft/>
-                </button>
-              )}
-        
-              {/* Right Arrow */}
-              {isHovering && showRightArrow && (
-                <button
-                  onClick={() =>
-                    scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
-                  }
-                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
-                >
-                  <SlArrowRight />
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    )}
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
