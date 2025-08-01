@@ -16,51 +16,51 @@ export interface FieldHead {
 export const formHeadConfig: Record<UserType, FieldHead[]> = {
   company: [
     {
-      formheading: "Complete Your Company Profile",
+      formheading: "Complete Your Business Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   investor: [
     {
-      formheading: "Complete Your Business Profile",
+      formheading: "Complete Your Investor Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   startup: [
     {
       formheading: "Complete Your Startup Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   learner: [
     {
       formheading: "Complete Your Learner Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   startupidea: [
     {
       formheading: "Complete Your Startup Idea Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   businessowner: [
     {
       formheading: "Complete Your Business Owner Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   creator: [
     {
       formheading: "Complete Your Creator Profile",
       formdescription:
-        "Tell us more about your company to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
 };

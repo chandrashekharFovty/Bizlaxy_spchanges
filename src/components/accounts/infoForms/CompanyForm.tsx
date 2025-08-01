@@ -322,13 +322,13 @@ const CompanyForm: React.FC = () => {
           <div className="w-[97%] overflow-scroll scrollbar-hide mt-[3%] h-[600px] flex flex-col gap-5 z-10">
             {/* Company Name */}
             <div className="w-full  flex flex-col mx-auto">
-              <label className="text-sm font-medium">Company Name</label>
+              <label className="text-sm font-medium">Business Name</label>
               <input
                 name="companyName"
                 value={form.companyName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="Enter your company name here"
+                placeholder="Enter your Business name here"
                 className="w-full h-[60px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-7 text-sm"
               />
               {errors.companyName && (
@@ -719,7 +719,7 @@ const CompanyForm: React.FC = () => {
                 <option
                   value=""
                   disabled
-                  className="text-[#707070] text-[#707070]"
+                  className=" text-[#707070]"
                 >
                   Select City
                 </option>

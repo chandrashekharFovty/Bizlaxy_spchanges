@@ -166,7 +166,7 @@ const Register = function () {
                 </p>
                 <p className="text-sm font-normal tracking-[0.2px] mt-1">
                   Join Now & Unlock Your Digital 
-                  <span className="font-medium ml-1">Galaxy!</span>
+                  <span className="font-normal ml-1">Galaxy!</span>
                 </p>
               </div>
               <div className="w-full">

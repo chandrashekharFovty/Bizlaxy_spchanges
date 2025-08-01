@@ -576,7 +576,7 @@ const socialPlatforms = [
   
   return (
     <>
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[96%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[100%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
       {/* <div className="snap-y snap-mandatory max-md:w-screen max-lg:w-[450px] max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide"> */}
         {mediaList.map((media, idx) => {
           const liked = likedIds.includes(media.id);
@@ -585,7 +585,7 @@ const socialPlatforms = [
             <div
               key={media.id}
               onDoubleClick={() => handleDoubleClick(media.id, idx)}
-              className="snap-start mb-8 max-md:4 dark:bg-black max-md:w-screen max-md:h-[98%] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none  "
+              className="snap-start  dark:bg-black max-md:w-screen max-md:h-[100%] max-sm:h-[100%] w-full h-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none  "
               // className="snap-start mb-8 max-md:4 dark:bg-black h-full max-md:w-full max-md:h-full w-full flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
             >
               {media.type === "image" ? (
