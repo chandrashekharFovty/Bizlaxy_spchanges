@@ -20,7 +20,7 @@ const Pitch = () => {
       </div>
 
       {/* Main Content */}
-      <main className="dark:text-white max-[769px]:mb-10 flex flex-1 max-lg:ml-[80px] max-lg:mr-0 ml-[245px] mr-[350px] justify-center max-md:ml-0 max-md:mr-0 dark:bg-[#0f001a]">
+      <main className="dark:text-white max-[769px]:mb-0 flex flex-1 max-lg:ml-[80px] max-lg:mr-0 ml-[245px] mr-[350px] justify-center max-md:ml-0 max-md:mr-0 dark:bg-[#0f001a]">
         {currentView === 'main' && <MainContent onNavigate={setCurrentView} />}
         {currentView === 'details' && <PitchDetailsPage onNavigate={setCurrentView} />}
         {currentView === 'faq' && <PitchFAQ onNavigate={setCurrentView} />}

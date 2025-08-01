@@ -17,6 +17,7 @@ import {
   Ellipsis,
   ExpandIcon,
   MessageCircleIcon,
+  PauseCircle,
 } from "lucide-react";
 import { Item } from "@radix-ui/react-accordion";
 import { FiSend } from "react-icons/fi";
@@ -36,6 +37,9 @@ import { MdOutlineInsertLink } from "react-icons/md";
 import { PiCheckCircleFill } from "react-icons/pi";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { HiMiniArrowTurnUpRight } from "react-icons/hi2";
+import { BiVolumeMute } from "react-icons/bi";
+import { VscUnmute } from "react-icons/vsc";
+import { MdOutlinePlayCircleOutline } from "react-icons/md";
 
 type Props = {
   onNavigate: (view: "main" | "details" | "faq" | "analysis") => void;
@@ -79,7 +83,7 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-   comments: [
+    comments: [
       {
         id: 1,
         text: "First comment!",
@@ -100,7 +104,7 @@ const pitchMedia: MediaItem[] = [
     description:
       "🚀 Complex problems demand simple solutions. Our AI-driven framework abstracts away the noise, letting you focus on innovation—not integration.",
     likes: 2100,
-   comments: [
+    comments: [
       {
         id: 1,
         text: "First comment!",
@@ -163,7 +167,7 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-   comments: [
+    comments: [
       {
         id: 1,
         text: "First comment!",
@@ -205,7 +209,7 @@ const pitchMedia: MediaItem[] = [
     description:
       "⚡ We’re not waiting for the future—we’re creating it. Neoseland is building sustainable solutions that tackle tomorrow’s problems, starting right now.We’re not waiting for the future—we’re creating it. [Your Startup] is building sustainable solutions that tackle tomorrow’s problems, starting right now.",
     likes: 3000,
-   comments: [
+    comments: [
       {
         id: 1,
         text: "First comment!",
@@ -225,8 +229,8 @@ export default function MainContent({ onNavigate }: Props) {
   const [openIndex, setOpenIndex] = useState(null);
   const [openReplyIndex, setOpenReplyIndex] = useState(null);
   const [likedIds, setLikedIds] = useState<number[]>([]);
-   const [commentlikedIds, setCoemmentLikedIds] = useState<number[]>([]);
-    const [replylikedIds, setReplyLikedIds] = useState<number[]>([]);
+  const [commentlikedIds, setCoemmentLikedIds] = useState<number[]>([]);
+  const [replylikedIds, setReplyLikedIds] = useState<number[]>([]);
   const [animatingLikeIdx, setAnimatingLikeIdx] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [commentReplyInput, setCommentReplyInput] = useState("");
@@ -245,92 +249,97 @@ export default function MainContent({ onNavigate }: Props) {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
-
   // social media share links
   const shareUrl = "https://yourwebsite.com/eduvid"; // your actual share link
-const shareText = "Check out this Eduvid!";
+  const shareText = "Check out this Eduvid!";
 
-const socialPlatforms = [
-  {
-    icon: <MdOutlineInsertLink />,
-    label: "Copy Link",
-    onClick: () => {
-      navigator.clipboard.writeText(shareUrl);
-      alert("Link copied! You can paste it anywhere.");
+  const socialPlatforms = [
+    {
+      icon: <MdOutlineInsertLink />,
+      label: "Copy Link",
+      onClick: () => {
+        navigator.clipboard.writeText(shareUrl);
+        alert("Link copied! You can paste it anywhere.");
+      },
     },
-  },
-  {
-    icon: <RiFacebookCircleLine />,
-    label: "Facebook",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <RiFacebookCircleLine />,
+      label: "Facebook",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <BsChatDots />,
-    label: "Messenger",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <BsChatDots />,
+      label: "Messenger",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/dialog/send?link=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaWhatsapp />,
-    label: "WhatsApp",
-    onClick: () => {
-      window.open(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaWhatsapp />,
+      label: "WhatsApp",
+      onClick: () => {
+        window.open(
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(
+            shareText + " " + shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaThreads />,
-    label: "Threads",
-    onClick: () => {
-      window.open(
-        `https://threads.net/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaThreads />,
+      label: "Threads",
+      onClick: () => {
+        window.open(
+          `https://threads.net/intent/post?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaXTwitter />,
-    label: "Twitter",
-    onClick: () => {
-      window.open(
-        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaXTwitter />,
+      label: "Twitter",
+      onClick: () => {
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <HiMiniArrowTurnUpRight />,
-    label: "More",
-    onClick: () => {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: "Eduvid",
-            text: shareText,
-            url: shareUrl,
-          })
-          .catch((err) => console.log("Share failed:", err));
-      } else {
-        alert("Sharing not supported on this device.");
-      }
+    {
+      icon: <HiMiniArrowTurnUpRight />,
+      label: "More",
+      onClick: () => {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Eduvid",
+              text: shareText,
+              url: shareUrl,
+            })
+            .catch((err) => console.log("Share failed:", err));
+        } else {
+          alert("Sharing not supported on this device.");
+        }
+      },
     },
-  },
-];
-
-
-
-
+  ];
 
   // Update arrow visibility
   const updateArrows = () => {
@@ -390,7 +399,7 @@ const socialPlatforms = [
     { id: 10, name: "soktri", title: "Follows you", img: "/Hide.jpg" },
   ];
 
-   const toggleLike = (id) => {
+  const toggleLike = (id) => {
     setMediaList((prev) =>
       prev.map((item) =>
         item.id === id
@@ -525,19 +534,6 @@ const socialPlatforms = [
     setCommentReplyInput("");
     setOpenReplyIndex(null);
   };
-  
-  const handleVideoToggle = (idx) => {
-    const video = document.getElementById(
-      `video-${idx}`
-    ) as HTMLVideoElement | null;
-    if (video && video.paused) {
-      video.play();
-      setActiveVideo(idx);
-    } else if (video) {
-      video.pause();
-      setActiveVideo(null);
-    }
-  };
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement
@@ -559,6 +555,124 @@ const socialPlatforms = [
         });
     }
   };
+
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [playing, setPlaying] = useState<{ [key: number]: boolean }>({});
+  const [muted, setMuted] = useState<{ [key: number]: boolean }>({});
+  const [progress, setProgress] = useState<{ [key: number]: number }>({});
+  const [showcontrils, setShowControls] = useState(false);
+
+  const handleVideoToggle = (idx) => {
+    const video = videoRefs.current[idx];
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setPlaying((p) => ({ ...p, [idx]: true }));
+      setActiveVideo(idx);
+    } else {
+      video.pause();
+      setPlaying((p) => ({ ...p, [idx]: false }));
+      setActiveVideo(null);
+    }
+    setShowControls(true);
+  };
+
+  function togglePlay(idx) {
+    const vid = videoRefs.current[idx];
+    if (!vid) return;
+    if (vid.paused) {
+      vid.play();
+      setPlaying((p) => ({ ...p, [idx]: true }));
+    } else {
+      vid.pause();
+      setPlaying((p) => ({ ...p, [idx]: false }));
+    }
+    setShowControls(true);
+  }
+
+  function seek(idx, amount) {
+    const vid = videoRefs.current[idx];
+    if (vid) vid.currentTime += amount;
+  }
+
+  function toggleMute(idx) {
+    const vid = videoRefs.current[idx];
+    if (vid) {
+      vid.muted = !vid.muted;
+      setMuted((m) => ({ ...m, [idx]: vid.muted }));
+    }
+    setShowControls(true);
+  }
+  useEffect(() => {
+    const initialMuted = {};
+    pitchMedia.forEach((_, idx) => {
+      const vid = videoRefs.current[idx];
+      if (vid) {
+        initialMuted[idx] = vid.muted;
+      } else {
+        initialMuted[idx] = false;
+      }
+    });
+    setMuted(initialMuted);
+  }, []);
+
+  // function onTimeUpdate(idx: number) {
+  //   const vid = videoRefs.current[idx];
+  //   if (vid) {
+  //     const pct = (vid.currentTime / vid.duration) * 100;
+  //     setProgress((prev) => ({
+  //       ...prev,
+  //       [idx]: pct,
+  //     }));
+  //   }
+  // }
+
+  //   useEffect(() => {
+  //   mediaList.forEach((_, idx) => {
+  //     const vid = videoRefs.current[idx];
+  //     if (!vid) return;
+  //     const update = () => {
+  //       setProgress(p => ({
+  //         ...p,
+  //         [idx]: (vid.currentTime / vid.duration) * 100
+  //       }));
+  //     };
+  //     vid.addEventListener("timeupdate", update);
+  //     return () => vid.removeEventListener("timeupdate", update);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    pitchMedia.forEach((media, idx) => {
+      if (media.type !== "video") return;
+      const vid = videoRefs.current[idx];
+      if (!vid) return;
+      const onPlay = () => setPlaying((p) => ({ ...p, [idx]: true }));
+      const onPause = () => setPlaying((p) => ({ ...p, [idx]: false }));
+      const onTimeUpdate = () =>
+        setProgress((p) => ({
+          ...p,
+          [idx]: (vid.currentTime / vid.duration) * 100,
+        }));
+      const update = () => {
+        setProgress((p) => ({
+          ...p,
+          [idx]: (vid.currentTime / vid.duration) * 100,
+        }));
+      };
+      vid.addEventListener("timeupdate", update);
+      vid.addEventListener("play", onPlay);
+      vid.addEventListener("pause", onPause);
+      vid.addEventListener("timeupdate", onTimeUpdate);
+      return () => {
+        vid.removeEventListener("play", onPlay);
+        vid.removeEventListener("pause", onPause);
+        vid.removeEventListener("timeupdate", onTimeUpdate);
+        vid.removeEventListener("timeupdate", update);
+      };
+    });
+  }, []);
+
   function formatNumber(num) {
     if (num >= 1000000000) {
       return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
@@ -576,8 +690,8 @@ const socialPlatforms = [
   
   return (
     <>
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[96%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
-      {/* <div className="snap-y snap-mandatory max-md:w-screen max-lg:w-[450px] max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide"> */}
+      <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-md:h-[98%] max-sm:h-[96%] max-[420px]:h-[87%] max-lg:w-[38vw] h-[95vh] max-md:my-0 my-5 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[750px] overflow-y-scroll scrollbar-hide   ">
+        {/* <div className="snap-y snap-mandatory max-md:w-screen max-lg:w-[450px] max-md:h-[90vh] h-[95vh] w-[30vw] max-md:my-0 my-5 rounded-xl max-md:rounded-none overflow-y-scroll scrollbar-hide"> */}
         {mediaList.map((media, idx) => {
           const liked = likedIds.includes(media.id);
           const isAnimating = animatingLikeIdx === idx;
@@ -604,11 +718,15 @@ const socialPlatforms = [
                   disablePictureInPicture
                   autoPlay
                   // muted
-                   loop
-                  onClick={() => handleVideoToggle(idx)}
+                  loop
+                  onClick={() => {
+                    handleVideoToggle(idx), togglePlay(idx);
+                  }}
+                  ref={(el) => (videoRefs.current[idx] = el)}
                   className="absolute inset-0 w-full h-full object-cover cursor-pointer rounded-xl max-md:rounded-none"
                 />
               )}
+
               <div className="absolute w-full px-5 flex justify-between items-center top-5 z-10">
                 {/* Upper-SIDE BUTTON */}
                 <div className="dark:text-white text-white cursor-pointer font-bold tracking-[0.8px] text-lg">
@@ -621,7 +739,82 @@ const socialPlatforms = [
                   {isFullscreen ? <BiCollapse size={30} /> : <ExpandIcon />}
                 </div>
               </div>
-              <div className="absolute w-full bottom-0 max-md:bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent ">
+              {/*Controllers */}
+              <div
+                className={`absolute w-full top-1/2 max-md:bottom-0 opacity-0 hover:opacity-100 px-3 ${
+                  showcontrils ? "opacity-0" : "opacity-100"
+                } transition-opacity`}
+              >
+                <div className="group flex justify-center gap-4 items-center">
+                  {/* <button
+                                className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                                onClick={() => seek(idx, -10)}
+                                type="button"
+                                tabIndex={-1}
+                              >
+                                <PiFastForwardCircleBold className="rotate-180" />
+                              </button> */}
+                  <button
+                    className="bg-gray-800 cursor-pointer bg-opacity-50 text-white p-3 rounded-full"
+                    onClick={() => togglePlay(idx)}
+                    type="button"
+                    tabIndex={-1}
+                  >
+                    {playing[idx] ? (
+                      <PauseCircle className="w-6 h-6" />
+                    ) : (
+                      <MdOutlinePlayCircleOutline className="w-6 h-6" />
+                    )}
+                  </button>
+                  {/* <button
+                                className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                                onClick={() => seek(idx, 10)}
+                                type="button"
+                                tabIndex={-1}
+                              >
+                                <PiFastForwardCircleBold />
+                              </button> */}
+                  <button
+                    className="bg-gray-800 bg-opacity-50 cursor-pointer text-white p-3 rounded-full"
+                    onClick={() => toggleMute(idx)}
+                    type="button"
+                    tabIndex={-1}
+                  >
+                    {muted[idx] ? (
+                      <VscUnmute className="w-6 h-6" />
+                    ) : (
+                      <BiVolumeMute className="w-6 h-6" />
+                    )}
+                  </button>
+                  {/* <button
+                                className="bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                                onClick={() => toggleFullscreen(idx)}
+                                type="button"
+                                tabIndex={-1}
+                              >
+                                ⛶
+                              </button> */}
+                </div>
+              </div>
+              <div className="absolute w-full bottom-0 max-md:bottom-0 max-md:px-0 px-3 opacity-100 transition-opacity">
+                <div
+                  className="h-1 w-full bg-gray-800 rounded cursor-pointer"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    if (videoRefs.current[idx]) {
+                      videoRefs.current[idx].currentTime =
+                        pos * videoRefs.current[idx].duration;
+                    }
+                  }}
+                >
+                  <div
+                    className="h-full bg-white rounded"
+                    style={{ width: `${progress[idx] || 0}%` }}
+                  />
+                </div>
+              </div>
+              <div className="absolute w-full bottom-0 max-md:bottom-0 to-transparent ">
                 <div className="flex items-center justify-between ">
                   {/* <div className="flex items-center gap-2">
                 <Link to="/profile" className="flex items-center gap-2">
@@ -642,12 +835,12 @@ const socialPlatforms = [
                     {media.description}
                   </p>
                 </div>
-                 <button
-                    onClick={() => onNavigate("details")}
-                    className="cursor-pointer max-md:w-full w-full rounded text-sm text-white text-center px-5"
-                  >
-                    More Details
-                  </button>
+                <button
+                  onClick={() => onNavigate("details")}
+                  className="cursor-pointer max-md:w-full w-full rounded text-sm text-white text-center px-5"
+                >
+                  More Details
+                </button>
               </div>
               {/* CENTER ANIMATED THUMB */}
               {isAnimating && (
@@ -787,7 +980,9 @@ const socialPlatforms = [
                               <div className="flex text-xs gap-4 mt-1 text-gray-500">
                                 <button>
                                   <div
-                                    onClick={() => commenttoggleLike(media.id,comm.id)}
+                                    onClick={() =>
+                                      commenttoggleLike(media.id, comm.id)
+                                    }
                                     className="cursor-pointer"
                                   >
                                     {commentlikedIds.includes(comm.id) ? (
@@ -848,11 +1043,17 @@ const socialPlatforms = [
                                               <button>
                                                 <div
                                                   onClick={() =>
-                                                    replytoggleLike(media.id,comm.id,reply.replyId)
+                                                    replytoggleLike(
+                                                      media.id,
+                                                      comm.id,
+                                                      reply.replyId
+                                                    )
                                                   }
                                                   className="cursor-pointer"
                                                 >
-                                                  {replylikedIds.includes(reply.replyId) ? (
+                                                  {replylikedIds.includes(
+                                                    reply.replyId
+                                                  ) ? (
                                                     <FaThumbsUp
                                                       size={16}
                                                       className="dark:text-white text-black  mb-2"
@@ -864,7 +1065,9 @@ const socialPlatforms = [
                                                     />
                                                   )}
                                                   <p className="text-center text-[8px]">
-                                                    {formatNumber(reply.replylikes)}
+                                                    {formatNumber(
+                                                      reply.replylikes
+                                                    )}
                                                   </p>
                                                 </div>
                                               </button>
@@ -886,7 +1089,10 @@ const socialPlatforms = [
                                             {commentReplyInput.trim() && (
                                               <FiSend
                                                 onClick={() =>
-                                                  addCommentReply(reply.replyId,comm.id)
+                                                  addCommentReply(
+                                                    reply.replyId,
+                                                    comm.id
+                                                  )
                                                 }
                                                 className="absolute top-1/2 right-3 -translate-y-1/2 text-blue-600 cursor-pointer text-xl hover:scale-110 transition"
                                               />
@@ -909,30 +1115,30 @@ const socialPlatforms = [
 
               {/* More Options Dialog */}
               <Dialog
-                           open={showMoreOptions === idx}
-                           onClose={() => setShowMoreOptions(null)}
-                         >
-                           <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4  max-xl:w-64 w-1/4 h-40 rounded-xl bottom-1/2 top-1/2 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
-                             <button
-                               className="block w-full py-2 text-left text-red-600 "
-                               onClick={() => {
-                                 setReport(true);
-                               }}
-                             >
-                               {report ? "you reported this profile" : "Report"}
-                             </button>
-                             <button
-                               className="block w-full py-2 text-left"
-                               onClick={() => {
-                                 setBlock(true);
-                               }}
-                             >
-                               {block ? "Blocked" : "Block"}
-                             </button>
-                             <button className="block w-full py-2 text-left">
-                               <Link to="/profile">View Profile</Link>
-                             </button>
-                           </Dialog.Panel>
+                open={showMoreOptions === idx}
+                onClose={() => setShowMoreOptions(null)}
+              >
+                <Dialog.Panel className="fixed max-md:w-full max-md:rounded-none max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:top-3/4  max-xl:w-64 w-1/4 h-40 rounded-xl bottom-1/2 top-1/2 right-1/3 left-1/3 bg-white p-4 z-50 shadow-md">
+                  <button
+                    className="block w-full py-2 text-left text-red-600 "
+                    onClick={() => {
+                      setReport(true);
+                    }}
+                  >
+                    {report ? "you reported this profile" : "Report"}
+                  </button>
+                  <button
+                    className="block w-full py-2 text-left"
+                    onClick={() => {
+                      setBlock(true);
+                    }}
+                  >
+                    {block ? "Blocked" : "Block"}
+                  </button>
+                  <button className="block w-full py-2 text-left">
+                    <Link to="/profile">View Profile</Link>
+                  </button>
+                </Dialog.Panel>
               </Dialog>
 
               {isShareOpen && (
@@ -1029,28 +1235,27 @@ const socialPlatforms = [
                         onMouseLeave={() => setIsHovering(false)}
                       >
                         {/* Scrollable Social Buttons */}
-                <div
-  ref={scrollRef}
-  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
->
-  {socialPlatforms.map((item, idx) => (
-    <div
-      key={idx}
-      className="flex flex-col items-center text-center flex-shrink-0 w-16"
-    >
-      <button
-        onClick={item.onClick}
-        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
-      >
-        {item.icon}
-      </button>
-      <span className="pt-1 text-black text-xs dark:text-white">
-        {item.label}
-      </span>
-    </div>
-  ))}
-</div>
-
+                        <div
+                          ref={scrollRef}
+                          className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+                        >
+                          {socialPlatforms.map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                            >
+                              <button
+                                onClick={item.onClick}
+                                className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
+                              >
+                                {item.icon}
+                              </button>
+                              <span className="pt-1 text-black text-xs dark:text-white">
+                                {item.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
 
                         {/* Left Arrow */}
                         {isHovering && showLeftArrow && (
@@ -1085,10 +1290,10 @@ const socialPlatforms = [
                     )}
                   </div>
                 </div>
-              )}
+              )};
             </div>
           );
-        })}
+        })};
       </div>
     </>
   );

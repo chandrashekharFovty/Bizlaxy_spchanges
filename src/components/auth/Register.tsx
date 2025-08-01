@@ -66,8 +66,9 @@ const Register = function () {
         : percentage <= 66
         ? "Medium"
         : percentage >= 75
-        ? "very Strong"
-        : "strong";
+        ? "Strong"
+        : ""
+
 
     percentage > 90 ? setStrengthLabel("") : setStrengthLabel(label);
   };

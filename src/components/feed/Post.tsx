@@ -743,7 +743,7 @@ const socialPlatforms = [
 
                         {/* Share */}
                         <div
-                          onClick={handleShare}
+                          // onClick={handleShare}
                           className="flex dark:text-white items-center gap-1 cursor-pointer border border-gray-400 h-8 px-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                         >
                           <FiSend className="text-lg" />
