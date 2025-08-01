@@ -21,6 +21,8 @@ import HidePeople from "@/components/MoreSettingMobile/HidePeople";
 import Wallet from "@/components/MoreSettingMobile/Wallet";
 import SwitchApp from "@/components/MoreSettingMobile/SwitchApp";
 
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
 const settings = [
   { title: "Switch Appearance", path: "/switch", description: "Choose whether others can see your online activity." },
   { title: "Active Status", path: "/active", description: "Choose whether others can see your online activity." },
@@ -33,7 +35,8 @@ const settings = [
   { title: "Privacy Setting", path: "/privacy", description: "Control who can see your profile." },
   { title: "Wallet", path: "/wallet", description: "Access your wallet to manage and track your funds." },
   { title: "Delete Account", path: "/delete", description: "Permanently delete your account." },
-];
+].filter(item => isMobile || item.title !== "Switch Appearance");
+
 
 const secondSettings = [
   { title: "Feedback", path: "/feedback", description: "Send us your feedback or suggestions." },

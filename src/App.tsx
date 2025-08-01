@@ -136,7 +136,7 @@ const appRouter = createBrowserRouter([
   { path: "/subscription", element: <PrivateRoute><Subscription /></PrivateRoute> },
 
   // Calls
-  { path: "/voicecall", element: <PrivateRoute><VoiceCall /></PrivateRoute> },
+  { path: "/voicecall", element: <PrivateRoute><VoiceCall/></PrivateRoute> },
   { path: "/videocall", element: <PrivateRoute><VideoCall /></PrivateRoute> },
 
   // Shop extra
