@@ -4,7 +4,7 @@ import AccountOption from "./AccountOptions";
 import InfoCrousel from "./InfoCrousel";
 
 const options = [
-  { id: "company", title: "Company", desc: "Get connected with tools and resources to grow your business.", tooltip: "Select this if your business is registered and in the early growth stage but not yet fully established." },
+  { id: "company", title: "Business", desc: "Get connected with tools and resources to grow your business.", tooltip: "Select this if your business is registered and in the early growth stage but not yet fully established." },
   { id: "investor", title: "Investor", desc: "Discover and track promising investment opportunities.", tooltip: "For angels, VCs, or firms exploring high-potential startups and deal flow opportunities." },
   { id: "startup", title: "Startup", desc: "Access funding, mentorship, and marketing support.", tooltip: "For early-stage or scaling startups seeking funding, partnerships, and growth support." },
   { id: "learner", title: "Learner", desc: "Gain knowledge through insights to enhance your skills.", tooltip: "For students or professionals who want to learn from industry experts and real startup journeys." },
