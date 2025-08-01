@@ -80,7 +80,7 @@ const [showRightArrow, setShowRightArrow] = useState(false);
       id:1,
       name: "NebuloTech",
       role: "Investor",
-       profile: "  /investerprofile",
+       profile: "/investerprofile",
       avatar:
         "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/dedfa53dcf0b27896852b3e4617af3cfe52b12a1?placeholderIfAbsent=true",
     },
@@ -96,7 +96,7 @@ const [showRightArrow, setShowRightArrow] = useState(false);
         id:3,
       name: "NebuloTech",
       role: "Investor",
-         profile: "  /investerprofile",
+         profile: "/investerprofile",
       avatar:
         "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/dedfa53dcf0b27896852b3e4617af3cfe52b12a1?placeholderIfAbsent=true",
     },
@@ -112,7 +112,7 @@ const [showRightArrow, setShowRightArrow] = useState(false);
         id:5,
       name: "NebuloTech",
       role: "Investor",
-      profile: "  /investerprofile",
+      profile: "/investerprofile",
       avatar:
         "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/dedfa53dcf0b27896852b3e4617af3cfe52b12a1?placeholderIfAbsent=true",
     },
@@ -124,6 +124,7 @@ const [showRightArrow, setShowRightArrow] = useState(false);
         "https://cdn.builder.io/api/v1/image/assets/22e8f5e19f8a469193ec854927e9c5a6/72e44816435fc8367dbf89a3696574c30b417c68?placeholderIfAbsent=true",
     },
   ]);
+    const [isFollowing, setIsFollowing] = useState(false);
  
 
 
@@ -184,7 +185,7 @@ useEffect(() => {
       )
     : [];
 
-  const [isFollowing, setIsFollowing] = useState(false);
+ 
   const handleFollowToggle = () => setIsFollowing(!isFollowing);
 
     const handleRemove = (id: number) => {
@@ -363,7 +364,7 @@ useEffect(() => {
           onClick={() =>
             recommendedScrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
           }
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+          className="absolute left-0 top-2/3 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
         >
           <SlArrowLeft />
         </button>
@@ -375,62 +376,86 @@ useEffect(() => {
           onClick={() =>
             recommendedScrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
           }
-          className="absolute  right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
+          className="absolute  right-0 top-2/3 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10"
         >
           <SlArrowRight />
         </button>
       )}
 
       {/* Scrollable container */}
-      <div
-        ref={recommendedScrollRef}
-        // onMouseDown={handleMouseDown}
-        // onMouseLeave={handleMouseLeave}
-        // onMouseUp={handleMouseUp}
-        // onMouseMove={handleMouseMove}
-        className={"flex w-full h-[190px] items-stretch gap-[9px] overflow-x-auto scrollbar-hide mt-4" 
-        //   ${
-        //   isDragging ? "cursor-grabbing" : "cursor-grab"
-        // }`
-        }
+ <div
+  ref={recommendedScrollRef}
+  className={`flex w-full h-[190px] gap-[9px] mt-4 items-center transition-all duration-300 ${
+    recommended.length === 1
+      ? 'justify-start'
+      : 'overflow-x-auto scrollbar-hide'
+  }`}
+>
+  {recommended.map((profile) => (
+    <div key={profile.id} className="flex-shrink-0">
+    
+    <div
+      key={profile.id}
+      className={`relative dark:dark-color bg-white shadow-[0px_0px_4px_-1px_rgba(0,0,0,0.25)] border flex flex-col items-center text-center transition-all duration-300 ${
+        recommended.length === 1
+          ? 'max-w-[300px] w-auto px-5 '
+          : 'w-[135px] px-3 py-2'
+      } h-[164px] rounded-[10px] border-[rgba(220,220,220,1)] border-solid`}
+    >
+      <button
+        onClick={() => handleRemove(profile.id)}
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
       >
-     {recommended.map((profile) => (
+        &#10005;
+      </button>
+
+      <Link to={profile.profile}>
+        <img
+          src={profile.avatar}
+          alt={profile.name}
+          className={`rounded-full object-cover ${
+            recommended.length === 1 ? 'w-14 h-14 mt-3 ml-4' : 'w-14 h-14 mt-[7px] ml-4'
+          }`}
+        />
+    
+
+      <div className="mt-2">
         <div
-          key={profile.id}
-          className="relative dark:dark-color bg-white shadow-[0px_0px_4px_-1px_rgba(0,0,0,0.25)] border flex flex-col flex-1 w-[135px] h-[164px] px-3 py-2 rounded-[10px] border-[rgba(220,220,220,1)] border-solid"
+          className={`dark:text-white text-[#050505] font-medium ${
+            recommended.length === 1 ? 'text-sm' : 'text-[13px]'
+          }`}
         >
-          <button
-            onClick={() => handleRemove(profile.id)}
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-          >
-            &#10005;
-          </button>
-
-          <div className="flex gap-4 ml-3 max-md:ml-2.5">
-            <a href={profile.profile} className="cursor-pointer text-white">
-              <img
-                src={profile.avatar}
-                alt={profile.name}
-                className="w-14 h-14 rounded-full mt-[7px] ml-4"
-              />
-            </a>
-          </div>
-
-          <div className="flex min-h-[35px] flex-col items-center whitespace-nowrap text-center justify-center mt-1.5">
-            <div className="dark:text-white text-[#050505] text-[13px] font-medium">
-              {profile.name}
-            </div>
-            <div className="dark:text-gray-300 text-[#707070] text-[10px] font-normal">
-              {profile.role}
-            </div>
-          </div>
-
-          <div className="cursor-pointer btn-gradient text-white self-stretch min-h-7 w-[114px] h-[27px] mt-[4px] text-center rounded-[5px] ">
-          <FollowButtonCard/>
-          </div>
+          {profile.name}
         </div>
-      ))}
+        <div
+          className={`dark:text-gray-300 text-[#707070] ${
+            recommended.length === 1 ? 'text-xs' : 'text-[10px]'
+          }`}
+        >
+          {profile.role}
+        </div>
       </div>
+</Link>
+      <div className="mt-2 w-full flex justify-center">
+        <div
+           onClick={() => setIsFollowing(!isFollowing)}
+          className={`btn-gradient text-white rounded-[10px] font-medium text-xs pt-1.5 ${
+            recommended.length === 1
+              ? 'w-full  max-w-[200px] py-2'
+              : 'w-[114px] h-[27px]'
+          }`}
+        >
+      {isFollowing ? "Following" : "Follow"}
+
+        </div>
+      </div>  
+    </div>
+    
+      </div>
+  ))}
+</div>
+
+
     </div>
         </div>
       </div>

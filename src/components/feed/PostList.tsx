@@ -130,7 +130,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
         documentUrl:
           "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
         documentName: "Ramayana.pdf",
@@ -179,7 +179,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "Dream big. Hustle hard. Repeat. Pioneering new paths in [your industry] and proving that ambition paired with action wins every time. 🚀 #Innovate #BusinessGoals",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
       },
       engagement: {
         likes: "1105",
@@ -225,7 +225,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "Not just polished pitches — here’s the real side of startup life: late-night brainstorms, coffee-fueled sprints, and team huddles that make the dream possible. What’s the hustle behind your best idea? 👇 #StartupVibes #TeamWork",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
         documentUrl:
           "http://dt.pepperdine.edu/courses/greatbooks_v/gbv-15/66697602-The-Ramayana-R-K-Narayan.pdf",
         documentName: "Ramayana.pdf",
@@ -274,7 +274,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "“From a spark of an idea to building something real — every step, sprint, and setback has shaped this journey. Here’s to the sleepless nights, early wins, and relentless belief in something greater. 🔗 #FounderLife #StartupJourney",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
       },
       engagement: {
         likes: "119",
@@ -322,7 +322,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "Passion turned into purpose — but I need your voice: Whats the #1 challenge you face when launching a new idea? Lets chat in the comments & build solutions together. 💬👇 #GrowthMindset #EntrepreneurshipInspired by engaging caption tips like asking questions and CTAs",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
       },
       engagement: {
        likes: '110541',
@@ -370,7 +370,7 @@ export function PostList() {
         titleLimit: 30, // 🔹 Set title character limit here
         description:
           "Passion turned into purpose — but I need your voice: Whats the #1 challenge you face when launching a new idea? Lets chat in the comments & build solutions together. 💬👇 #GrowthMindset #EntrepreneurshipInspired by engaging caption tips like asking questions and CTAs",
-        descpLimit: 50, // 🔹 Set description character limit here
+        descpLimit: 100, // 🔹 Set description character limit here
       },
       engagement: {
         likes: "1105415459",
