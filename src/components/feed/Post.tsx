@@ -470,9 +470,9 @@ const socialPlatforms = [
                 )}
                 {showFollowButton && <FollowButton />}
               </div>
-              <span className="dark:text-gray-400 text-xs text-gray-500">
+           <div className="mt-[-10px]">   <span className="dark:text-gray-400 text-xs text-gray-500">
                 {user.timeAgo}
-              </span>
+              </span></div>
             </div>
           </div>
           <div className="absolute max-md:w-1/12 dark:text-white top-4 right-4 z-10">
@@ -485,7 +485,7 @@ const socialPlatforms = [
             <div className="max-md:text-sm max-md:w-72 font-semibold">
               {content.title}
             </div>
-            <div className="max-md:text-xs max-md:w-72 dark:text-gray-500 text-[#464646] font-normal mt-2">
+            <div className="max-md:text-xs max-md:w-72 dark:text-gray-500 text-[#464646] w-full font-normal mt-2">
               {showFullDescription ? content.description : truncatedDescription}
               {content.description.length > content.descpLimit && (
                 <button
