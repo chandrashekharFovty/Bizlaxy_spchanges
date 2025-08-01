@@ -288,8 +288,7 @@ function PostCreate() {
 
 
 
-
- const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const files = e.target.files;
   if (!files) return;
 
@@ -299,15 +298,15 @@ function PostCreate() {
     const file = files[i];
     totalSize += file.size;
 
-    // Check if it's an image and size is EXACTLY 1MB
+    // ✅ Image check: size must be <= 1MB
     if (file.type.startsWith("image/")) {
-      if (file.size !== 1 * 1024 * 1024) {
-        alert(`Image ${file.name} must be exactly 1MB.`);
+      if (file.size > 1 * 1024 * 1024) {
+        alert(`Image ${file.name} must be less than or equal to 1MB.`);
         return;
       }
     }
 
-    //Check if it's a document and size <= 10MB
+    // ✅ Document check: size <= 10MB
     if (
       file.type === "application/pdf" ||
       file.type === "application/msword" ||
@@ -321,13 +320,13 @@ function PostCreate() {
     }
   }
 
-  //Check total combined size
+  // ✅ Check total combined size (all files)
   if (totalSize > 10 * 1024 * 1024) {
     alert("Total file size cannot exceed 10MB.");
     return;
   }
 
-  // If only one image, set preview
+  // ✅ Set image for preview
   if (files[0].type.startsWith("image/")) {
     setSelectedImage(files[0]);
   }
@@ -363,7 +362,7 @@ function PostCreate() {
       <>
 
       {/* Upload Step */}
-      {step === "upload" && (
+    {step === "upload" && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
           <div className="w-[400px] flex flex-col bg-white rounded-xl h-[450px] justify-between">
             {/* Top Bar */}
@@ -643,6 +642,7 @@ function PostCreate() {
             </div>
           </div>
         )}
+
       </>
 
   {/* Discard Modal */}

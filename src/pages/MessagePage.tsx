@@ -32,6 +32,8 @@ const initialChatUsers = [
       {
         sender: "Akash Retail",
         text: "Hi! I'm interested in a bulk order.",
+          images: [File, File],
+  documents: [File],
         time: "17:00",
           timestamp: Date.now(),
         me: false,
@@ -39,6 +41,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Sure, I can help you with that!",
+          images: [File, File],
+  documents: [File],
         time: "17:02",
         timestamp: Date.now(),
         me: true,
@@ -57,6 +61,8 @@ const initialChatUsers = [
       {
         sender: "Mike Mazowski",
         text: "Did you check the vacation plan?",
+          images: [File, File],
+  documents: [File],
         time: "18:04",
 
         me: false,
@@ -64,6 +70,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Yes, looks good to me!",
+          images: [File, File],
+  documents: [File],
         time: "18:44",
         timestamp: Date.now(),
         me: true,
@@ -82,6 +90,8 @@ const initialChatUsers = [
       {
         sender: "Sarah Connor",
         text: "Let's meet tomorrow at 5pm?",
+          images: [File, File],
+  documents: [File],
         time: "14:30",
         timestamp: Date.now(),
         me: false,
@@ -89,6 +99,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Perfect, see you then!",
+          images: [File, File],
+  documents: [File],
         time: "14:35",
              timestamp: Date.now(),
         me: true,
@@ -106,11 +118,15 @@ const initialChatUsers = [
       {
         sender: "Dev Team",
         text: "Don’t forget sprint planning tomorrow.",
+          images: [File, File],
+  documents: [File],
         time: "09:00",
               timestamp: Date.now(),
         me: false,
       },
       { sender: "You", text: "Got it!", time: "09:05",
+          images: [File, File],
+  documents: [File],
                timestamp: Date.now(),
         
         me: true },
@@ -128,6 +144,8 @@ const initialChatUsers = [
         sender: "John Doe",
         text: "Hey! Please add me.",
         time: "08:00",
+          images: [File, File],
+  documents: [File],
                 timestamp: Date.now(),
         me: false,
       },
@@ -144,6 +162,8 @@ const initialChatUsers = [
       {
         sender: "Jane Smith",
         text: "Hi there! I'd like to connect.",
+          images: [File, File],
+  documents: [File],
         time: "12:00",
                timestamp: Date.now(),
         me: false,
@@ -162,6 +182,8 @@ const initialChatUsers = [
       {
         sender: "Akash Retail",
         text: "Hi! I'm interested in a bulk order.",
+          images: [File, File],
+  documents: [File],
         time: "17:00",
                 timestamp: Date.now(),
         me: false,
@@ -169,6 +191,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Sure, I can help you with that!",
+          images: [File, File],
+  documents: [File],
         time: "17:02",
           timestamp: Date.now(),
         me: true,
@@ -186,6 +210,8 @@ const initialChatUsers = [
       {
         sender: "Mike Mazowski",
         text: "Did you check the vacation plan?",
+          images: [File, File],
+  documents: [File],
         time: "18:04",
                timestamp: Date.now(),
         me: false,
@@ -193,6 +219,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Yes, looks good to me!",
+          images: [File, File],
+  documents: [File],
         time: "18:44",
           timestamp: Date.now(),
         me: true,
@@ -210,6 +238,8 @@ const initialChatUsers = [
       {
         sender: "Sarah Connor",
         text: "Let's meet tomorrow at 5pm?",
+          images: [File, File],
+  documents: [File],
         time: "14:30",
                timestamp: Date.now(),
         me: false,
@@ -217,6 +247,8 @@ const initialChatUsers = [
       {
         sender: "You",
         text: "Perfect, see you then!",
+          images: [File, File],
+  documents: [File],
         time: "14:35",
             timestamp: Date.now(),
         me: true,
@@ -234,11 +266,16 @@ const initialChatUsers = [
       {
         sender: "Dev Team",
         text: "Don’t forget sprint planning tomorrow.",
+          images: [File, File],
+  documents: [File],
         time: "09:00",
               timestamp: Date.now(),
         me: false,
       },
-      { sender: "You", text: "Got it!", time: "09:05", me: true },
+      { sender: "You", text: "Got it!",
+          images: [File, File],
+  documents: [File],
+   time: "09:05", me: true },
     ],
   },
   {
@@ -252,6 +289,8 @@ const initialChatUsers = [
       {
         sender: "shivi mukati",
         text: "Hey! Please add me.",
+          images: [File, File],
+  documents: [File],
         time: "08:00",
                timestamp: Date.now(),
         me: false,
@@ -269,6 +308,8 @@ const initialChatUsers = [
       {
         sender: "Rudhra patel",
         text: "Hi there! I'd like to connect.",
+          images: [File, File],
+  documents: [File],
         time: "12:00",
               timestamp: Date.now(),
         me: false,
@@ -301,7 +342,63 @@ const MessagePage = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const menuRef = useRef(null);
+   const [attachedImages, setAttachedImages] = useState([]);
+  const [attachedDocs, setAttachedDocs] = useState([]);
+  const [previewImage, setPreviewImage] = useState(null);
+  const popupRef = useRef();
 
+
+
+  const handleSend = () => {
+    if ((!messageText.trim() && attachedImages.length === 0 && attachedDocs.length === 0) || !selectedUser) return;
+
+    const newMessage = {
+      sender: "You",
+      text: messageText.trim(),
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      me: true,
+      images: attachedImages,
+      documents: attachedDocs,
+    };
+
+    const previewText = messageText.trim()
+      ? messageText.slice(0, 30) + "..."
+      : attachedImages.length
+      ? "📷 Image"
+      : attachedDocs.length
+      ? "📄 Document"
+      : "";
+
+    const updatedChats = chats.map((chat) =>
+      chat.id === selectedUser.id
+        ? { ...chat, messages: [...chat.messages, newMessage], preview: previewText }
+        : chat
+    );
+
+    setChats(updatedChats);
+    setSelectedUser({
+      ...selectedUser,
+      messages: [...selectedUser.messages, newMessage],
+    });
+
+    // Reset fields
+    setMessageText("");
+    setAttachedImages([]);
+    setAttachedDocs([]);
+    setShowPopup(false);
+  };
+
+
+useEffect(() => {
+  return () => {
+    // Revoke any object URLs created in this component
+    message.images?.forEach((img) => {
+   if (img instanceof File || img instanceof Blob) {
+        URL.revokeObjectURL(img);
+      }
+    });
+  };
+}, [message.images]);
 
   
 
@@ -381,41 +478,44 @@ const MessagePage = () => {
     setSelectedMessageIdx(null);
   };
 
-  const handleSend = () => {
-    if (!messageText.trim() || !selectedUser) return;
+  // const handleSend = () => {
+  //   if (!messageText.trim() || !selectedUser) return;
 
-    const newMessage = {
-      sender: "You",
-      text: messageText.trim(),
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      me: true,
-    };
+  //   const newMessage = {
+  //     sender: "You",
+  //     text: messageText.trim(),
+  //     time: new Date().toLocaleTimeString([], {
+  //       hour: "2-digit",
+  //       minute: "2-digit",
+  //     }),
+  //     me: true,
+  //   };
 
-    const updatedChats = chats.map((chat) =>
-      chat.id === selectedUser.id
-        ? {
-            ...chat,
-            messages: [...chat.messages, newMessage],
-            preview: newMessage.text.slice(0, 30) + "...",
-          }
-        : chat
-    );
+  //   const updatedChats = chats.map((chat) =>
+  //     chat.id === selectedUser.id
+  //       ? {
+  //           ...chat,
+  //           messages: [...chat.messages, newMessage],
+  //           preview: newMessage.text.slice(0, 30) + "...",
+  //         }
+  //       : chat
+  //   );
 
-    setChats(updatedChats);
-    setSelectedUser({
-      ...selectedUser,
-      messages: [...selectedUser.messages, newMessage],
-    });
-    setMessageText("");
-    setShowEmojis(false);
-    setShowPopup(false);
-  };
+  //   setChats(updatedChats);
+  //   setSelectedUser({
+  //     ...selectedUser,
+  //     messages: [...selectedUser.messages, newMessage],
+  //   });
+  //   setMessageText("");
+  //   setShowEmojis(false);
+  //   setShowPopup(false);
+  // };
 
 
   // Close menu on outside click
+ 
+ 
+ 
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -451,6 +551,23 @@ const handleDeleteForMe = (idx) => {
   setSelectedUser((prev) => ({ ...prev, messages: updatedMessages }));
 };
 
+
+// when user clicks outside the popup, close it
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      setShowPopup(false); // Close the popup
+    }
+  };
+
+  if (showPopup) {
+    document.addEventListener("mousedown", handleClickOutside);
+  }
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [showPopup]);
 
 
   return (
@@ -633,7 +750,7 @@ const handleDeleteForMe = (idx) => {
         <div className="flex items-center gap-3">
           <Link
             to="/message"
-            className="dark:text-white lg:hidden flex items-center font-semibold text-black dark:text-black py-4 px-4"
+            className="lg:hidden flex items-center font-semibold text-black dark:text-black py-4 px-4"
           >
             <MdExpandLess className="transform rotate-[-90deg] text-2xl" />
           </Link>
@@ -659,20 +776,26 @@ const handleDeleteForMe = (idx) => {
           </div>
         </div>
         <div className="space-x-3">
-          <button
-            onClick={() =>
-              navigate("/videocall", { state: { user: selectedUser } })
-            }
-          >
-            <FaPhoneAlt className="text-2xl" />
-          </button>
-          <button
-            onClick={() =>
-              navigate("/videocall", { state: { user: selectedUser } })
-            }
-          >
-            <FaVideo className="text-2xl" />
-          </button>
+  <button
+  onClick={() => {
+    const { id, name, avatar } = selectedUser; // Avoid passing any File or function
+    navigate("/voicecall", { state: { user: { id, name, avatar } } });
+  }}
+>
+  <FaPhoneAlt className="text-2xl" />
+</button>
+
+<button
+  onClick={() => {
+    const { id, name, avatar } = selectedUser; // only pick serializable fields
+    navigate("/videocall", {
+      state: { user: { id, name, avatar } },
+    });
+  }}
+>
+  <FaVideo className="text-2xl" />
+</button>
+
           <button
             onClick={() => setShowOptions(!showOptions)}
             className="text-3xl"
@@ -760,94 +883,177 @@ const handleDeleteForMe = (idx) => {
       </div>
 
       {/* === Messages === */}
-      <div
-      className="flex-1 p-4 space-y-6 overflow-y-auto"
-      style={{
-        backgroundImage: selectedUser?.chatWallpaper
-          ? `url(${selectedUser.chatWallpaper})`
-          : "none",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+   <div
+  className="flex-1 p-4 space-y-6 overflow-y-auto scrollbar-hide"
+  style={{
+    backgroundImage: selectedUser?.chatWallpaper
+      ? `url(${selectedUser.chatWallpaper})`
+      : "none",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>
+  {selectedUser?.messages?.map((msg, idx) => (
+    <div
+      key={idx}
+      className={`relative flex ${msg.me ? "justify-end" : "justify-start"}`}
     >
-      {selectedUser?.messages?.map((msg, idx) => (
-        <div
-          key={idx}
-          className={`relative flex ${msg.me ? "justify-end" : "justify-start"}`}
-        >
-          {/* Message Bubble */}
-          <div
-            className={`max-w-sm p-3 rounded-xl ${
-              msg.me ? "bg-blue-600 text-white" : "bg-white text-gray-800 shadow"
-            }`}
-          >
-            {!msg.me && (
-              <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>
-            )}
-            <p className="text-sm">{msg.text}</p>
-            <p className="text-xs mt-2 text-right">{msg.time}</p>
-          </div>
+      {/* Message Bubble */}
+      <div
+        className={`max-w-sm p-3 rounded-xl ${
+          msg.me ? "bg-blue-600 text-white" : "bg-white text-gray-800 shadow"
+        }`}
+      >
+        {/* Sender Name */}
+        {!msg.me && <p className="text-xs text-gray-500 mb-1">{msg.sender}</p>}
 
-          {/* 3-dot button */}
-          <button
-            onClick={() =>
-              setSelectedMessageIdx(selectedMessageIdx === idx ? null : idx)
-            }
-            className="ml-2 text-gray-500"
-          >
-            •••
-          </button>
+        {/* Message Text */}
+        {msg.text && <p className="text-sm">{msg.text}</p>}
 
-          {/* Popup Menu */}
-          {selectedMessageIdx === idx && (
-            <div
-              ref={menuRef}
-              className="absolute top right-0 w-44 bg-white shadow-lg rounded-xl p-2 z-50"
-            >
-              <p className="text-xs text-gray-500 mb-2">{msg.time}</p>
-              <div className="flex flex-col gap-3">
-       <button
-                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
-                  onClick={() => handleForward(msg)}
-                >
-                 Reply <ReplyAllIcon/>
-                </button>
-                <button
-                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
-                  onClick={() => handleForward(msg)}
-                >
-                  Forward <IoIosSend />
-                </button>
-                <button
-                  className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
-                  onClick={() => handleCopy(msg)}
-                >
-                  Copy <FiCopy />
-                </button>
-                <hr />
-{msg.me && isWithin48Hours(msg.timestamp) && (
-  <button
-    className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
-    onClick={() => handleUnsend(idx)} // no need for condition inside
-  >
-    Unsend <HiOutlineArrowLeftCircle />
-  </button>
+        {/* Attached Images */}
+{msg.images?.length > 0 && (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {msg.images.map((img, i) => {
+      // Ensure we use a valid URL
+      let imgURL = "";
+
+      try {
+        if (typeof img === "string") {
+          // Already a URL
+          imgURL = img;
+        } else if (img instanceof File || img instanceof Blob) {
+          imgURL = URL.createObjectURL(img);
+        } else {
+          console.warn("Skipping invalid image object:", img);
+          return null;
+        }
+      } catch (error) {
+        console.error("Error creating image URL:", error);
+        return null;
+      }
+
+      // return (
+      //   <img
+      //     key={i}
+      //     src={imgURL}
+      //     alt={`attachment-${i}`}
+      //     onClick={() => setPreviewImage(imgURL)}
+      //     className="w-32 h-32 object-cover rounded-lg border cursor-pointer hover:opacity-80"
+      //   />
+      // );
+    })}
+  </div>
 )}
 
-<button
-  className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
-  onClick={() => handleDeleteForMe(idx)} 
+
+        {/* Attached Documents */}
+    {msg.images?.length > 0 && (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {msg.images.map((img, i) => {
+      let imgURL = "";
+      if (typeof img === "string") {
+        imgURL = img; // it's already a URL
+      } else if (img instanceof File || img instanceof Blob) {
+        imgURL = URL.createObjectURL(img);
+      } else {
+        return null; // skip invalid entries
+      }
+
+      return (
+        <img
+          key={i}
+          src={imgURL}
+          alt={`attachment-${i}`}
+          onClick={() => setPreviewImage(imgURL)}
+          className="w-32 h-32 object-cover rounded-lg border cursor-pointer hover:opacity-80"
+        />
+      );
+    })}
+  </div>
+)}
+
+
+        {/* Timestamp */}
+        <p className="text-xs mt-2 text-right">{msg.time}</p>
+      </div>
+
+      {/* 3-dot Menu */}
+      <button
+        onClick={() =>
+          setSelectedMessageIdx(selectedMessageIdx === idx ? null : idx)
+        }
+        className="ml-2 text-gray-500"
+      >
+        •••
+      </button>
+
+      {/* Popup Menu */}
+      {selectedMessageIdx === idx && (
+        <div
+          ref={menuRef}
+          className="absolute top right-0 w-44 bg-white shadow-lg rounded-xl p-2 z-50"
+        >
+          <p className="text-xs text-gray-500 mb-2">{msg.time}</p>
+          <div className="flex flex-col gap-3">
+            <button
+              className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+              onClick={() => handleForward(msg)}
+            >
+              Reply <ReplyAllIcon />
+            </button>
+            <button
+              className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+              onClick={() => handleForward(msg)}
+            >
+              Forward <IoIosSend />
+            </button>
+            <button
+              className="flex justify-between text-gray-700 hover:bg-gray-100 p-1 rounded"
+              onClick={() => handleCopy(msg)}
+            >
+              Copy <FiCopy />
+            </button>
+            <hr />
+            {msg.me && isWithin48Hours(msg.timestamp) && (
+              <button
+                className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
+                onClick={() => handleUnsend(idx)}
+              >
+                Unsend <HiOutlineArrowLeftCircle />
+              </button>
+            )}
+            <button
+              className="flex justify-between text-red-500 hover:bg-red-100 p-1 rounded"
+              onClick={() => handleDeleteForMe(idx)}
+            >
+              Delete for Me <FiTrash2 />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+{previewImage && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+    onClick={() => setPreviewImage(null)}
+  >
+    <img
+      src={previewImage}
+      alt="Preview"
+      className="max-w-full max-h-full rounded-lg shadow-lg"
+    />
+    <button
+  onClick={() => setPreviewImage(null)}
+  className="absolute top-4 right-4 text-white text-xl"
 >
-  Delete for Me <FiTrash2 />
+  ✕
 </button>
 
+  </div>
+)}
 
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
      
       {/* === Request Actions === */}
       {selectedUser?.type === "Requests" && (
@@ -901,7 +1107,8 @@ const handleDeleteForMe = (idx) => {
               😊
             </button>
             {showEmojis && (
-              <div className="absolute bottom-14 left-0 bg-white border rounded shadow p-2 flex gap-2">
+              <div className="absolute bottom-14 left-0 bg-white border rounded shadow p-2 flex gap-2"
+                  ref={popupRef}>
                 {["😀", "😁", "😂", "😍", "👍"].map((emoji) => (
                   <button
                     key={emoji}
@@ -919,124 +1126,172 @@ const handleDeleteForMe = (idx) => {
           </div>
 
           {/* Textarea */}
-          <textarea
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-              }
-            }}
-            placeholder="Write a message..."
-            className="dark:dark-color dark:text-black dark:border dark:border-gray-600 rounded-xl flex-1 px-4 py-2 outline-none text-sm resize-none"
-          />
+      <div className="p-4 w-full  dark:bg-gray-900 bg-white">
+      {/* Previews */}
+      {attachedImages.length > 0 && (
+        <div className="flex gap-2 flex-wrap mb-2">
+          {attachedImages.map((img, idx) => (
+            <div key={idx} className="relative w-16 h-16">
+              <img src={URL.createObjectURL(img)} className="w-full h-full object-cover rounded" />
+              <button
+                className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1"
+                onClick={() => setAttachedImages((prev) => prev.filter((_, i) => i !== idx))}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
-          {/* Attach */}
-          <div className="dark:dark-color relative">
-            <button onClick={() => setShowPopup(!showPopup)}>
-              <img src={LinkIcon} alt="" />
-            </button>
-            {showPopup && (
-              <div className="dark:dark-color absolute bottom-14 right-0 bg-white border rounded shadow p-4 w-48 flex flex-col gap-3 z-50">
-                {/* Document */}
-                <input
-                  type="file"
-                  id="docInput"
-                  accept=".pdf,.doc,.docx"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      console.log("Selected document:", file);
-                    }
-                  }}
-                />
-                <button
-                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                  onClick={() => document.getElementById("docInput").click()}
-                >
-                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                    <IoDocumentText />
-                  </span>
-                  Document
-                </button>
-
-                {/* Camera */}
-                <input
-                  type="file"
-                  id="cameraInput"
-                  accept="image/*"
-                  capture="environment"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      console.log("Captured photo:", file);
-                    }
-                  }}
-                />
-                <button
-                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                  onClick={() => document.getElementById("cameraInput").click()}
-                >
-                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                    <FaCamera />
-                  </span>{" "}
-                  Camera
-                </button>
-
-                {/* Gallery */}
-                <input
-                  type="file"
-                  id="galleryInput"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    console.log("Selected gallery images:", files);
-                  }}
-                />
-                <button
-                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                  onClick={() => document.getElementById("galleryInput").click()}
-                >
-                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                    <GrGallery />
-                  </span>{" "}
-                  Gallery
-                </button>
-
-                {/* Location */}
-                <button
-                  className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded"
-                  onClick={handleGetLocation}
-                >
-                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                    <MdLocationOn />
-                  </span>{" "}
-                  Location
-                </button>
-
-                {/* Contact */}
-                <button className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded">
-                  <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
-                    <RiContactsFill />
-                  </span>{" "}
-                  Contact
-                </button>
+      {attachedDocs.length > 0 && (
+        <div className="flex flex-col gap-1 mb-2 text-sm text-gray-600">
+          {attachedDocs.map((doc, idx) => (
+            <div key={idx} className="flex items-center justify-between gap-2 bg-gray-100 p-2 rounded">
+              <div className="flex items-center gap-2">
+                <span className="text-blue-600">📄</span>
+                <span className="truncate max-w-[150px]">{doc.name}</span>
               </div>
-            )}
-          </div>
+              <button
+                className="text-red-500 text-xs"
+                onClick={() => setAttachedDocs((prev) => prev.filter((_, i) => i !== idx))}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
-          {/* Send */}
-          <button
-            onClick={handleSend}
-            className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
-          >
-            <img src={SendIcon} alt="" className="w-6 h-6 -rotate-45" />
+      {/* Textarea and Buttons */}
+      <div className="flex items-end gap-2">
+        <textarea
+          value={messageText}
+          onChange={(e) => setMessageText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+          placeholder="Write a message..."
+          className="dark:bg-gray-800 dark:text-white border dark:border-gray-700 rounded-xl flex-1 px-4 py-2 outline-none text-sm resize-none"
+        />
+
+        {/* Attach Popup */}
+        <div className="relative">
+          <button onClick={() => setShowPopup(!showPopup)}>
+            <img src={LinkIcon} alt="attach" />
           </button>
+
+          {showPopup && (
+            <div className="absolute bottom-14 right-0 bg-white border rounded shadow p-4 w-48 flex flex-col gap-3 z-50 dark:bg-gray-800 dark:border-gray-700"
+            ref={popupRef}
+            >
+              {/* Document */}
+              <input
+                type="file"
+                id="docInput"
+                accept=".pdf,.doc,.docx"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && file.size <= 10 * 1024 * 1024) {
+                    setAttachedDocs((prev) => [...prev, file]);
+                  } else {
+                    alert("Document must be less than 10MB");
+                  }
+                }}
+              />
+              <button
+                className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded dark:hover:bg-gray-700"
+                onClick={() => document.getElementById("docInput").click()}
+              >
+                <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                  <IoDocumentText />
+                </span>
+                Document
+              </button>
+
+              {/* Camera */}
+              <input
+                type="file"
+                id="cameraInput"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && file.size <= 1024 * 1024) {
+                    setAttachedImages((prev) => [...prev, file]);
+                  } else {
+                    alert("Image must be less than 1MB");
+                  }
+                }}
+              />
+              <button
+                className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded dark:hover:bg-gray-700"
+                onClick={() => document.getElementById("cameraInput").click()}
+              >
+                <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                  <FaCamera />
+                </span>
+                Camera
+              </button>
+
+              {/* Gallery */}
+              <input
+                type="file"
+                id="galleryInput"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files);
+                  const valid = files.filter((file) => file.size <= 1024 * 1024);
+                  const invalid = files.filter((file) => file.size > 1024 * 1024);
+                  if (invalid.length > 0) alert("Some images exceeded 1MB and were skipped.");
+                  setAttachedImages((prev) => [...prev, ...valid]);
+                }}
+              />
+              <button
+                className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded dark:hover:bg-gray-700"
+                onClick={() => document.getElementById("galleryInput").click()}
+              >
+                <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                  <GrGallery />
+                </span>
+                Gallery
+              </button>
+
+              {/* Location */}
+              <button className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded dark:hover:bg-gray-700">
+                <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                  <MdLocationOn />
+                </span>
+                Location
+              </button>
+
+              {/* Contact */}
+              <button className="flex items-center gap-2 text-sm hover:bg-gray-100 p-2 rounded dark:hover:bg-gray-700">
+                <span className="w-6 h-6 bg-blue-500 text-white flex items-center justify-center rounded">
+                  <RiContactsFill />
+                </span>
+                Contact
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Send */}
+        <button
+          onClick={handleSend}
+          className="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+        >
+          <img src={SendIcon} alt="send" className="w-6 h-6 -rotate-45" />
+        </button>
+      </div>
+    </div>
         </div>
       )}
     </>

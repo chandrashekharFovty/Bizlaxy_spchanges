@@ -286,6 +286,7 @@ const StoryModal: React.FC<Props> = ({
               <input
                 type="text"
                 value={message}
+                maxLength={100}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Send Message"
                 className="w-full h-9 bg-transparent border border-white/30 outline-none text-white pl-3 pr-12 rounded-full text-sm placeholder-white/60"

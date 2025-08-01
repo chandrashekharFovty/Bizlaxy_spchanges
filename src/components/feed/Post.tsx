@@ -1086,6 +1086,7 @@ const socialPlatforms = [
                 <input
                   type="text"
                   placeholder="Write a message..."
+                    maxLength={100}
                   className="w-full h-full focus:outline-none dark:dark-color text-black"
                 />
 
