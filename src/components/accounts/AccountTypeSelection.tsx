@@ -54,7 +54,7 @@ const SelectAccountType = () => {
   {/* Left Side (Main Content) */}
   <div className="flex flex-col w-full md:w-8/12 md:mr-[35%] bg-white h-screen">
     {/* Header */}
-    <div className="sticky top-0  py-4 px-5 z-20">
+    <div className="sticky top-0  py-4 pr-5 pl-12 z-20">
       <h3 className="text-xl md:text-2xl font-bold text-center md:text-left">
         Select Account Type
       </h3>
@@ -64,7 +64,7 @@ const SelectAccountType = () => {
     </div>
 
     {/* Scrollable Content */}
-    <div className="flex-1 overflow-y-auto scrollbar-hide px-5 py-4">
+    <div className="flex-1 overflow-y-auto scrollbar-hide pr-5 pl-12 py-4">
       <div className="flex flex-col gap-5">
         {options.map((opt, idx) => (
           <AccountOption

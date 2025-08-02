@@ -11,13 +11,15 @@ import { FiSend } from "react-icons/fi";
 import { FaHeart, FaRegThumbsUp, FaThumbsUp, FaWhatsapp } from "react-icons/fa";
 import { HiDocument, HiMiniArrowTurnUpRight } from "react-icons/hi2";
 import { CgFileDocument } from "react-icons/cg";
-import * as Dialog from "@radix-ui/react-dialog";
+// import * as Dialog from "@radix-ui/react-dialog";
 import { Transition } from "@headlessui/react";
 import { BsChatDots } from "react-icons/bs";
 import { RiFacebookCircleLine } from "react-icons/ri";
 import { MdOutlineInsertLink } from "react-icons/md";
 import { PiCheckCircleFill } from "react-icons/pi";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+
 
 //MEDIA CONTENT IMAGES ARRAY
 const images = ["/poster03.png", "/poster01.png", "/poster02.png"];
@@ -145,95 +147,97 @@ export function Post({
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
+  // Social Media Share Functionality
+  const shareUrl = "https://yourwebsite.com/post"; // actual share link
+  const shareText = "Check out this Post!";
 
-
-
-// Social Media Share Functionality
-const shareUrl = "https://yourwebsite.com/post"; // actual share link
-const shareText = "Check out this Post!";
-
-const socialPlatforms = [
-  {
-    icon: <MdOutlineInsertLink />,
-    label: "Copy Link",
-    onClick: () => {
-      navigator.clipboard.writeText(shareUrl);
-      alert("Link copied! You can paste it anywhere.");
+  const socialPlatforms = [
+    {
+      icon: <MdOutlineInsertLink />,
+      label: "Copy Link",
+      onClick: () => {
+        navigator.clipboard.writeText(shareUrl);
+        alert("Link copied! You can paste it anywhere.");
+      },
     },
-  },
-  {
-    icon: <RiFacebookCircleLine />,
-    label: "Facebook",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <RiFacebookCircleLine />,
+      label: "Facebook",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <BsChatDots />,
-    label: "Messenger",
-    onClick: () => {
-      window.open(
-        `https://www.facebook.com/dialog/send?link=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <BsChatDots />,
+      label: "Messenger",
+      onClick: () => {
+        window.open(
+          `https://www.facebook.com/dialog/send?link=${encodeURIComponent(
+            shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaWhatsapp />,
-    label: "WhatsApp",
-    onClick: () => {
-      window.open(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaWhatsapp />,
+      label: "WhatsApp",
+      onClick: () => {
+        window.open(
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(
+            shareText + " " + shareUrl
+          )}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaThreads />,
-    label: "Threads",
-    onClick: () => {
-      window.open(
-        `https://threads.net/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaThreads />,
+      label: "Threads",
+      onClick: () => {
+        window.open(
+          `https://threads.net/intent/post?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <FaXTwitter />,
-    label: "Twitter",
-    onClick: () => {
-      window.open(
-        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        "_blank"
-      );
+    {
+      icon: <FaXTwitter />,
+      label: "Twitter",
+      onClick: () => {
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+      },
     },
-  },
-  {
-    icon: <HiMiniArrowTurnUpRight />,
-    label: "More",
-    onClick: () => {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: "Eduvid",
-            text: shareText,
-            url: shareUrl,
-          })
-          .catch((err) => console.log("Share failed:", err));
-      } else {
-        alert("Sharing not supported on this device.");
-      }
+    {
+      icon: <HiMiniArrowTurnUpRight />,
+      label: "More",
+      onClick: () => {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Eduvid",
+              text: shareText,
+              url: shareUrl,
+            })
+            .catch((err) => console.log("Share failed:", err));
+        } else {
+          alert("Sharing not supported on this device.");
+        }
+      },
     },
-  },
-];
-
-
-
-
-
+  ];
 
   // Update arrow visibility
   const updateArrows = () => {
@@ -591,27 +595,28 @@ const socialPlatforms = [
                 title={`Download ${content.documentName || "attachment"}`}
               />
             )}
-            <img src="/savePost.svg" alt="savepost" className="h-5 w-5 text-black dark:invert"/>
+            <img
+              src="/savePost.svg"
+              alt="savepost"
+              className="h-5 w-5 text-black dark:invert"
+            />
           </div>
         </div>
       </div>
 
       {/* Comment Dialog */}
-      <Dialog.Root open={showComment} onOpenChange={setShowComment}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/70 z-40" />
-          <Dialog.Content className="fixed inset-0 z-40 flex items-center justify-center mx-auto">
+      <Dialog open={showComment} onClose={setShowComment}>
+    
+          <DialogBackdrop className="fixed inset-0 bg-black/70 z-40" />
+          <DialogPanel className="fixed inset-0 z-40 flex items-center justify-center mx-auto">
             <div className="rounded-xl bg-white dark:bg-gray-800 border">
-              <Dialog.Title className="text-lg dark:text-white flex p-3 justify-between font-bold w-full h-full">
-                <h2>Bizlaxy</h2>
-                <button onClick={() => setShowComment(false)}>X</button>
-              </Dialog.Title>
-              <div className="flex max-md:flex-col mx-auto max-md:h-[482px] scrollbar-hide">
+              <button onClick={() => setShowComment(false)} className="w-full text-end pr-2 pt-2">X</button>
+              <div className="flex max-md:flex-col mx-auto max-h-[98vh] max-md:h-[558px] scrollbar-hide">
                 <div className="p-3 w-1/2 max-md:w-full">
                   <div className="p-2 dark:border dark:border-gray-300 dark:glass-bg-dark  max-md:w-screen bg-white rounded-xl relative z-10">
                     <div className="w-full flex justify-between">
                       <div className="flex gap-2">
-                        <UserAvatar src={user.avatar}/>
+                        <UserAvatar src={user.avatar} />
                         <div className="">
                           <div className="flex items-center gap-2">
                             <span className="max-md:text-xs dark:text-white font-medium text-base">
@@ -952,9 +957,9 @@ const socialPlatforms = [
                 </div>
               </div>
             </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+          </DialogPanel>
+       
+      </Dialog>
 
       {/* Share Dialog */}
       {/* <Dialog.Root open={isShareOpen} onOpenChange={setIsShareOpen}>
@@ -1012,8 +1017,6 @@ const socialPlatforms = [
         </Dialog.Portal>
       </Dialog.Root> */}
 
-   
-                                                    
       {isShareOpen && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
           <div className="w-full max-w-md rounded-xl bg-white dark:dark-color dark:border dark:border-white p-6 relative">
@@ -1108,28 +1111,27 @@ const socialPlatforms = [
                 onMouseLeave={() => setIsHovering(false)}
               >
                 {/* Scrollable Social Buttons */}
-             <div
-  ref={scrollRef}
-  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
->
-  {socialPlatforms.map((item, idx) => (
-    <div
-      key={idx}
-      className="flex flex-col items-center text-center flex-shrink-0 w-16"
-    >
-      <button
-        onClick={item.onClick}
-        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
-      >
-        {item.icon}
-      </button>
-      <span className="pt-1 text-black text-xs dark:text-white">
-        {item.label}
-      </span>
-    </div>
-  ))}
-</div>
-
+                <div
+                  ref={scrollRef}
+                  className="overflow-x-auto h-full scrollbar-hide flex space-x-6 px-2"
+                >
+                  {socialPlatforms.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center text-center flex-shrink-0 w-16"
+                    >
+                      <button
+                        onClick={item.onClick}
+                        className="bg-gray-200 shadow text-black text-2xl rounded-full p-3"
+                      >
+                        {item.icon}
+                      </button>
+                      <span className="pt-1 text-black text-xs dark:text-white">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
 
                 {/* Left Arrow */}
                 {isHovering && showLeftArrow && (

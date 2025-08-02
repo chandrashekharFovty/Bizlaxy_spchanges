@@ -28,12 +28,12 @@ const AccountOption = ({ id, title, desc,tooltip, selected, onClick }) => {
         </div>
         <div
           className={`w-8 h-8 rounded-full border flex items-center justify-center mt-1 ${
-            selected ? "border-[#1C4BC4] btn-gradient" : "border-[#BED6FF]"
-          }`}
+            selected ? "border-[#1C4BC4] bg-blue-700" : "border-[#BED6FF]"
+          }`} 
         >
           <div
             className={`w-4 h-4 max-md:w-4 max-md:h-4 border-2 border-[#BED6FF] rounded-full ${
-              selected ? "bg-[#BED6FF]" : "bg-transparent"
+              selected ? "bg-[#eef4fd]" : "bg-transparent"
             }`}
           ></div>
         </div>

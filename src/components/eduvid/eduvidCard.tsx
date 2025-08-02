@@ -602,7 +602,7 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-lg:w-[35vw] h-[95vh] max-md:my-0 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[550px] overflow-y-scroll scrollbar-hide">
+    <div className="dark:dark-color snap-y snap-mandatory max-md:w-screen max-lg:w-[32vw] max-xl:w-[25vw] 2xl:w-[28vw] h-[95vh] max-md:my-0 rounded-xl max-md:rounded-none min-w-[30vw] max-w-[550px] overflow-y-scroll scrollbar-hide">
       {mediaList.map((media, idx) => {
         const liked = likedIds.includes(media.id);
         const isAnimating = animatingLikeIdx === idx;
@@ -610,7 +610,7 @@ useEffect(() => {
           <div
             key={media.id}
             onDoubleClick={() => handleDoubleClick(media.id, idx)}
-            className="snap-start max-md:4 dark:bg-black max-md:w-screen max-lg:w-[35vw] h-[95vh] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
+            className="snap-start dark:bg-black max-md:w-screen max-lg:w-[32vw] max-xl:w-[25vw] 2xl:w-[28vw] h-[95vh] flex items-center justify-center relative text-white rounded-xl max-md:rounded-none"
           >
             {media.type === "image" ? (
               <img
