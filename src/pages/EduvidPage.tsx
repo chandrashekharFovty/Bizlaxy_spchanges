@@ -33,10 +33,10 @@ const ReelsPage = () => {
       </div>
 
       {/* Main Content */}
-      <main className="dark:dark-color flex flex-1 ml-[245px] mr-[350px] max-md:mt-0 mt-8 justify-center max-lg:ml-0 max-lg:mr-0 dark:bg-[#0f001a]">
+      <main className="dark:dark-color flex mx-auto mt-8 justify-center dark:bg-[#0f001a]">
         <ReelCard />
         <div className="lg:hidden z-40 dark:bg-[#0f001a]">
-          {" "}
+         
           <Footer />
         </div>
       </main>

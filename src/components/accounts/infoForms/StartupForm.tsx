@@ -175,6 +175,18 @@ const CompanyForm: React.FC = () => {
   form.industrySector = industryvalue;
   form.businessModel = valuebusinessModel;
 
+  // Add these inside your component above the return statement:
+
+  const handleOnindustrySelect = (selected: any[]) => {
+    setindustryvalue(selected);
+    setForm((prev) => ({
+      ...prev,
+      industrySector: selected,
+    }));
+    setTouched((prev) => ({ ...prev, industrySector: true }));
+    validateField("industrySector", selected);
+  };
+
   const validators: Record<keyof Form, (v: any) => string> = {
     startupName: (v) => (v.length < 3 ? "At least 5 characters required" : ""),
     businessType: (v) => (!v ? "Pick at least one" : ""),
@@ -285,15 +297,15 @@ const CompanyForm: React.FC = () => {
 
   return (
     <>
-      <div className="w-full h-auto">
-        <div className="fixed w-full flex gap-1">
+      <div className="w-full h-[100%] flex flex-col">
+        <div className="fixed w-[60%] flex gap-1 max-lg:mt-0 max-xl:mt-5 z-20">
           {progressbarArray.map((_, index) => (
             <div
-              className="w-[5.8%] bg-gray-200 rounded-full h-2.5 mb-4 "
+              className="w-1/12 bg-gray-200 rounded-full h-2.5 mb-4 "
               key={index}
             >
               <div
-                className={`btn-gradient h-2.5 rounded-full ${
+                className={`btn-gradient h-2.5 rounded-full  ${
                   index < progress ? "w-full" : "w-0"
                 }`}
               ></div>
@@ -303,10 +315,10 @@ const CompanyForm: React.FC = () => {
         <form
           onSubmit={onSubmit}
           encType="multipart/form-data"
-          className="w-full overflow-scroll scrollbar-hide mt-[4%] h-[600px] flex flex-col gap-5 z-10"
+           className="w-full mt-[4%] flex overflow-scroll scrollbar-hide flex-col gap-10 z-10"
         >
-          <div className="w-[97%] overflow-scroll scrollbar-hide mt-[3%] h-[600px] flex flex-col gap-5 z-10">
-            {/* Company Name */}
+          <div className="w-[97%] h-[100%] overflow-scroll scrollbar-hide mt-[3%] flex flex-col gap-5 z-10">
+             {/* Company Name */} {/* Company Name */}
             <div className="w-full  flex flex-col mx-auto">
               <label className="text-sm font-medium">Startup Name</label>
               <input
@@ -349,10 +361,31 @@ const CompanyForm: React.FC = () => {
 
             {/* Industry Sector */}
             <div className="w-full  flex flex-col mx-auto">
-              {/* <label className="text-sm font-medium">Industry & Sector</label> */}
+              <label className="text-sm font-medium">Industry & Sector</label>
               {/* MultiSelect Component */}
-              <div className="w-full mt-2">
-                <MultiSelectDropdown
+              <div className="w-full mt-2 ">
+                {/* <MultiSelect
+                  options={industrySectors}
+                  selectedValues={industryvalue}
+                  onSelect={handleOnindustrySelect}
+                  onRemove={handleOnindustryRemove}
+                  showCheckbox
+                  showArrow
+                  avoidHighlightFirstOption
+                  placeholder="Select Industry&Sector type"
+                  className="custom-multiselect w-full h-[60px] placeholder:text-[#707070] mt-2 outline-[#BED3FF] border border-[#BED6FF] rounded-xl px-4 text-sm"
+                /> */}
+                <MultiSelect
+                  options={industrySectors}
+                  value={industryvalue}
+                  onChange={handleOnindustrySelect}
+                  labelledBy="Select Industry & Sector"
+                  hasSelectAll={false}
+                  className="rmsc"
+                  overrideStrings={{ selectSomeItems: "Select Industry & Sector" }} // placeholder text
+                />
+
+                {/* <MultiSelectDropdown
                   label="Industry & Sector"
                   options={industrySectors}
                   value={industryvalue}
@@ -360,7 +393,24 @@ const CompanyForm: React.FC = () => {
                   placeholder="Select Industry&Sector"
                   error={errors.industrySector}
                   
-                />
+                /> */}
+                {/* {industryvalue.find((item) => item.value === "other") && (
+                  <div className="mt-2 border z-50 border-[#BED3FF] rounded-md p-2 w-full text-sm flex justify-between">
+                    <input
+                      type="text"
+                      value={customIndustry}
+                      onChange={(e) => setCustomIndustry(e.target.value)}
+                      placeholder="Enter your custom business model"
+                      className="rounded-md w-full text-sm outline-none placeholder:text-[#707070]"
+                    />
+                    <button
+                      onClick={handleAddCustomIndustry}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Add
+                    </button>
+                  </div>
+                )} */}
               </div>
 
               {errors.industrySector && (
@@ -653,83 +703,104 @@ const CompanyForm: React.FC = () => {
               )}
             </div>
 
-            {/* Referrals */}
+             {/* Referrals */}
             <div className="w-full  flex flex-col mx-auto">
               <fieldset className="w-full h-[60px] flex flex-col gap-2">
                 <legend className="text-sm font-medium mb-2">
                   How did you hear about us?
                 </legend>
-                <label className="flex items-center gap-2">
+                <label
+                  className="fb-custom-checkbox"
+                  // onBlur={handleBlur}
+                >
                   <input
                     type="checkbox"
+                    className="fb-checkbox-input"
                     name="referrals"
                     value="Facebook"
                     checked={form.referrals.includes("Facebook")}
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="btn-gradient"
-                  />{" "}
+                  />
+                  <span className="fb-checkbox-checkmark"></span>
                   Facebook
                 </label>
-                <label className="flex items-center gap-2">
+                <label
+                  className="fb-custom-checkbox"
+                  // onBlur={handleBlur}
+                >
                   <input
                     type="checkbox"
+                    className="fb-checkbox-input"
                     name="referrals"
-                    value="Instagram"
+                   value="Instagram"
                     checked={form.referrals.includes("Instagram")}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                     className="btn-gradient"
-                  />{" "}
+                  />
+                  <span className="fb-checkbox-checkmark"></span>
                   Instagram
                 </label>
-                <label className="flex items-center gap-2">
+                <label
+                  className="fb-custom-checkbox"
+                  // onBlur={handleBlur}
+                >
                   <input
                     type="checkbox"
+                    className="fb-checkbox-input"
                     name="referrals"
                     value="YouTube"
                     checked={form.referrals.includes("YouTube")}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                     className="btn-gradient"
-                  />{" "}
+                  />
+                  <span className="fb-checkbox-checkmark"></span>
                   YouTube
                 </label>
-                <label className="flex items-center gap-2">
+                <label
+                  className="fb-custom-checkbox"
+                  // onBlur={handleBlur}
+                >
                   <input
                     type="checkbox"
+                    className="fb-checkbox-input"
                     name="referrals"
                     value="Friend"
                     checked={form.referrals.includes("Friend")}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                     className="btn-gradient"
-                  />{" "}
+                   
+                  />
+                  <span className="fb-checkbox-checkmark"></span>
                   Friend
                 </label>
-                <label className="flex items-center gap-2">
+                <label
+                  className="fb-custom-checkbox"
+                  // onBlur={handleBlur}
+                >
                   <input
                     type="checkbox"
+                    className="fb-checkbox-input"
                     name="referrals"
                     value="Others"
                     checked={form.referrals.includes("Others")}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                     className="btn-gradient"
-                  />{" "}
+                  />
+                  <span className="fb-checkbox-checkmark"></span>
                   Others
                 </label>
-              {errors.referrals && (
-                <div className="text-red-500 text-sm mt-1">
-                  {errors.referrals}
-                </div>
-              )}
+                
+                {errors.referrals && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {errors.referrals}
+                  </div>
+                )}
               </fieldset>
             </div>
           </div>
         {/* Submit */}
-        <div className="h-20 w-full">
-          <div className="w-[97%] h-full flex justify-end">
+         <div className="h-20 w-full bg-white sticky bottom-8 z-20">
+            <div className="w-[97%]  h-full flex justify-end items-center">
             <button
               onClick={() => {
                 onSubmit;

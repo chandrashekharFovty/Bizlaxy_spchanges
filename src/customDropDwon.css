@@ -1,4 +1,4 @@
-.rmsc {
+/* .rmsc {
   --rmsc-main: transparent !important;
   --rmsc-border: transparent !important;
   --rmsc-h: 50px !important;
@@ -30,7 +30,7 @@
   -webkit-text-stroke: #338AF3 !important;
 }
 /* 1. Main container */
-.custom-multiselect .multiselect-container {
+/* .custom-multiselect .multiselect-container {
   width: 100% !important;
   height:auto;
   font-size: 14px;
@@ -51,7 +51,7 @@
     margin-top: 16px !important;
     margin: auto 0;
     color:black;
-}
+} */
 /* 2. Input box
 .custom-multiselect .searchBox {
   width: 100% !important;
@@ -60,7 +60,7 @@
   border-radius:12px;
   border: 2px solid #BED6FF;
 }
-*/
+*/ */
 
 /* 3. Dropdown arrow (caret) */
 .custom-multiselect .caret {
@@ -163,4 +163,77 @@
 .custom-hover option:hover {
   color: black;
   background-color: #E0ECFF;
+}
+
+
+/* Custom MultiSelect styling */
+.rmsc {
+  font-family: 'Inter', sans-serif;
+  /* Remove default background */
+  background: none !important;
+}
+
+/* Control box */
+.rmsc .dropdown-container {
+  border: 1.5px solid #bed6ff !important;
+  border-radius: 10px !important;
+  min-height: 56px;
+  box-shadow: none !important;
+}
+
+.rmsc .dropdown-heading {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 6px 18px;
+  font-size: 1rem;
+}
+
+/* Selected options as "chips" */
+.rmsc .dropdown-container .dropdown-content .selected,
+.rmsc .dropdown-heading .chip {
+  background: #f5faff !important;
+  color: #2563eb !important;
+  border-radius: 8px !important;
+  font-weight: 500;
+  margin-right: 8px;
+  box-shadow: none;
+  font-size: 15px;
+  padding: 5px 13px 5px 16px !important;
+  border: none !important;
+}
+.rmsc .dropdown-container .dropdown-content .selected{
+  color: black;
+}
+
+.rmsc .dropdown-heading .chip .close-icon {
+  color: #606fc3 !important;
+  margin-left: 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.rmsc .dropdown-heading .chip {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.rmsc .downshift-dropdown {
+  border-radius: 6px !important;
+  box-shadow: 0 3px 16px rgba(30,46,130,.08) !important;
+}
+
+/* Change arrow icon color */
+.rmsc .dropdown-container .dropdown-arrow {
+  color: #2563eb !important;
+}
+
+/* Remove ugly placeholder spacing */
+.rmsc .dropdown-content {
+  padding-left: 15px !important;
+}
+
+/* Placeholder style */
+.rmsc .dropdown-heading .gray {
+  color: #707070 !important;
 }

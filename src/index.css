@@ -250,3 +250,60 @@ sidebar-text::before {
 .formPlaceholder {
   @apply text-gray-300 text-[14px] font-normal mb-2;
 }
+
+/*styles for checkbox */
+.fb-custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  font-weight:500;
+  user-select: none;
+  gap: 8px;
+  color: #3c4043;
+}
+
+.fb-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fb-checkbox-checkmark {
+  width: 22px;
+  height: 22px;
+  background: white;
+  border: #797878 1px solid;
+  border-radius: 6px;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.fb-checkbox-input:checked + .fb-checkbox-checkmark {
+  /* background: linear-gradient(135deg, #6a35ff, #3f3fff); */
+  background: linear-gradient(to left, #9645FF, #1C4BC3);
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.fb-checkbox-checkmark::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fb-checkbox-input:checked + .fb-checkbox-checkmark::after {
+  opacity: 1;
+}

@@ -6,7 +6,8 @@ export type UserType =
   | "learner"
   | "startupidea"
   | "businessowner"
-  | "creator";
+  | "creator"
+  | "professionals";
 
 export interface FieldHead {
   formheading: string;
@@ -18,49 +19,56 @@ export const formHeadConfig: Record<UserType, FieldHead[]> = {
     {
       formheading: "Complete Your Business Profile",
       formdescription:
-        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   investor: [
     {
       formheading: "Complete Your Investor Profile",
       formdescription:
-        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   startup: [
     {
       formheading: "Complete Your Startup Profile",
       formdescription:
-        "Tell us more about your business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   learner: [
     {
       formheading: "Complete Your Learner Profile",
       formdescription:
-        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   startupidea: [
     {
       formheading: "Complete Your Startup Idea Profile",
       formdescription:
-        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   businessowner: [
     {
       formheading: "Complete Your Business Owner Profile",
       formdescription:
-        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
   creator: [
     {
       formheading: "Complete Your Creator Profile",
       formdescription:
-        "Tell us more about your  business to personalize your experience and unlock relevant business opportunities.",
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
+    },
+  ],
+  professionals: [
+    {
+      formheading: "Complete Your Professionals Profile",
+      formdescription:
+        "Tell us more about your Business to personalize your experience and unlock relevant business opportunities.",
     },
   ],
 };

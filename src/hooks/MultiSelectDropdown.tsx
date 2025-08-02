@@ -157,13 +157,26 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
           {optionsState.map((opt) => (
             <div
               key={opt.value}
-              className={`flex items-center px-4 py-2 cursor-pointer hover:bg-blue-50 select-none ${value.some((v) => v.value === opt.value)
+              className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-blue-50 select-none ${value.some((v) => v.value === opt.value)
                 ? "bg-blue-50"
                 : ""
                 }`}
               onClick={() => handleSelect(opt)}
             >
+              <label className="fb-custom-checkbox">
               <input
+                type="checkbox"
+                checked={!!value.find((v) => v.value === opt.value)}
+                onChange={() => { }}
+                className="fb-checkbox-input"
+                tabIndex={-1}
+                readOnly
+              
+              />
+              <span className="fb-checkbox-checkmark"></span>
+              </label>
+              <span className="">{opt.label}</span>
+              {/* <input
                 type="checkbox"
                 checked={!!value.find((v) => v.value === opt.value)}
                 onChange={() => { }}
@@ -172,7 +185,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                 style={{ accentColor: "#1C4BC4" }}
                 readOnly
               />
-              <span>{opt.label}</span>
+              <span>{opt.label}</span> */}
               {opt.custom && <span className="ml-2 text-green-600 text-xs">(custom)</span>}
             </div>
           ))}

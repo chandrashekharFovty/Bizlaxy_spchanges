@@ -37,7 +37,7 @@ export default function InfoCarousel({ InfoBoxes }: InfoBoxProps): JSX.Element {
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-[6px] rounded-full cursor-pointer transition-all duration-300
-            ${idx === currentIndex ? "w-10 bg-white" : "w-8 bg-white/50"}`}
+            ${idx === currentIndex ? "w-10 bg-white" : "w-6 bg-white/50"}`}
           ></div>
         ))}
       </div>
